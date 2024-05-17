@@ -1,0 +1,1054 @@
+###############################################################################
+#
+# IAR ELF Linker V9.40.1.364/W64 for ARM                  05/May/2024  17:37:30
+# Copyright 2007-2023 IAR Systems AB.
+#
+#    Output file  =
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Exe\cyt4bb7_cm_0_plus.out
+#    Map file     =
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\List\cyt4bb7_cm_0_plus.map
+#    Command line =
+#        -f
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Exe\cyt4bb7_cm_0_plus.out.rsp
+#        (D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\user_8514941877209965082.dir\cm0plus_isr.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\adc_11722776235721520015.dir\cy_adc.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\button_4990804375159372270.dir\cy_button.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\canfd_1800690984773873875.dir\cy_canfd.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\cpu_15938736945165268644.dir\cy_cpu.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\crypto_1190170608956581615.dir\cy_crypto_config.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\eth_phy_18133017486186456677.dir\cy_dp83867.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ethernet_6029839089178797009.dir\cy_ethif.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\evtgen_3404189088603873129.dir\cy_evtgen.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\flash_8529866181315662935.dir\cy_flash.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\gpio_3999404635324069351.dir\cy_gpio.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\audioss_1346650047966882938.dir\cy_i2s.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\rev_b_6162237342861132223.dir\cy_interrupt_map.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ipc_10145506163450686023.dir\cy_ipc_drv.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ipc_10145506163450686023.dir\cy_ipc_pipe.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ipc_10145506163450686023.dir\cy_ipc_sema.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\lin_18429031207028094880.dir\cy_lin.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\lvd_6353935867039560245.dir\cy_lvd.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\mcwdt_4052485907822033969.dir\cy_mcwdt.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\dma_12106025507578611576.dir\cy_mdma.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\mpu_5663187252346826382.dir\cy_mpu.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\flash_864493325053435817.dir\cy_mw_flash.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\dma_12106025507578611576.dir\cy_pdma.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\power_14453085144426420577.dir\cy_power.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\prot_10722960861768657883.dir\cy_prot.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir\cy_scb_common.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir\cy_scb_ezi2c.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir\cy_scb_i2c.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir\cy_scb_spi.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir\cy_scb_uart.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sd_host_2982766354293506895.dir\cy_sd_host.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\semihosting_143864889731838620.dir\cy_semihosting.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smartio_5451710003740070188.dir\cy_smartio.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_427648126384146252.dir\cy_smif.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir\cy_smif_device_common.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir\cy_smif_hb_flash.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_427648126384146252.dir\cy_smif_memslot.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir\cy_smif_s25fl.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir\cy_smif_s25fs.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir\cy_smif_semp.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_427648126384146252.dir\cy_smif_ver_specific.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\srom_13018798572330080582.dir\cy_srom.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sw_timer_4215635015939382130.dir\cy_sw_tmr.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysclk_16149231235676103872.dir\cy_sysclk.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysflt_12293435975120599261.dir\cy_sysflt.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysint_7435970359207984181.dir\cy_sysint.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syslib_16330585751512546975.dir\cy_syslib.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syslib_16330585751512546975.dir\cy_syslib_iar.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syspm_10887939769544754770.dir\cy_syspm.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysreghc_17676636058511625587.dir\cy_sysreghc.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysreset_14586141425677365288.dir\cy_sysreset.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysrtc_10747768817563771611.dir\cy_sysrtc.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\systick_16016591671695740695.dir\cy_systick.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syswdt_9118657615806274156.dir\cy_syswdt.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir\cy_tcpwm.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir\cy_tcpwm_counter.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir\cy_tcpwm_pwm.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir\cy_tcpwm_quaddec.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir\cy_tcpwm_sr.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\trigmux_9729677290734583340.dir\cy_trigmux.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ethernet_6029839089178797009.dir\edd.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ethernet_6029839089178797009.dir\edd_rx.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ethernet_6029839089178797009.dir\edd_tx.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\user_8514941877209965082.dir\main_cm0plus.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_components_14936052685886095442.dir\seekfree_assistant.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_components_14936052685886095442.dir\seekfree_assistant_interface.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\startup_479057977785470282.dir\startup.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\startup_479057977785470282.dir\startup_cm0plus.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\rev_b_4986922561640112550.dir\system_tviibh4m_cm0plus.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir\zf_common_clock.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir\zf_common_debug.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir\zf_common_fifo.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir\zf_common_font.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir\zf_common_function.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir\zf_common_interrupt.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_absolute_encoder.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_bluetooth_ch9141.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_dl1a.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_gnss.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_icm20602.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_imu963ra.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_ips114.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_ips200.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_key.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_mpu6050.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_oled.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_tft180.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_tsl1401.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_type.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_uart_receiver.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_virtual_oscilloscope.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_wifi_spi.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_wifi_uart.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir\zf_device_wireless_uart.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_adc.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_delay.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_encoder.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_exti.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_flash.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_gpio.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_pit.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_pwm.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_soft_iic.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_soft_spi.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_spi.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_timer.o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir\zf_driver_uart.o
+#        --no_out_extension -o
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Exe\cyt4bb7_cm_0_plus.out
+#        --config_def _CORE_cm0plus_=0 --config_def _LINK_flash_=0 --map
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\List\cyt4bb7_cm_0_plus.map
+#        --config
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\..\icf\linker_directives_tviibh.icf
+#        --semihosting
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\..\..\..\libraries\sdk\tviibh4m\src\drivers\crypto\libs\libcrypto_server_cm0plus_iar.a
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\..\..\..\libraries\sdk\common\hdr\cmsis\dsp\iar_cortexM7lf_math.a
+#        --entry __iar_program_start --vfe --text_out locale --cpu=Cortex-M0+
+#        --fpu=None) --dependencies=n
+#        D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Exe\cyt4bb7_cm_0_plus.out.iar_deps
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__CPP_Runtime   = 1
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because --advanced_heap
+was not specified and the application did not appear to
+be primarily optimized for speed.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at start of [from 0x1000'0000 to 0x1007'ffff] { section .intvec };
+"P1":  place in [from 0x1000'0000 to 0x1007'ffff] { ro };
+"P2":  place in [from 0x2800'0800 to 0x2801'ffff] { rw };
+define block HEAP with size = 1K, alignment = 8 { };
+define block CSTACK with size = 1K, alignment = 8 { };
+define block HEAP_STACK { block HEAP, last block CSTACK };
+"A3":  place at end of [from 0x2800'0800 to 0x2801'ffff] { block HEAP_STACK };
+do not initialize { section .intvec_ram };
+initialize by copy { rw };
+
+No sections matched the following patterns:
+
+  ro section .sflash_app_prot  in "P6"
+  ro section .sflash_nar       in "P4"
+  ro section .sflash_pkey      in "P5"
+  ro section .sflash_toc2      in "P7"
+  ro section .sflash_uf_rows   in "P3"
+  ro section .work_flash       in "P8"
+  section .cm7_0_rom           in "A1"
+  section .cm7_1_rom           in "A2"
+
+
+  Section            Kind         Address    Size  Object
+  -------            ----         -------    ----  ------
+"A0":                                        0x80
+  .intvec            ro code  0x1000'0000    0x80  startup_cm0plus.o [30]
+                            - 0x1000'0080    0x80
+
+"P1":                                      0x40a4
+  .text              ro code  0x1000'0080   0x832  cy_sysclk.o [32]
+  .text              ro code  0x1000'08b2     0xa  xsprout.o [49]
+  .text              ro code  0x1000'08bc    0xc0  strncpy.o [51]
+  .text              ro code  0x1000'097c    0x48  cy_syslib.o [35]
+  .text              ro code  0x1000'09c4    0x4e  ABImemcpy.o [51]
+  .text              ro code  0x1000'0a12    0xe0  I32DivModFast.o [51]
+  .text              ro code  0x1000'0af4    0x32  I64Mul.o [51]
+  .text              ro code  0x1000'0b26    0x7c  I64DivMod.o [51]
+  .text              ro code  0x1000'0ba4    0x52  ABImemset.o [51]
+  .text              ro code  0x1000'0bf6     0x4  cy_syslib.o [35]
+  .text              ro code  0x1000'0bfc     0x2  IntDivZer.o [51]
+  .text              ro code  0x1000'0c00     0x2  I64DivZer.o [51]
+  .text              ro code  0x1000'0c04   0x82c  zf_driver_uart.o [48]
+  .text              ro code  0x1000'1430   0x41c  zf_common_debug.o [45]
+  .text              ro code  0x1000'184c   0x18c  cy_gpio.o [13]
+  .text              ro code  0x1000'19d8   0x3d0  cy_scb_uart.o [23]
+  .text              ro code  0x1000'1da8   0x122  zf_common_interrupt.o [45]
+  .text              ro code  0x1000'1ecc     0xe  strlen.o [51]
+  .text              ro code  0x1000'1edc    0x40  sprintf.o [49]
+  .text              ro code  0x1000'1f1c   0x454  zf_common_fifo.o [45]
+  .text              ro code  0x1000'2370    0x20  zf_driver_pwm.o [48]
+  .text              ro code  0x1000'2390    0x64  cy_sysint.o [34]
+  .text              ro code  0x1000'23f4   0x17c  xprintftiny.o [49]
+  .text              ro code  0x1000'2570   0x6f4  system_tviibh4m_cm0plus.o [21]
+  .text              ro code  0x1000'2c64    0x5c  cy_syswdt.o [41]
+  .text              ro code  0x1000'2cc0    0xa8  cy_systick.o [40]
+  .text              ro code  0x1000'2d68   0x23c  cy_power.o [19]
+  .text              ro code  0x1000'2fa4     0x8  startup_cm0plus.o [30]
+  .text              ro code  0x1000'2fac     0x6  startup_cm0plus.o [30]
+  .text              ro code  0x1000'2fc0    0x1e  cy_syslib_iar.o [35]
+  .text              ro code  0x1000'2fe0    0x48  cy_sysreghc.o [37]
+  .text              ro code  0x1000'3028   0x1dc  cy_srom.o [29]
+  .text              ro code  0x1000'3204    0x68  cy_ipc_drv.o [14]
+  .text              ro code  0x1000'326c   0x288  startup.o [30]
+  .text              ro code  0x1000'34f4   0x190  cm0plus_isr.o [44]
+  .text              ro code  0x1000'3684   0x114  zf_device_gnss.o [47]
+  .text              ro code  0x1000'3798    0x2e  strncmp.o [49]
+  .text              ro code  0x1000'37c8   0x184  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'394c    0x90  system_tviibh4m_cm0plus.o [21]
+  .rodata            const    0x1000'39dc    0x8c  cy_sysclk.o [32]
+  .rodata            const    0x1000'3a68    0x8c  cy_sysclk.o [32]
+  .rodata            const    0x1000'3af4    0x8c  cy_systick.o [40]
+  .text              ro code  0x1000'3b80    0x80  lz77_init_single.o [51]
+  .rodata            const    0x1000'3c00    0x7c  zf_common_fifo.o [45]
+  .rodata            const    0x1000'3c7c    0x7c  zf_driver_uart.o [48]
+  .text              ro code  0x1000'3cf8    0x6c  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3d64    0x3c  zero_init3.o [51]
+  .text              ro code  0x1000'3da0    0x28  main_cm0plus.o [44]
+  .text              ro code  0x1000'3dc8    0x28  data_init.o [51]
+  .iar.init_table    const    0x1000'3df0    0x20  - Linker created -
+  .text              ro code  0x1000'3e10    0x20  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3e30    0x1e  cmain.o [51]
+  .text              ro code  0x1000'3e50     0x4  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3e54     0x8  exit.o [49]
+  .text              ro code  0x1000'3e5c     0xa  cexit.o [51]
+  .text              ro code  0x1000'3e68    0x14  exit.o [52]
+  .rodata            const    0x1000'3e7c    0x1c  zf_common_debug.o [45]
+  .text              ro code  0x1000'3e98    0x1c  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3eb4    0x1c  cstartup_M.o [51]
+  .rodata            const    0x1000'3ed0    0x18  system_tviibh4m_cm0plus.o [21]
+  .rodata            const    0x1000'3ee8    0x18  zf_common_debug.o [45]
+  .rodata            const    0x1000'3f00    0x10  system_tviibh4m_cm0plus.o [21]
+  .rodata            const    0x1000'3f10    0x10  zf_common_debug.o [45]
+  .rodata            const    0x1000'3f20    0x10  zf_common_debug.o [45]
+  .rodata            const    0x1000'3f30     0xc  zf_common_debug.o [45]
+  .rodata            const    0x1000'3f3c     0xc  zf_common_debug.o [45]
+  .text              ro code  0x1000'3f48     0xc  cy_syslib.o [35]
+  .rodata            const    0x1000'3f54     0x8  cy_sysclk.o [32]
+  .rodata            const    0x1000'3f5c     0x8  startup.o [30]
+  .rodata            const    0x1000'3f64     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f68     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f6c     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f70     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f74     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f78     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f7c     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f80     0x4  cy_interrupt_map.o [22]
+  .rodata            const    0x1000'3f84     0x4  cy_ipc_drv.o [14]
+  .rodata            const    0x1000'3f88     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3f8c     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3f90     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3f94     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3f98     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3f9c     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3fa0     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3fa4     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3fa8     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3fac     0x4  cy_scb_uart.o [23]
+  .rodata            const    0x1000'3fb0     0x4  cy_sysint.o [34]
+  .text              ro code  0x1000'3fb4     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fb8     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fbc     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fc0     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fc4     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fc8     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fcc     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fd0     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fd4     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fd8     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fdc     0x2  startup_cm0plus.o [30]
+  .text              ro code  0x1000'3fe0     0x2  zf_device_type.o [47]
+  .rodata            const    0x1000'3fe2     0x0  zero_init3.o [51]
+  .rodata            const    0x1000'3fe2     0x0  lz77_init_single.o [51]
+  Initializer bytes  const    0x1000'3fe2    0x4b  <for P2-1>
+                            - 0x1000'402d  0x3fad
+
+"P2", part 1 of 3:                          0x721
+  P2-1                        0x2800'0800   0x721  <Init block>
+    .data            inited   0x2800'0800   0x6ec  cy_interrupt_map.o [22]
+    .data            inited   0x2800'0eec     0x4  cy_interrupt_map.o [22]
+    .data            inited   0x2800'0ef0     0x4  zf_device_type.o [47]
+    .data            inited   0x2800'0ef4     0x4  zf_device_type.o [47]
+    .data            inited   0x2800'0ef8    0x14  zf_driver_uart.o [48]
+    .data            inited   0x2800'0f0c    0x14  zf_driver_uart.o [48]
+    .data            inited   0x2800'0f20     0x1  zf_common_debug.o [45]
+                            - 0x2800'0f21   0x721
+
+"P2", part 2 of 3:                          0x3d8
+  .bss               zero     0x2800'0f24   0x118  zf_driver_uart.o [48]
+  .bss               zero     0x2800'103c    0x80  zf_device_gnss.o [47]
+  .bss               zero     0x2800'10bc    0x80  zf_device_gnss.o [47]
+  .bss               zero     0x2800'113c    0x80  zf_device_gnss.o [47]
+  .bss               zero     0x2800'11bc    0x40  zf_common_debug.o [45]
+  .bss               zero     0x2800'11fc    0x24  cy_syslib.o [35]
+  .bss               zero     0x2800'1220    0x18  cy_sysclk.o [32]
+  .bss               zero     0x2800'1238    0x18  cy_syslib.o [35]
+  .bss               zero     0x2800'1250    0x18  zf_common_debug.o [45]
+  .bss               zero     0x2800'1268    0x18  zf_device_gnss.o [47]
+  .bss               zero     0x2800'1280    0x14  zf_common_debug.o [45]
+  .bss               zero     0x2800'12a0    0x10  cy_srom.o [29]
+  .bss               zero     0x2800'12c0    0x10  cy_srom.o [29]
+  .bss               zero     0x2800'12d0     0x4  cy_srom.o [29]
+  .bss               zero     0x2800'12d4     0x4  cy_syslib.o [35]
+  .bss               zero     0x2800'12d8     0x4  system_tviibh4m_cm0plus.o [21]
+  .bss               zero     0x2800'12dc     0x4  system_tviibh4m_cm0plus.o [21]
+  .bss               zero     0x2800'12e0     0x4  system_tviibh4m_cm0plus.o [21]
+  .bss               zero     0x2800'12e4     0x4  system_tviibh4m_cm0plus.o [21]
+  .bss               zero     0x2800'12e8     0x4  system_tviibh4m_cm0plus.o [21]
+  .bss               zero     0x2800'12ec     0x4  zf_common_interrupt.o [45]
+  .bss               zero     0x2800'12f0     0x1  cy_sysclk.o [32]
+  .bss               zero     0x2800'12f1     0x1  cy_systick.o [40]
+  .bss               zero     0x2800'12f2     0x1  zf_common_debug.o [45]
+  .bss               zero     0x2800'12f3     0x1  zf_common_debug.o [45]
+  .bss               zero     0x2800'12f4     0x1  zf_common_debug.o [45]
+  .bss               zero     0x2800'12f5     0x1  zf_device_gnss.o [47]
+  .bss               zero     0x2800'12f6     0x1  zf_device_gnss.o [47]
+  .bss               zero     0x2800'12f7     0x1  zf_device_gnss.o [47]
+  .bss               zero     0x2800'12f8     0x1  zf_device_gnss.o [47]
+  .bss               zero     0x2800'12f9     0x1  zf_device_gnss.o [47]
+                            - 0x2800'12fa   0x3d6
+
+"P2", part 3 of 3:                           0x80
+  .intvec_ram        uninit   0x2800'1300    0x80  startup_cm0plus.o [30]
+                            - 0x2800'1380    0x80
+
+"A3":                                       0x400
+  HEAP_STACK                  0x2801'fc00   0x400  <Block>
+    CSTACK                    0x2801'fc00   0x400  <Block>
+      CSTACK         uninit   0x2801'fc00   0x400  <Block tail>
+                            - 0x2802'0000   0x400
+
+Unused ranges:
+
+         From           To      Size
+         ----           --      ----
+  0x1000'4124  0x1007'ffff  0x7'bedc
+  0x2800'0f21  0x2800'0f23       0x3
+  0x2800'12fc  0x2800'12ff       0x4
+  0x2800'1380  0x2801'fbff  0x1'e880
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address      Size
+          -------      ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x3d6:
+          0x2800'0f24  0x3d6
+
+Copy/lz77 (__iar_lz77_init_single3)
+    1 source range, total size 0x4b (4% of destination):
+          0x1000'3fe2   0x4b
+    1 destination range, total size 0x721:
+          0x2800'0800  0x721
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                     ro code  ro data  rw data
+    ------                     -------  -------  -------
+command line/config:
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\adc_11722776235721520015.dir: [1]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\audioss_1346650047966882938.dir: [2]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\button_4990804375159372270.dir: [3]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\canfd_1800690984773873875.dir: [4]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\cpu_15938736945165268644.dir: [5]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\crypto_1190170608956581615.dir: [6]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\dma_12106025507578611576.dir: [7]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\eth_phy_18133017486186456677.dir: [8]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ethernet_6029839089178797009.dir: [9]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\evtgen_3404189088603873129.dir: [10]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\flash_8529866181315662935.dir: [11]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\flash_864493325053435817.dir: [12]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\gpio_3999404635324069351.dir: [13]
+    cy_gpio.o                      396
+    ----------------------------------------------------
+    Total:                         396
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ipc_10145506163450686023.dir: [14]
+    cy_ipc_drv.o                   104        4
+    ----------------------------------------------------
+    Total:                         104        4
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\lin_18429031207028094880.dir: [15]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\lvd_6353935867039560245.dir: [16]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\mcwdt_4052485907822033969.dir: [17]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\mpu_5663187252346826382.dir: [18]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\power_14453085144426420577.dir: [19]
+    cy_power.o                     572
+    ----------------------------------------------------
+    Total:                         572
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\prot_10722960861768657883.dir: [20]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\rev_b_4986922561640112550.dir: [21]
+    system_tviibh4m_cm0plus.o    1'780      184       20
+    ----------------------------------------------------
+    Total:                       1'780      184       20
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\rev_b_6162237342861132223.dir: [22]
+    cy_interrupt_map.o             388      104    1'776
+    ----------------------------------------------------
+    Total:                         388      104    1'776
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir: [23]
+    cy_scb_uart.o                  976       40
+    ----------------------------------------------------
+    Total:                         976       40
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sd_host_2982766354293506895.dir: [24]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\semihosting_143864889731838620.dir: [25]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smartio_5451710003740070188.dir: [26]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_427648126384146252.dir: [27]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir: [28]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\srom_13018798572330080582.dir: [29]
+    cy_srom.o                      476                36
+    ----------------------------------------------------
+    Total:                         476                36
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\startup_479057977785470282.dir: [30]
+    startup.o                      648        8
+    startup_cm0plus.o              336               128
+    ----------------------------------------------------
+    Total:                         984        8      128
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sw_timer_4215635015939382130.dir: [31]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysclk_16149231235676103872.dir: [32]
+    cy_sysclk.o                  2'098      288       25
+    ----------------------------------------------------
+    Total:                       2'098      288       25
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysflt_12293435975120599261.dir: [33]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysint_7435970359207984181.dir: [34]
+    cy_sysint.o                    100        4
+    ----------------------------------------------------
+    Total:                         100        4
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syslib_16330585751512546975.dir: [35]
+    cy_syslib.o                     88                64
+    cy_syslib_iar.o                 30
+    ----------------------------------------------------
+    Total:                         118                64
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syspm_10887939769544754770.dir: [36]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysreghc_17676636058511625587.dir: [37]
+    cy_sysreghc.o                   72
+    ----------------------------------------------------
+    Total:                          72
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysreset_14586141425677365288.dir: [38]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysrtc_10747768817563771611.dir: [39]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\systick_16016591671695740695.dir: [40]
+    cy_systick.o                   168      140        1
+    ----------------------------------------------------
+    Total:                         168      140        1
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syswdt_9118657615806274156.dir: [41]
+    cy_syswdt.o                     92
+    ----------------------------------------------------
+    Total:                          92
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir: [42]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\trigmux_9729677290734583340.dir: [43]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\user_8514941877209965082.dir: [44]
+    cm0plus_isr.o                  400
+    main_cm0plus.o                  40
+    ----------------------------------------------------
+    Total:                         440
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir: [45]
+    zf_common_debug.o            1'052      109      112
+    zf_common_fifo.o             1'108      124
+    zf_common_interrupt.o          290                 4
+    ----------------------------------------------------
+    Total:                       2'450      233      116
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_components_14936052685886095442.dir: [46]
+    ----------------------------------------------------
+    Total:
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir: [47]
+    zf_device_gnss.o               276               413
+    zf_device_type.o                 2        1        8
+    ----------------------------------------------------
+    Total:                         278        1      421
+
+D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir: [48]
+    zf_driver_pwm.o                 32
+    zf_driver_uart.o             2'092      125      320
+    ----------------------------------------------------
+    Total:                       2'124      125      320
+
+dl6M_tln.a: [49]
+    exit.o                           8
+    sprintf.o                       64
+    strncmp.o                       46
+    xprintftiny.o                  380
+    xsprout.o                       10
+    ----------------------------------------------------
+    Total:                         508
+
+m6M_tl.a: [50]
+    ----------------------------------------------------
+    Total:
+
+rt6M_tl.a: [51]
+    ABImemcpy.o                     78
+    ABImemset.o                     82
+    I32DivModFast.o                224
+    I64DivMod.o                    124
+    I64DivZer.o                      2
+    I64Mul.o                        50
+    IntDivZer.o                      2
+    cexit.o                         10
+    cmain.o                         30
+    cstartup_M.o                    28
+    data_init.o                     40
+    lz77_init_single.o             128
+    strlen.o                        14
+    strncpy.o                      192
+    zero_init3.o                    60
+    ----------------------------------------------------
+    Total:                       1'064
+
+shb_l.a: [52]
+    exit.o                          20
+    ----------------------------------------------------
+    Total:                          20
+
+    Gaps                            58                28
+    Linker created                           32    1'024
+--------------------------------------------------------
+    Grand Total:                15'266    1'163    3'959
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                       Address   Size  Type      Object
+-----                       -------   ----  ----      ------
+.iar.init_table$$Base   0x1000'3df0          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x1000'3e10          --   Gb  - Linker created -
+?main                   0x1000'3e31         Code  Gb  cmain.o [51]
+CSTACK$$Base            0x2801'fc00          --   Gb  - Linker created -
+CSTACK$$Limit           0x2802'0000          --   Gb  - Linker created -
+CopyVectorTable         0x1000'3445   0x32  Code  Lc  startup.o [30]
+CpuUserInt0_Handler     0x1000'37e5   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt10_Handler    0x1000'3fc9         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt11_Handler    0x1000'3fcd         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt12_Handler    0x1000'3fd1         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt13_Handler    0x1000'3fd5         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt14_Handler    0x1000'3fd9         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt15_Handler    0x1000'3fdd         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt1_Handler     0x1000'3809   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt2_Handler     0x1000'382d   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt3_Handler     0x1000'3851   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt4_Handler     0x1000'3875   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt5_Handler     0x1000'3899   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt6_Handler     0x1000'38bd   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt7_Handler     0x1000'38e1   0x24  Code  Gb  cy_interrupt_map.o [22]
+CpuUserInt8_Handler     0x1000'3fc1         Code  Wk  startup_cm0plus.o [30]
+CpuUserInt9_Handler     0x1000'3fc5         Code  Wk  startup_cm0plus.o [30]
+Cy_DefaultUserHandler   0x1000'37e1    0x4  Code  Gb  cy_interrupt_map.o [22]
+Cy_GPIO_ClearInterrupt  0x1000'1919    0xc  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_Pin_Init        0x1000'195b   0x72  Code  Gb  cy_gpio.o [13]
+Cy_GPIO_SetDriveSel     0x1000'18fb   0x1e  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_SetDrivemode    0x1000'18ab   0x1c  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_SetHSIOM        0x1000'184d   0x48  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_SetInterruptEdge
+                        0x1000'193f   0x1c  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_SetInterruptMask
+                        0x1000'1925   0x1a  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_SetSlewRate     0x1000'18e1   0x1a  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_SetVtrip        0x1000'18c7   0x1a  Code  Lc  cy_gpio.o [13]
+Cy_GPIO_Write           0x1000'1895   0x16  Code  Lc  cy_gpio.o [13]
+Cy_IPC_Drv_AcquireNotify
+                        0x1000'3205   0x10  Code  Lc  cy_ipc_drv.o [14]
+Cy_IPC_Drv_IsLockAcquired
+                        0x1000'3029    0x8  Code  Lc  cy_srom.o [29]
+Cy_IPC_Drv_LockAcquire  0x1000'321d   0x12  Code  Gb  cy_ipc_drv.o [14]
+Cy_IPC_Drv_SendMsgWord_2
+                        0x1000'322f   0x34  Code  Gb  cy_ipc_drv.o [14]
+Cy_IPC_Drv_WriteData1Value
+                        0x1000'3219    0x4  Code  Lc  cy_ipc_drv.o [14]
+Cy_IPC_Drv_WriteDataValue
+                        0x1000'3215    0x4  Code  Lc  cy_ipc_drv.o [14]
+Cy_Power_SwitchToPmic   0x1000'2f79   0x14  Code  Gb  cy_power.o [19]
+Cy_RestoreIRQ           0x1000'2fad         Code  Gb  startup_cm0plus.o [30]
+Cy_SCB_ClearRxInterrupt
+                        0x1000'34fb    0xe  Code  Lc  cm0plus_isr.o [44]
+Cy_SCB_ClearTxInterrupt
+                        0x1000'350f    0xe  Code  Lc  cm0plus_isr.o [44]
+Cy_SCB_GetNumInRxFifo   0x1000'0df1    0xc  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_GetNumInTxFifo   0x1000'0e05    0xc  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_GetRxInterruptMask
+                        0x1000'34f5    0x6  Code  Lc  cm0plus_isr.o [44]
+Cy_SCB_GetRxInterruptMask
+                        0x1000'0e47    0x6  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_GetTxInterruptMask
+                        0x1000'3509    0x6  Code  Lc  cm0plus_isr.o [44]
+Cy_SCB_GetTxInterruptMask
+                        0x1000'0e53    0x6  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_GetTxSrValid     0x1000'0e11    0xe  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_IsTxComplete     0x1000'0e1f   0x22  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_ReadRxFifo       0x1000'0de9    0x8  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_SetRxInterruptMask
+                        0x1000'0e41    0x6  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_SetTxInterruptMask
+                        0x1000'0e4d    0x6  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_UART_DeInit      0x1000'1d1d   0x4e  Code  Gb  cy_scb_uart.o [23]
+Cy_SCB_UART_Enable      0x1000'0e69    0xc  Code  Lc  zf_driver_uart.o [48]
+Cy_SCB_UART_Init        0x1000'19d9  0x30c  Code  Gb  cy_scb_uart.o [23]
+Cy_SCB_WriteTxFifo      0x1000'0dfd    0x8  Code  Lc  zf_driver_uart.o [48]
+Cy_SaveIRQ              0x1000'2fa5         Code  Gb  startup_cm0plus.o [30]
+Cy_Srom_CallApi         0x1000'3031   0xae  Code  Gb  cy_srom.o [29]
+Cy_Srom_CallApi_2       0x1000'30df   0xd4  Code  Gb  cy_srom.o [29]
+Cy_Srom_GetResponseType
+                        0x1000'31b5   0x34  Code  Gb  cy_srom.o [29]
+Cy_SysClk_CheckDividerExisting
+                        0x1000'0c05   0x2c  Code  Lc  zf_driver_uart.o [48]
+Cy_SysClk_ClkPathGetSource
+                        0x1000'0205   0x4c  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_EcoGetStatus  0x1000'0081   0x1a  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_FllGetConfiguration
+                        0x1000'0265   0x72  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_FllGetLockStatus
+                        0x1000'009b    0xc  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_GetClkMemFrequency
+                        0x1000'0851   0x30  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetClkSlowFrequency
+                        0x1000'0881   0x2a  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetClockGroup
+                        0x1000'0d07    0x8  Code  Lc  zf_driver_uart.o [48]
+Cy_SysClk_GetCoreFrequency
+                        0x1000'08ab    0x8  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetEcoFrequency
+                        0x1000'0401   0x2e  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetExtFrequency
+                        0x1000'042f   0x1c  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetFllInputFrequency
+                        0x1000'053d    0xc  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetFllOutputFrequency
+                        0x1000'0565   0x72  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetHfClkFrequency
+                        0x1000'07bb   0x7a  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetIlo0Frequency
+                        0x1000'044d   0x2e  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetIlo1Frequency
+                        0x1000'047d   0x2e  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetImoFrequency
+                        0x1000'03d1   0x2e  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetPathFrequency
+                        0x1000'0789   0x32  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetPathSourceFrequency
+                        0x1000'04dd   0x60  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetPll400MNo  0x1000'00e3   0x16  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_GetPllInputFrequency
+                        0x1000'0549   0x1c  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetPllNo      0x1000'00a7   0x14  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_GetPllOutputFrequency
+                        0x1000'05ed  0x196  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_GetWcoFrequency
+                        0x1000'04ad   0x2e  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_HfClockGetDivider
+                        0x1000'0189   0x3a  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_HfClockGetSource
+                        0x1000'013d   0x4c  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_InitGetFreqParams
+                        0x1000'03b9   0x16  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_MemClkGetDivider
+                        0x1000'01c9    0xa  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_PeriphAssignDivider
+                        0x1000'0d0f   0x7a  Code  Lc  zf_driver_uart.o [48]
+Cy_SysClk_PeriphEnableDivider
+                        0x1000'0d89   0x60  Code  Lc  zf_driver_uart.o [48]
+Cy_SysClk_PeriphSetFracDivider
+                        0x1000'0c31   0xd6  Code  Lc  zf_driver_uart.o [48]
+Cy_SysClk_Pll400MGetConfiguration
+                        0x1000'0335   0x80  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_Pll400MGetLockStatus
+                        0x1000'00f9   0x2a  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_PllGetConfiguration
+                        0x1000'02e5   0x48  Code  Gb  cy_sysclk.o [32]
+Cy_SysClk_PllGetLockStatus
+                        0x1000'00bb   0x28  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_SlowClkGetDivider
+                        0x1000'01f1    0xa  Code  Lc  cy_sysclk.o [32]
+Cy_SysClk_WcoOkay       0x1000'0129    0xe  Code  Lc  cy_sysclk.o [32]
+Cy_SysEnableApplCore    0x1000'2af5   0xa4  Code  Gb  system_tviibh4m_cm0plus.o [21]
+Cy_SysGetApplCoreStatus
+                        0x1000'2a91   0x50  Code  Gb  system_tviibh4m_cm0plus.o [21]
+Cy_SysInt_InitIRQ       0x1000'2391   0x3e  Code  Gb  cy_sysint.o [34]
+Cy_SysInt_SetSystemIrqVector
+                        0x1000'23cf   0x14  Code  Gb  cy_sysint.o [34]
+Cy_SysInt_SystemIrqUserTableRamPointer
+                        0x2800'0eec    0x4  Data  Gb  cy_interrupt_map.o [22]
+Cy_SysLib_CleanCoreDCacheByAddr
+                        0x1000'09c3    0x2  Code  Gb  cy_syslib.o [35]
+Cy_SysLib_DelayCycles   0x1000'2fc1         Code  Gb  cy_syslib_iar.o [35]
+Cy_SysLib_EnterCriticalSection
+                        0x1000'2fd1         Code  Gb  cy_syslib_iar.o [35]
+Cy_SysLib_ExitCriticalSection
+                        0x1000'2fd9         Code  Gb  cy_syslib_iar.o [35]
+Cy_SysLib_FaultHandler  0x1000'0983   0x34  Code  Gb  cy_syslib.o [35]
+Cy_SysLib_Halt          0x1000'097d    0x6  Code  Gb  cy_syslib.o [35]
+Cy_SysLib_InvalidateCoreDCacheByAddr
+                        0x1000'09c1    0x2  Code  Gb  cy_syslib.o [35]
+Cy_SysLib_ProcessingFault
+                        0x1000'0bf7    0x4  Code  Wk  cy_syslib.o [35]
+Cy_SysLib_SvcHandler    0x1000'3f49    0xc  Code  Wk  cy_syslib.o [35]
+Cy_SysReghc_IsConfigured
+                        0x1000'2ff7    0xa  Code  Gb  cy_sysreghc.o [37]
+Cy_SysReghc_IsEnabled   0x1000'3001    0xc  Code  Gb  cy_sysreghc.o [37]
+Cy_SysReghc_IsSequencerBusy
+                        0x1000'300d    0xa  Code  Gb  cy_sysreghc.o [37]
+Cy_SysReghc_SetPmicStatusWaitTime
+                        0x1000'2fe1   0x16  Code  Gb  cy_sysreghc.o [37]
+Cy_SysResetApplCore     0x1000'2bbd   0x60  Code  Gb  system_tviibh4m_cm0plus.o [21]
+Cy_SysTick_DelayCoreCycle
+                        0x1000'2cc1   0x80  Code  Gb  cy_systick.o [40]
+Cy_SysTick_DelayCoreCycle::isThisBeingCalled
+                        0x2800'12f1    0x1  Data  Lc  cy_systick.o [40]
+Cy_SystemIrqUserTable   0x2800'0800  0x6ec  Data  Gb  cy_interrupt_map.o [22]
+Cy_WDT_Disable          0x1000'2ca1   0x16  Code  Gb  cy_syswdt.o [41]
+Cy_WDT_Lock             0x1000'2c65   0x16  Code  Gb  cy_syswdt.o [41]
+Cy_WDT_Unlock           0x1000'2c7b   0x26  Code  Gb  cy_syswdt.o [41]
+Cy_u32StartupStackEndAddress
+                        0x1000'3d60         Data  Gb  startup_cm0plus.o [30]
+Cy_u32StartupStackStartAddress
+                        0x1000'3d5c         Data  Gb  startup_cm0plus.o [30]
+HEAP_STACK$$Base        0x2801'fc00          --   Gb  - Linker created -
+HEAP_STACK$$Limit       0x2802'0000          --   Gb  - Linker created -
+HardFault_Handler       0x1000'3e11         Code  Wk  startup_cm0plus.o [30]
+InitRamEcc              0x1000'3327  0x10a  Code  Lc  startup.o [30]
+InitRamEccClearArea     0x1000'3431   0x14  Code  Lc  startup.o [30]
+NMI_Handler             0x1000'3fb5         Code  Wk  startup_cm0plus.o [30]
+PendSV_Handler          0x1000'3fb9         Code  Wk  startup_cm0plus.o [30]
+PrepareSystemCallInfrastructure
+                        0x1000'3477   0x44  Code  Lc  startup.o [30]
+Region$$Table$$Base     0x1000'3df0          --   Gb  - Linker created -
+Region$$Table$$Limit    0x1000'3e10          --   Gb  - Linker created -
+Reset_Handler           0x1000'3cf9         Code  Wk  startup_cm0plus.o [30]
+SVC_Handler             0x1000'3e99         Code  Wk  startup_cm0plus.o [30]
+Startup_Init            0x1000'32fd   0x2a  Code  Gb  startup.o [30]
+SwitchToExternal        0x1000'2d69  0x210  Code  Lc  cy_power.o [19]
+SysTick_Handler         0x1000'3fbd         Code  Wk  startup_cm0plus.o [30]
+SystemCoreClock         0x2800'12d8    0x4  Data  Gb  system_tviibh4m_cm0plus.o [21]
+SystemCoreClockUpdate   0x1000'29ed   0x98  Code  Gb  system_tviibh4m_cm0plus.o [21]
+SystemInit              0x1000'2571  0x424  Code  Gb  system_tviibh4m_cm0plus.o [21]
+_PrintfTiny             0x1000'240f  0x162  Code  Gb  xprintftiny.o [49]
+_SProut                 0x1000'08b3    0xa  Code  Gb  xsprout.o [49]
+__NVIC_ClearPendingIRQ  0x1000'37c9   0x18  Code  Lc  cy_interrupt_map.o [22]
+__NVIC_ClearPendingIRQ  0x1000'1dc1   0x18  Code  Lc  zf_common_interrupt.o [45]
+__NVIC_EnableIRQ        0x1000'326d   0x18  Code  Lc  startup.o [30]
+__NVIC_EnableIRQ        0x1000'1da9   0x18  Code  Lc  zf_common_interrupt.o [45]
+__NVIC_SetPriority      0x1000'3285   0x78  Code  Lc  startup.o [30]
+__NVIC_SetPriority      0x1000'1dd9   0x78  Code  Lc  zf_common_interrupt.o [45]
+__Vectors               0x1000'0000          --   Gb  startup_cm0plus.o [30]
+__Vectors_End           0x1000'0080         Data  Gb  startup_cm0plus.o [30]
+__Vectors_Size {Abs}           0x80          --   Gb  startup_cm0plus.o [30]
+__aeabi_idiv            0x1000'0a3f         Code  Gb  I32DivModFast.o [51]
+__aeabi_idiv0           0x1000'0bfd         Code  Gb  IntDivZer.o [51]
+__aeabi_idivmod         0x1000'0a3f         Code  Gb  I32DivModFast.o [51]
+__aeabi_ldiv0           0x1000'0c01         Code  Gb  I64DivZer.o [51]
+__aeabi_lmul            0x1000'0af5         Code  Gb  I64Mul.o [51]
+__aeabi_memclr4         0x1000'0bc5         Code  Gb  ABImemset.o [51]
+__aeabi_memclr8         0x1000'0bc5         Code  Gb  ABImemset.o [51]
+__aeabi_memcpy          0x1000'09f9         Code  Gb  ABImemcpy.o [51]
+__aeabi_memcpy4         0x1000'09c5         Code  Gb  ABImemcpy.o [51]
+__aeabi_memcpy8         0x1000'09c5         Code  Gb  ABImemcpy.o [51]
+__aeabi_memset          0x1000'0ba5         Code  Gb  ABImemset.o [51]
+__aeabi_uidiv           0x1000'0a45         Code  Gb  I32DivModFast.o [51]
+__aeabi_uidivmod        0x1000'0a45         Code  Gb  I32DivModFast.o [51]
+__aeabi_uldivmod        0x1000'0b27         Code  Gb  I64DivMod.o [51]
+__cm7_0_vector_base_linker_symbol {Abs}
+                        0x1008'0000         Data  Gb  <internal module>
+__cm7_1_vector_base_linker_symbol {Abs}
+                        0x1028'0000         Data  Gb  <internal module>
+__cmain                 0x1000'3e31         Code  Gb  cmain.o [51]
+__ecc_init_sram_end_address {Abs}
+                        0x2801'ffff         Data  Gb  <internal module>
+__ecc_init_sram_start_address {Abs}
+                        0x2800'0800         Data  Gb  <internal module>
+__exit                  0x1000'3e69   0x14  Code  Gb  exit.o [52]
+__iar_Memcpy            0x1000'0a05         Code  Gb  ABImemcpy.o [51]
+__iar_Memset4_word      0x1000'0bc9         Code  Gb  ABImemset.o [51]
+__iar_Memset_word       0x1000'0bb1         Code  Gb  ABImemset.o [51]
+__iar_data_init3        0x1000'3dc9   0x28  Code  Gb  data_init.o [51]
+__iar_lz77_init_single3
+                        0x1000'3b81   0x80  Code  Gb  lz77_init_single.o [51]
+__iar_program_start     0x1000'3eb5         Code  Gb  cstartup_M.o [51]
+__iar_zero_init3        0x1000'3d65   0x3c  Code  Gb  zero_init3.o [51]
+__low_level_init        0x1000'3e51         Code  Gb  startup_cm0plus.o [30]
+__ramVectors            0x2800'1300         Data  Gb  startup_cm0plus.o [30]
+__vector_table          0x1000'0000         Data  Gb  startup_cm0plus.o [30]
+__vector_table_0x1c     0x1000'001c         Data  Gb  startup_cm0plus.o [30]
+_call_main              0x1000'3e3d         Code  Gb  cmain.o [51]
+_exit                   0x1000'3e5d         Code  Gb  cexit.o [51]
+assert_interrupt_config
+                        0x1000'1e7d    0xc  Code  Gb  zf_common_interrupt.o [45]
+cy_assertFileName       0x2800'1238   0x18  Data  Gb  cy_syslib.o [35]
+cy_assertLine           0x2800'12d4    0x4  Data  Gb  cy_syslib.o [35]
+cy_delay32kMs           0x2800'12e8    0x4  Data  Gb  system_tviibh4m_cm0plus.o [21]
+cy_delayFreqHz          0x2800'12dc    0x4  Data  Gb  system_tviibh4m_cm0plus.o [21]
+cy_delayFreqKhz         0x2800'12e0    0x4  Data  Gb  system_tviibh4m_cm0plus.o [21]
+cy_delayFreqMhz         0x2800'12e4    0x4  Data  Gb  system_tviibh4m_cm0plus.o [21]
+cy_faultFrame           0x2800'11fc   0x24  Data  Gb  cy_syslib.o [35]
+debug_assert_handler    0x1000'1749   0x3c  Code  Gb  zf_common_debug.o [45]
+debug_assert_handler::assert_nest_index
+                        0x2800'12f4    0x1  Data  Lc  zf_common_debug.o [45]
+debug_delay             0x1000'1431   0x32  Code  Lc  zf_common_debug.o [45]
+debug_info_init         0x1000'17d5   0x18  Code  Gb  zf_common_debug.o [45]
+debug_init              0x1000'17ed   0x2a  Code  Gb  zf_common_debug.o [45]
+debug_interrupr_handler
+                        0x1000'1721   0x20  Code  Gb  zf_common_debug.o [45]
+debug_output            0x1000'146f  0x2b2  Code  Lc  zf_common_debug.o [45]
+debug_output_info       0x2800'1280   0x14  Data  Lc  zf_common_debug.o [45]
+debug_output_init       0x1000'17a5   0x2a  Code  Gb  zf_common_debug.o [45]
+debug_output_struct_init
+                        0x1000'1785   0x1a  Code  Gb  zf_common_debug.o [45]
+debug_uart_buffer       0x2800'11bc   0x40  Data  Gb  zf_common_debug.o [45]
+debug_uart_data         0x2800'12f3    0x1  Data  Gb  zf_common_debug.o [45]
+debug_uart_fifo         0x2800'1250   0x18  Data  Gb  zf_common_debug.o [45]
+debug_uart_str_output   0x1000'1463    0xc  Code  Lc  zf_common_debug.o [45]
+divNumLocator           0x1000'3f54    0x8  Data  Gb  cy_sysclk.o [32]
+exit                    0x1000'3e55    0x8  Code  Gb  exit.o [49]
+fifo_clear              0x1000'1f55   0x6e  Code  Gb  zf_common_fifo.o [45]
+fifo_end_offset         0x1000'1f39   0x1c  Code  Lc  zf_common_fifo.o [45]
+fifo_head_offset        0x1000'1f1d   0x1c  Code  Lc  zf_common_fifo.o [45]
+fifo_init               0x1000'2335   0x38  Code  Gb  zf_common_fifo.o [45]
+fifo_read_buffer        0x1000'2189  0x1a6  Code  Gb  zf_common_fifo.o [45]
+fifo_used               0x1000'1fc3   0x20  Code  Gb  zf_common_fifo.o [45]
+fifo_write_buffer       0x1000'1fe3  0x1a0  Code  Gb  zf_common_fifo.o [45]
+g_dummy                 0x2800'12d0    0x4  Data  Lc  cy_srom.o [29]
+g_scratch               0x2800'12a0   0x10  Data  Lc  cy_srom.o [29]
+g_scratch2              0x2800'12c0   0x10  Data  Lc  cy_srom.o [29]
+get_scb_module          0x1000'0fa9   0x38  Code  Gb  zf_driver_uart.o [48]
+get_uart_config         0x1000'0e75  0x134  Code  Lc  zf_driver_uart.o [48]
+gnss_flag               0x2800'12f5    0x1  Data  Gb  zf_device_gnss.o [47]
+gnss_gga_state          0x2800'12f7    0x1  Data  Lc  zf_device_gnss.o [47]
+gnss_receiver_fifo      0x2800'1268   0x18  Data  Lc  zf_device_gnss.o [47]
+gnss_rmc_state          0x2800'12f8    0x1  Data  Lc  zf_device_gnss.o [47]
+gnss_state              0x2800'12f6    0x1  Data  Lc  zf_device_gnss.o [47]
+gnss_ths_state          0x2800'12f9    0x1  Data  Lc  zf_device_gnss.o [47]
+gnss_uart_callback      0x1000'3685   0xe2  Code  Gb  zf_device_gnss.o [47]
+gps_gga_buffer          0x2800'103c   0x80  Data  Lc  zf_device_gnss.o [47]
+gps_rmc_buffer          0x2800'10bc   0x80  Data  Lc  zf_device_gnss.o [47]
+gps_ths_buffer          0x2800'113c   0x80  Data  Lc  zf_device_gnss.o [47]
+intFreqInitialized      0x2800'12f0    0x1  Data  Gb  cy_sysclk.o [32]
+internalBaseFreqInfo    0x2800'1220   0x18  Data  Gb  cy_sysclk.o [32]
+interrupt_global_disable
+                        0x1000'1e51   0x16  Code  Gb  zf_common_interrupt.o [45]
+interrupt_global_flag   0x2800'12ec    0x4  Data  Lc  zf_common_interrupt.o [45]
+interrupt_init          0x1000'1e95   0x36  Code  Gb  zf_common_interrupt.o [45]
+interrupt_set_priority  0x1000'1e89    0xc  Code  Gb  zf_common_interrupt.o [45]
+main                    0x1000'3da1   0x28  Code  Gb  main_cm0plus.o [44]
+out                     0x1000'23f5   0x1a  Code  Lc  xprintftiny.o [49]
+pwm_all_channel_close   0x1000'2371   0x1c  Code  Gb  zf_driver_pwm.o [48]
+scb_module              0x2800'0f0c   0x14  Data  Gb  zf_driver_uart.o [48]
+sprintf                 0x1000'1edd   0x40  Code  Gb  sprintf.o [49]
+strlen                  0x1000'1ecd         Code  Gb  strlen.o [51]
+strncmp                 0x1000'3799   0x2e  Code  Gb  strncmp.o [49]
+strncpy                 0x1000'08bd         Code  Gb  strncpy.o [51]
+type_default_callback   0x1000'3fe1    0x2  Code  Lc  zf_device_type.o [47]
+uart0_isr               0x1000'351d   0x44  Code  Gb  cm0plus_isr.o [44]
+uart1_isr               0x1000'3561   0x46  Code  Gb  cm0plus_isr.o [44]
+uart2_isr               0x1000'35a7   0x44  Code  Gb  cm0plus_isr.o [44]
+uart3_isr               0x1000'35eb   0x40  Code  Gb  cm0plus_isr.o [44]
+uart4_isr               0x1000'362b   0x46  Code  Gb  cm0plus_isr.o [44]
+uart_context            0x2800'0f24  0x118  Data  Gb  zf_driver_uart.o [48]
+uart_init               0x1000'12a9  0x170  Code  Gb  zf_driver_uart.o [48]
+uart_isr_func           0x2800'0ef8   0x14  Data  Gb  zf_driver_uart.o [48]
+uart_query_byte         0x1000'1029   0x32  Code  Gb  zf_driver_uart.o [48]
+uart_receiver_handler   0x2800'0ef4    0x4  Data  Gb  zf_device_type.o [47]
+uart_rx_interrupt       0x1000'1191   0xf4  Code  Gb  zf_driver_uart.o [48]
+uart_tx_interrupt       0x1000'106d  0x114  Code  Gb  zf_driver_uart.o [48]
+uart_write_byte         0x1000'0fe1   0x26  Code  Gb  zf_driver_uart.o [48]
+uart_write_string       0x1000'100d   0x1c  Code  Gb  zf_driver_uart.o [48]
+wireless_module_uart_handler
+                        0x2800'0ef0    0x4  Data  Gb  zf_device_type.o [47]
+zf_debug_assert_enable  0x2800'0f20    0x1  Data  Lc  zf_common_debug.o [45]
+zf_debug_init_flag      0x2800'12f2    0x1  Data  Lc  zf_common_debug.o [45]
+
+
+[1] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\adc_11722776235721520015.dir
+[2] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\audioss_1346650047966882938.dir
+[3] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\button_4990804375159372270.dir
+[4] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\canfd_1800690984773873875.dir
+[5] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\cpu_15938736945165268644.dir
+[6] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\crypto_1190170608956581615.dir
+[7] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\dma_12106025507578611576.dir
+[8] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\eth_phy_18133017486186456677.dir
+[9] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ethernet_6029839089178797009.dir
+[10] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\evtgen_3404189088603873129.dir
+[11] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\flash_8529866181315662935.dir
+[12] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\flash_864493325053435817.dir
+[13] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\gpio_3999404635324069351.dir
+[14] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\ipc_10145506163450686023.dir
+[15] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\lin_18429031207028094880.dir
+[16] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\lvd_6353935867039560245.dir
+[17] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\mcwdt_4052485907822033969.dir
+[18] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\mpu_5663187252346826382.dir
+[19] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\power_14453085144426420577.dir
+[20] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\prot_10722960861768657883.dir
+[21] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\rev_b_4986922561640112550.dir
+[22] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\rev_b_6162237342861132223.dir
+[23] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\scb_15490842639181808494.dir
+[24] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sd_host_2982766354293506895.dir
+[25] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\semihosting_143864889731838620.dir
+[26] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smartio_5451710003740070188.dir
+[27] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_427648126384146252.dir
+[28] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\smif_mem_6470536964353725183.dir
+[29] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\srom_13018798572330080582.dir
+[30] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\startup_479057977785470282.dir
+[31] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sw_timer_4215635015939382130.dir
+[32] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysclk_16149231235676103872.dir
+[33] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysflt_12293435975120599261.dir
+[34] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysint_7435970359207984181.dir
+[35] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syslib_16330585751512546975.dir
+[36] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syspm_10887939769544754770.dir
+[37] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysreghc_17676636058511625587.dir
+[38] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysreset_14586141425677365288.dir
+[39] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\sysrtc_10747768817563771611.dir
+[40] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\systick_16016591671695740695.dir
+[41] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\syswdt_9118657615806274156.dir
+[42] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\tcpwm_422923530147891246.dir
+[43] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\trigmux_9729677290734583340.dir
+[44] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\user_8514941877209965082.dir
+[45] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_common_1201165462030747823.dir
+[46] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_components_14936052685886095442.dir
+[47] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_device_6570275422786408770.dir
+[48] = D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\Debug_m0_plus\Obj\zf_driver_11922370083829174090.dir
+[49] = dl6M_tln.a
+[50] = m6M_tl.a
+[51] = rt6M_tl.a
+[52] = shb_l.a
+
+  15'266 bytes of readonly  code memory
+   1'163 bytes of readonly  data memory
+   3'959 bytes of readwrite data memory
+
+Errors: none
+Warnings: none
