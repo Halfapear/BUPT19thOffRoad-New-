@@ -1,9 +1,5 @@
-/*
- * Algorithm.c
- *
- *  Created on: 2023年3月19日
- *      Author: ORRN
- */
+//5.15
+
 #include "zf_common_headfile.h"
 
 //===================================================LQ_PID===================================================
@@ -123,6 +119,7 @@ float PidIncCtrl(pid_param_t * pid, float error)
 
 
 //===================================================GPS与IMU互补滤波===================================================
+//低配卡尔曼？
 
 extern float Daty_Z;//陀螺仪积分得到的值(高频噪声)
 
@@ -131,7 +128,7 @@ void GPS_IMU_COM_filtering()
     float K=0.9;//互补系数
     float Fusion_angle;//融合后的航向角
 
-    Fusion_angle=K*Daty_Z+(1-K)*gps_tau1201.direction;//将积分的YAW和逐飞GPS的direction进行互补融合
+    Fusion_angle=K*Daty_Z+(1-K)*gnss.direction;//将积分的YAW和逐飞GPS的direction进行互补融合
 
     printf("\r\nFusion_angle---%f",Fusion_angle);
 

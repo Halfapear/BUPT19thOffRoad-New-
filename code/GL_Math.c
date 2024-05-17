@@ -1,9 +1,9 @@
+
 /*
- * GL_Math.c
- *
- *  Created on: 2023年7月19日
- *      Author: ORRN
- */
+5.15
+包括
+查找表 fast_atan_table；角度转换函数；自定义数学函数；快速计算 atan2 函数（即arctan）
+*/
 
 #include "zf_common_headfile.h"
 

@@ -1,9 +1,6 @@
-/*
- * Math_self.c
- *
- *  Created on: 2023年4月10日
- *      Author: ORRN
- */
+//5.15没几个的数学函数
+//纯算法了，晚点想看看看吧
+
 
 #include "zf_common_headfile.h"
 

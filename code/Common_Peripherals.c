@@ -1,10 +1,5 @@
-/*
- * Common_Peripherals.c
- *
- *  Created on: 2023年3月18日
- *      Author: ORRN
- */
 
+//5.14 “Common Peripherals” 意思是“常见的外围设备”
 
 
 #include "zf_common_headfile.h"
@@ -110,6 +105,7 @@ void key_scan()//按键扫描
 
     }
 
+/*
 //===================================================摄像头===================================================
 void Image_get()//总钻风得到图像
 {
@@ -122,8 +118,40 @@ void Image_get()//总钻风得到图像
            }
 
 }
+*/
 
 //===================================================LORA===================================================
+//Can this work? Without zf-library?
+//这就是从例程抄来的——不是 还有很大不同
+//我需要看懂里面所有的函数吗？：
+//我觉得这时候我应该看懂原理再来了，不然反推很伤脑筋
+//我需要你更细致得讲解 每一行！ 结合原理和代码
+//UART_TX_PIN 像这种pin 晚点毫无疑问需要改——go declaration即可——不过一路导到了CYT4BB的library了
+//不过问题是为什么例程重新定义了一份：#define LORA_UART_RX_PIN           (UART1_TX_P04_1)
+/*
+基本流程是
+uart_init
+uart_rx_interrupt(UART_INDEX, 1);
+*/
+/*
+关于FIFO
+先是用法
+声明数组 以及fifo_init
+uart_query_byte查询UART是否有接收到的新数据。如果有数据，将其存入get_data中
+fifo_write_buffer写入FIFO缓冲区
+和基本的使用方法 已经融合在LORA_work()等函数里面了，用用挺好的
+如果不使用会怎么样 和原版有什么区别 还能使用别的吗
+我目前完全无法理解数据丢失的情况
+也许还能用环形缓冲区 软件队列（但那也得学着用了）
+*/
+//不过到现在 用LORA如何发送如何接受我还是没有特别明确的感受
+//和例程对比，例程有奇怪的起始标志检测if(temp_data == 0x66)，这到底在干什么 为什么有这些判断？在第二份代码里面有没有类似内容？
+//——好像是在直接解析协议
+//两份代码中的 LoRa 通信实际上都可以被看作是透明传输的具体实现。这种方式下，数据从一个 LoRa 模块发送到另一个 LoRa 模块，而不需要对地址和信道进行特殊处理
+//
+//
+//
+
 
 uint8 uart_get_data[64];                                                        // 串口接收数据缓冲区
 uint8 fifo_get_data[64];                                                        // fifo 输出读出缓冲区
@@ -137,10 +165,10 @@ void LORA_Send_TXT()
     uart_write_byte(UART_INDEX, '\n');                                          // 输出换行
     uart_write_byte(UART_INDEX, '\n');                                          // 输出换行
     uart_write_string(UART_INDEX, "////////////////////////////");                                // 输出测试信息
-    uart_write_string(UART_INDEX, "Hello!这里是TC264(接收端)");                                // 输出测试信息
+    uart_write_string(UART_INDEX, "Hello!这里是CYT4BB7(接收端)");                                // 输出测试信息
     uart_write_byte(UART_INDEX, '\n');                                          // 输出换行
     uart_write_string(UART_INDEX, "////////////////////////////");                                // 输出测试信息
-    uart_write_string(UART_INDEX, "2023.6.10/16:25 (省三一队) 詹海翔-李仁恒-封启航 向你问好");                                // 输出测试信息
+    uart_write_string(UART_INDEX, "2024.5.15 jzb向你问好");                                // 输出测试信息
     uart_write_byte(UART_INDEX, '\n');                                          // 输出换行
     uart_write_string(UART_INDEX, "////////////////////////////");                                // 输出测试信息
     uart_write_string(UART_INDEX, "一切顺利的话,我们的道路将不再交汇");                                // 输出测试信息
@@ -171,7 +199,7 @@ void LORA_work()//LORA工作函数
     {
         fifo_read_buffer(&uart_data_fifo, fifo_get_data, &fifo_data_count, FIFO_READ_AND_CLEAN);    // 将 fifo 中数据读出并清空 fifo 挂载的缓冲
 
-        uart_write_string(UART_INDEX, "\r\nTC264(接收端) get data:");                // 输出测试信息
+        uart_write_string(UART_INDEX, "\r\nCYT4BB7(接收端) get data:");                // 输出测试信息
         uart_write_buffer(UART_INDEX, fifo_get_data, fifo_data_count);      // 将读取到的数据发送出去
 
         if(fifo_data_count==1)
@@ -197,6 +225,8 @@ void uart_rx_interrupt_handler (void)//LORA串口中断
 }
 
 //===================================================电机===================================================
+//HIP4082 是由 Intersil（现为 Renesas Electronics 旗下公司）生产的一种高压、高速 MOSFET 驱动器。它的主要功能是驱动N沟道MOSFET，用于全桥（H-bridge）或半桥（half-bridge）电路中。这种芯片常用于DC-DC转换器、马达控制、电源逆变器等需要高效、高速切换的应用
+
 
 int16 Target_speed=0;
 int16 Current_speed=0;
@@ -550,10 +580,10 @@ void YX_CTRL()
    //        BLDC_Cloop_ctrl(0);
            HIP4082_Motor_ctrl(0);
        }
-}
+}+-
 
 //===================================================TOF===================================================
-
+//TOF 是 "Time of Flight" 的缩写，意思是“飞行时间”
 
 
 

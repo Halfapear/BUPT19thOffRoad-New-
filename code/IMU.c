@@ -4,7 +4,8 @@
  *  Created on: 2023年3月18日
  *      Author: ORRN
  */
-
+//5.14 在IMU中我们可以先试着单独运行起来，然后和GPS结合（要结合吗，我还不太清楚）
+//IMU的单纯用库测量简直不用看，就三个函数
 
 #include "zf_common_headfile.h"
 

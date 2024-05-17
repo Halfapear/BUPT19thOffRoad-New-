@@ -4,8 +4,13 @@
  *  Created on: 2023年7月19日
  *      Author: ORRN
  */
-
-
+//5.14  核心功能是通过按键触发采集GPS数据，并实时显示和存储这些数据。GPS_GL_GET函数负责从gnss结构体中读取GPS数据并存储，同时在屏幕上显示这些数据。而GL_CRC函数则处理按键触发的各种操作，包括数据采集、实时显示、数据打印和屏幕清除等
+//https://chat.openai.com/share/5f080321-ec01-4a9c-8aeb-02d6788a50c0 
+//根据下面代码或上面gpt解释会用这些按键（连接着GPS的）
+//解析一律写在最上头 随行的我会另起一行
+   
+   
+   
 #include "zf_common_headfile.h"
 
 
@@ -18,8 +23,8 @@ double    GPS_GET_LOT[40];
 void GPS_GL_GET()
 {
 
-            GPS_GET_LAT[i]=gps_tau1201.latitude;
-            GPS_GET_LOT[i]=gps_tau1201.longitude;
+            GPS_GET_LAT[i]=gnss.latitude;
+            GPS_GET_LOT[i]=gnss.longitude;
 
 
 
@@ -66,8 +71,8 @@ void GL_CRC()
                       }
 
                   ips_show_string(0, 16*3,"T:");//浮点实时点位
-                  ips_show_float(50, 16*4,  gps_tau1201.latitude, 3, 6);
-                  ips_show_float(50, 16*5,  gps_tau1201.longitude, 3, 6);
+                  ips_show_float(50, 16*4,  gnss.latitude, 3, 6);
+                  ips_show_float(50, 16*5,  gnss.longitude, 3, 6);
 
                 if(key3_flag)
                   {
