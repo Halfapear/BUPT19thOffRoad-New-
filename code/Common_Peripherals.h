@@ -8,6 +8,7 @@
 #ifndef CODE_COMMON_PERIPHERALS_H_
 #define CODE_COMMON_PERIPHERALS_H_
 
+/*
 //宏定义
 #define BUZZER_PIN  (P33_10)
 
@@ -66,6 +67,7 @@
 #define X6F_CH4                     (P02_6)      //拨动挡位通道
 #define X6F_CH5                     (P21_5)      //旋钮通道1
 #define X6F_CH6                     (P21_3)      //旋钮通道2
+*/
 
 //IPS114宏定义
 #define ips_show_string                  ips114_show_string

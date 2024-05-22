@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.general.xcl" --backend -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.driver.xcl" 
+& "D:\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.general.xcl" --backend -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.driver.xcl" 
+& "D:\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_0.Debug.driver.xcl" 
 }
