@@ -291,7 +291,7 @@ void Motor_text()//电机测试
              }
 
 
-          ips_show_int(100,  16*3,MOTOR, 5);
+          ips200_show_int(100,  16*3,MOTOR, 5);
 //          HIP4082_Motor_ctrl(MOTOR);
           BLDC_ctrl(MOTOR);
 //          BLDC_Cloop_ctrl(MOTOR);
@@ -433,7 +433,7 @@ void Steer_text()//舵机测试
             angle-=1;
 //             angle=85;//右打死
          }
-      ips_show_int(100,  16*3,angle, 5);
+      ips200_show_int(100,  16*3,angle, 5);
       Steer_set(angle);
 
 

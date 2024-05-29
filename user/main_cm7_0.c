@@ -24,16 +24,18 @@ int main(void)
 #endif
 
 //     Ctrl_GO_FLAG=0; //清除标志位
-     Buzzer_check(0,2000);                                  // 自检完成
+     Buzzer_check(0,100);                                  // 自检完成
     // 初始化代码
 
+//这个被大坑了一波     
 //    cpu_wait_event_ready();         // 等待所有核心初始化完毕
 
 
 
     while (1)
     {
-
+         Menu();
+         /*
         #if Main_FLAG
                          if(x6f_out[0]<135) {Ctrl_GO_FLAG=1;}//控制发车标志位
 
@@ -48,7 +50,7 @@ int main(void)
                              }
                            }
 
-                         if(STOP_MENU_FALG){Menu();}//菜单
+                         if(STOP_MENU_FLAG){Menu();}//菜单
         #endif
 
                          GL_CRC();
@@ -61,7 +63,7 @@ int main(void)
                               Control_Program();//控制程序
                          }
 
-
+        */
 
     }
 }

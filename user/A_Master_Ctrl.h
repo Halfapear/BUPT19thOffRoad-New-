@@ -11,7 +11,7 @@
 #define ZHX_MATH_FLAG      (0)
 #define GL_MATH_FLAG       (1)
 
-#define Main_FLAG          (0)          //主程序开启标志位
+#define Main_FLAG          (1)          //主程序开启标志位
 
 #define Float_FLAG         (0)          //单精度模式开启标志位(GPS数学库条件编译为单精度)
 #define Double_FLAG        (0)          //双精度模式开启标志位(GPS数学库条件编译为双精度)

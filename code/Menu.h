@@ -11,7 +11,7 @@
 //全局变量定义
 extern int  SPEED;           //SPEED参数
 extern int GO_FLAG;
-extern int STOP_MENU_FALG;
+extern int STOP_MENU_FLAG;
 
 //宏定义
 #define FLAG_PAGE_INDEX   (9)                //FLAG          存储页码
