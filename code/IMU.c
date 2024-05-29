@@ -116,7 +116,7 @@ void IMU_init()//IMU初始化
 
     imu660ra_init();   //IMU660惯导初始化
 //    imu963ra_init();   //IMU660惯导初始化
-    pit_ms_init(CCU60_CH0, 5);                              // (IMU)初始化 CCU60_CH0 为周期中断 5ms 周期,IMU660频率为200HZ
+    pit_ms_init(PIT_CH2, 5);                              // (IMU)初始化 CCU60_CH0 为周期中断 5ms 周期,IMU660频率为200HZ
     IMU_gyro_Offset_Init();// 陀螺仪零漂初始化
 
 }
@@ -125,11 +125,11 @@ void IMU_SHOW()
 {
 //    static int ZT_FLAG=0;
 
-//    ips_show_string(0, 16*0, "Pitch:");    ips_show_float(60,16*0,Daty_Y,3,6);
-//    ips_show_string(0, 16*1, "Roll:");     ips_show_float(60,16*1,Daty_X,3,6);
-    ips_show_string(0, 16*0, "Yaw:");      ips_show_float(60,16*0,Daty_Z,3,6);
-    ips_show_string(0, 16*1, "T_M:");      ips_show_float(60,16*1,T_M,3,6);
-    ips_show_string(0, 16*2, "T_N:");      ips_show_float(60,16*2,T_N,3,6);
+//    ips200_show_string(0, 16*0, "Pitch:");    ips200_show_float(60,16*0,Daty_Y,3,6);
+//    ips200_show_string(0, 16*1, "Roll:");     ips200_show_float(60,16*1,Daty_X,3,6);
+    ips200_show_string(0, 16*0, "Yaw:");      ips200_show_float(60,16*0,Daty_Z,3,6);
+    ips200_show_string(0, 16*1, "T_M:");      ips200_show_float(60,16*1,T_M,3,6);
+    ips200_show_string(0, 16*2, "T_N:");      ips200_show_float(60,16*2,T_N,3,6);
 
 }
 
@@ -145,7 +145,7 @@ void GPS_direction_average()//计算GPS偏航角平均值
     {
         if(direction_count <= 20)
         {
-            gps_direction_sum += gps_tau1201.direction;
+            gps_direction_sum += gnss.direction;
             direction_count++;
         }
         gps_direction_average=(double)(gps_direction_sum/direction_count);
@@ -153,13 +153,13 @@ void GPS_direction_average()//计算GPS偏航角平均值
 }
 void GPS_IMU_Complementary_filter()//将GPS反馈的direction(航向角)和IMU反馈的YAW(航向角)进行互补滤波
 {
-    if(gps_tau1201.direction>180)    //获取到GPS方位角信息
+    if(gnss.direction>180)    //获取到GPS方位角信息
     {
-        GPS_Daty_Z=gps_tau1201.direction-360;
+        GPS_Daty_Z=gnss.direction-360;
     }
     else
     {
-        GPS_Daty_Z=gps_tau1201.direction;
+        GPS_Daty_Z=gnss.direction;
     }
 
 

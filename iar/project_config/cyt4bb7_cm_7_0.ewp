@@ -1902,6 +1902,9 @@
             <name>$PROJ_DIR$\..\..\user\A_Master_Ctrl.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\user\cm7_0_isr.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\user\cpu0_main.h</name>
         </file>
         <file>
@@ -2008,12 +2011,6 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\libraries\zf_device\zf_device_gnss.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\libraries\zf_device\zf_device_gps_tau1201.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\libraries\zf_device\zf_device_gps_tau1201.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\libraries\zf_device\zf_device_icm20602.c</name>

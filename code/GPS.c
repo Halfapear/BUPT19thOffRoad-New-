@@ -1,18 +1,3 @@
-/*
- * GPS.c
- *
- *  Created on: 2023年3月18日
- *      Author: ORRN
- */
-//5.14 gps这边的移植有点麻烦，但顺便看懂吧
-//一个zf_device_gps_tau1201.c 一个zf_device_gnss.c 太长我也懒得看区别啊——GPS (TAU1201) 和 GNSS (CYT4BB) 在初始化和数据处理的代码框架上非常相似，主要区别在于具体的实现细节，如缓冲区大小、UART通信的细节配置等
-//5.15 IMU没什么好看的，赶紧把GPS看懂
-//逻辑只比IMU复杂一点 先把GPS的数据先扔到缓冲区 flash_union_buffer 再通过 flash_write_page_from_buffer 函数写入到Flash的指定扇区和页码，
-//然后再扔会缓冲区，然后存储到 Target_point 数组
-//flash_union_buffer[Number]奇偶一个latitude一个longtitude
-//嗯 gps也就这些东西，真正想成为通信大师还不是时候，还得深入底层
-//
-
 #include "zf_common_headfile.h"
 #include "zf_device_gnss.h" // 替换头文件
 
@@ -20,6 +5,10 @@ extern gnss_info_struct gnss; // 使用gnss变量
 
 int Number = 0; // 介质变量
 
+#define FLASH_SECTION_INDEX 0
+#define GPS_PAGE_INDEX 10
+#define DATA_LENGTH 128
+#define RP_MAX 150
 
 #if Int_Record_FLAG
 
@@ -35,16 +24,16 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
     lot = gnss.longitude * 1000000; // 经度*100万(GPS回传数据只有后6位有效)
 
     flash_union_buffer[Number].uint32_type = lat; // 将纬度数据强制转换后储存在FLASH 操作的数据缓冲区 (数组标号为偶数时是纬度数据)
-    ips_show_string(0, 16 * 0, "R:");
-    ips_show_uint(50, 16 * 0, flash_union_buffer[Number].uint32_type, 10);
-    ips_show_uint(180, 16 * 0, Number, 3);
+    ips200_show_string(0, 16 * 0, "R:");
+    ips200_show_uint(50, 16 * 0, flash_union_buffer[Number].uint32_type, 10);
+    ips200_show_uint(180, 16 * 0, Number, 3);
     printf("\r\n缓冲区纬度数据:%d", (int)flash_union_buffer[Number].uint32_type);
 
     Number++; // 数组下标+1,切换储存经度
 
     flash_union_buffer[Number].uint32_type = lot; // 将经度数据强制转换后储存在FLASH 操作的数据缓冲区 (数组标号为奇数时是经度数据)
-    ips_show_uint(50, 16 * 1, flash_union_buffer[Number].uint32_type, 10);
-    ips_show_uint(180, 16 * 1, Number, 3);
+    ips200_show_uint(50, 16 * 1, flash_union_buffer[Number].uint32_type, 10);
+    ips200_show_uint(180, 16 * 1, Number, 3);
     printf("\r\n缓冲区经度数据:%d", (int)flash_union_buffer[Number].uint32_type);
 
     Number++; // 数组下标+1,切换储存纬度
@@ -53,7 +42,7 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
         flash_erase_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 擦除Flash数据
     }
 
-    flash_write_page_from_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 将缓冲区的数据写入到指定Flash 扇区的页码
+    flash_write_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, Number); // 将缓冲区的数据写入到指定Flash 扇区的页码
 
     NUM++;
 
@@ -61,18 +50,18 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
         NUM = 1;
     }
 
-    ips_show_uint(200, 0, NUM, 3); // 显示已采集的点数
+    ips200_show_uint(200, 0, NUM, 3); // 显示已采集的点数
 }
 
 void GPS_Flash_use() { // 将GPS_FLASH的数据重新读回缓冲区并赋值给数组
     flash_buffer_clear(); // 清空缓冲区
 
     if (flash_check(FLASH_SECTION_INDEX, GPS_PAGE_INDEX)) { // 判断Flash是否有数据 : 有数据返回1，无数据返回0
-        flash_read_page_to_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 将数据从FLASH指定扇区页码放入到缓冲区
+        flash_read_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, DATA_LENGTH); // 将数据从FLASH指定扇区页码放入到缓冲区
 
         int TG = 0; // 用以切换二维数组下标
 
-        for (int data = 0; data < ARRAY_Element_Calculation(); data++) {
+        for (int data = 0; data < DATA_LENGTH; data++) {
             Target_point[0][TG] = flash_union_buffer[data].uint32_type; // 纬度
             data++;
             Target_point[1][TG] = flash_union_buffer[data].uint32_type; // 经度
@@ -83,7 +72,7 @@ void GPS_Flash_use() { // 将GPS_FLASH的数据重新读回缓冲区并赋值给数组
 }
 #endif
 
-//GPS_Work_array 函数的主要作用是将目标数组 (Target_point) 中的数据复制到工作目标数组 (Work_target_array) 中，以便在后续的计算中使用。这一步骤可以理解为将原始数据提取并进行隔离，从而避免对Flash的直接操作，提高数据访问的效率和安全性
+// GPS_Work_array 函数的主要作用是将目标数组 (Target_point) 中的数据复制到工作目标数组 (Work_target_array) 中，以便在后续的计算中使用。这一步骤可以理解为将原始数据提取并进行隔离，从而避免对Flash的直接操作，提高数据访问的效率和安全性
 
 void GPS_Work_array() { // 用于隔离FLASH,实际参加计算的数组
     for (int NUM = 0; NUM < (ARRAY_Element_Calculation() / 2); NUM++) {
@@ -104,16 +93,15 @@ void GPS_param_t_init() { // GPS参数初始化
     }
 }
 
-//总会有一个show
+// 总会有一个show
 void GPS_SHOW() { // GPS信息显示
     // 每个字符宽占8个格,长占16个格子
-    ips_show_string(0, 16 * 0, "state:"); ips_show_uint(90, 16 * 0, gnss.state, 5);
-    ips_show_string(0, 16 * 1, "direction:"); ips_show_float(90, 16 * 1, gnss.direction, 4, 6);
-    ips_show_string(0, 16 * 2, "latitude:"); ips_show_float(90, 16 * 2, gnss.latitude, 4, 6);
-    ips_show_string(0, 16 * 3, "longitude:"); ips_show_float(90, 16 * 3, gnss.longitude, 4, 6);
-    ips_show_string(0, 16 * 4, "yaw:"); ips_show_float(90, 16 * 4, Daty_Z, 4, 6);
+    ips200_show_string(0, 16 * 0, "state:"); ips200_show_uint(90, 16 * 0, gnss.state, 5);
+    ips200_show_string(0, 16 * 1, "direction:"); ips200_show_float(90, 16 * 1, gnss.direction, 4, 6);
+    ips200_show_string(0, 16 * 2, "latitude:"); ips200_show_float(90, 16 * 2, gnss.latitude, 4, 6);
+    ips200_show_string(0, 16 * 3, "longitude:"); ips200_show_float(90, 16 * 3, gnss.longitude, 4, 6);
+    ips200_show_string(0, 16 * 4, "yaw:"); ips200_show_float(90, 16 * 4, Daty_Z, 4, 6);
 }
-
 
 #if Float_Record_FLAG
 
@@ -128,17 +116,17 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
     lat = gnss.latitude; // 获取纬度
     lot = gnss.longitude; // 获取经度
 
-    flash_union_buffer[Number].float_type = lat; // 将维度数据强制转换后储存在FLASH 操作的数据缓冲区 (数组标号为偶数时是纬度数据)
-    ips_show_string(0, 16 * 0, "R:");
-    ips_show_float(50, 16 * 0, flash_union_buffer[Number].float_type, 3, 6);
-    ips_show_uint(180, 16 * 0, Number, 3);
+    flash_union_buffer[Number].float_type = lat; // 将纬度数据强制转换后储存在FLASH 操作的数据缓冲区 (数组标号为偶数时是纬度数据)
+    ips200_show_string(0, 16 * 0, "R:");
+    ips200_show_float(50, 16 * 0, flash_union_buffer[Number].float_type, 3, 6);
+    ips200_show_uint(180, 16 * 0, Number, 3);
     printf("\r\n缓冲区纬度数据:%f", flash_union_buffer[Number].float_type);
 
     Number++; // 数组下标+1,切换储存经度
 
     flash_union_buffer[Number].float_type = lot; // 将经度数据强制转换后储存在FLASH 操作的数据缓冲区 (数组标号为奇数时是经度数据)
-    ips_show_float(50, 16 * 1, flash_union_buffer[Number].float_type, 3, 6);
-    ips_show_uint(180, 16 * 1, Number, 3);
+    ips200_show_float(50, 16 * 1, flash_union_buffer[Number].float_type, 3, 6);
+    ips200_show_uint(180, 16 * 1, Number, 3);
     printf("\r\n缓冲区经度数据:%f", flash_union_buffer[Number].float_type);
 
     Number++; // 数组下标+1,切换储存纬度
@@ -147,7 +135,7 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
         flash_erase_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 擦除Flash数据
     }
 
-    flash_write_page_from_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 将缓冲区的数据写入到指定Flash 扇区的页码
+    flash_write_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, Number); // 将缓冲区的数据写入到指定Flash 扇区的页码
 
     NUM++;
 
@@ -155,18 +143,18 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
         NUM = 1;
     }
 
-    ips_show_uint(200, 0, NUM, 3); // 显示已采集的点数
+    ips200_show_uint(200, 0, NUM, 3); // 显示已采集的点数
 }
 
 void GPS_Flash_use() { // 将GPS_FLASH的数据重新读回缓冲区并赋值给数组
     flash_buffer_clear(); // 清空缓冲区
 
     if (flash_check(FLASH_SECTION_INDEX, GPS_PAGE_INDEX)) { // 判断Flash是否有数据 : 有数据返回1，无数据返回0
-        flash_read_page_to_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 将数据从FLASH指定扇区页码放入到缓冲区
+        flash_read_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, DATA_LENGTH); // 将数据从FLASH指定扇区页码放入到缓冲区
 
         int TG = 0; // 用以切换二维数组下标
 
-        for (int data = 0; data < RP_MAX; data++) {
+        for (int data = 0; data < DATA_LENGTH; data++) {
             Target_point[0][TG] = flash_union_buffer[data].float_type; // 纬度数据
             data++;
             Target_point[1][TG] = flash_union_buffer[data].float_type; // 经度数据
@@ -202,33 +190,33 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
     I_lot = (uint32)(lot); // 获取经度整数部分
     F_lot = lot - I_lot; // 获取经度小数部分
 
-    ips_show_string(0, 16 * 0, "R:");
+    ips200_show_string(0, 16 * 0, "R:");
 
     flash_union_buffer[Number].uint32_type = I_lat; // 将整数纬度数据存入缓冲区
-    ips_show_uint(50, 16 * 0, flash_union_buffer[Number].uint32_type, 5);
-    ips_show_uint(150, 16 * 0, Number, 3);
+    ips200_show_uint(50, 16 * 0, flash_union_buffer[Number].uint32_type, 5);
+    ips200_show_uint(150, 16 * 0, Number, 3);
 
     Number++;
 
     flash_union_buffer[Number].float_type = F_lat; // 将浮点纬度数据存入缓冲区
-    ips_show_float(50, 16 * 1, flash_union_buffer[Number].float_type, 3, 6);
-    ips_show_uint(150, 16 * 1, Number, 3);
+    ips200_show_float(50, 16 * 1, flash_union_buffer[Number].float_type, 3, 6);
+    ips200_show_uint(150, 16 * 1, Number, 3);
 
-    ips_show_float(50, 16 * 2, gnss.latitude, 3, 6); // 显示完整纬度
+    ips200_show_float(50, 16 * 2, gnss.latitude, 3, 6); // 显示完整纬度
 
     Number++; // 数组下标+1,切换存储经度
 
     flash_union_buffer[Number].uint32_type = I_lot; // 将整数经度数据存入缓冲区
-    ips_show_uint(50, 16 * 4, flash_union_buffer[Number].uint32_type, 5);
-    ips_show_uint(150, 16 * 4, Number, 3);
+    ips200_show_uint(50, 16 * 4, flash_union_buffer[Number].uint32_type, 5);
+    ips200_show_uint(150, 16 * 4, Number, 3);
 
     Number++;
 
     flash_union_buffer[Number].float_type = F_lot; // 将浮点经度数据存入缓冲区
-    ips_show_float(50, 16 * 5, flash_union_buffer[Number].float_type, 3, 6);
-    ips_show_uint(150, 16 * 5, Number, 3);
+    ips200_show_float(50, 16 * 5, flash_union_buffer[Number].float_type, 3, 6);
+    ips200_show_uint(150, 16 * 5, Number, 3);
 
-    ips_show_float(50, 16 * 6, gnss.longitude, 3, 6); // 显示完整经度
+    ips200_show_float(50, 16 * 6, gnss.longitude, 3, 6); // 显示完整经度
 
     Number++; // 数组下标+1,切换存储纬度
 
@@ -236,7 +224,7 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
         flash_erase_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 擦除Flash数据
     }
 
-    flash_write_page_from_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 将缓冲区数据写入Flash
+    flash_write_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, Number); // 将缓冲区数据写入Flash
 
     NUM++;
 
@@ -244,18 +232,18 @@ void GPS_Record_flash() { // 将采集的点位记录到缓冲区并储存至GPS_FLASH
         NUM = 1;
     }
 
-    ips_show_uint(210, 0, NUM, 3); // 显示已采集的点数
+    ips200_show_uint(210, 0, NUM, 3); // 显示已采集的点数
 }
 
 void GPS_Flash_use() { // 将GPS_FLASH的数据重新读回缓冲区并赋值给数组
     flash_buffer_clear(); // 清空缓冲区
 
     if (flash_check(FLASH_SECTION_INDEX, GPS_PAGE_INDEX)) { // 判断Flash是否有数据 : 有数据返回1，无数据返回0
-        flash_read_page_to_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // 将数据从FLASH指定扇区页码放入到缓冲区
+        flash_read_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, DATA_LENGTH); // 将数据从FLASH指定扇区页码放入到缓冲区
 
         int TG = 0; // 用以切换二维数组下标
 
-        for (int data = 0; data < 200; data++) {
+        for (int data = 0; data < DATA_LENGTH; data++) {
             Target_point[0][TG] = flash_union_buffer[data].uint32_type + flash_union_buffer[data + 1].float_type; // 纬度
             data = data + 2;
             Target_point[1][TG] = flash_union_buffer[data].uint32_type + flash_union_buffer[data + 1].float_type; // 经度

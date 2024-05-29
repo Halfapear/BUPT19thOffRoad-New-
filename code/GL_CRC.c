@@ -28,14 +28,14 @@ void GPS_GL_GET()
 
 
 
-            ips_show_string(0, 16*0,"R:");
-            ips_show_float(50, 16*0,  GPS_GET_LAT[i], 3, 6);
-            ips_show_uint  (180, 16*0, i, 3);
+            ips200_show_string(0, 16*0,"R:");
+            ips200_show_float(50, 16*0,  GPS_GET_LAT[i], 3, 6);
+            ips200_show_uint  (180, 16*0, i, 3);
             printf("\r\n缓冲区纬度数据:%f", GPS_GET_LAT[i]);
 
 
-            ips_show_float(50, 16*1,  GPS_GET_LOT[i], 3, 6);
-            ips_show_uint (180, 16*1, i, 3);
+            ips200_show_float(50, 16*1,  GPS_GET_LOT[i], 3, 6);
+            ips200_show_uint (180, 16*1, i, 3);
             printf("\r\n缓冲区经度数据:%f",GPS_GET_LOT[i]);
 
             i++;
@@ -48,7 +48,7 @@ void GPS_GL_GET()
                   {
                   GL_NUM=1;
                   }
-              ips_show_uint(200, 0, GL_NUM, 3);                                              //显示已采集的点数
+              ips200_show_uint(200, 0, GL_NUM, 3);                                              //显示已采集的点数
 
 
 
@@ -70,9 +70,9 @@ void GL_CRC()
                         GPS_GL_GET();
                       }
 
-                  ips_show_string(0, 16*3,"T:");//浮点实时点位
-                  ips_show_float(50, 16*4,  gnss.latitude, 3, 6);
-                  ips_show_float(50, 16*5,  gnss.longitude, 3, 6);
+                  ips200_show_string(0, 16*3,"T:");//浮点实时点位
+                  ips200_show_float(50, 16*4,  gnss.latitude, 3, 6);
+                  ips200_show_float(50, 16*5,  gnss.longitude, 3, 6);
 
                 if(key3_flag)
                   {

@@ -104,7 +104,7 @@ void Follow_Track() // 核心循迹程序
         SPEED_Value = 100;
     } else if (next_point == 8) {
         gpio_set_level(BUZZER_PIN, 1);
-        Task_RZT(67, 70, 0, 'N'); // 打角 速度
+//        Task_RZT(67, 70, 0, 'N'); // 打角 速度
         SPEED_Value = 130;
     } else if (next_point == 9) {
         SPEED_Value = 60;

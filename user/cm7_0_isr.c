@@ -1,10 +1,10 @@
 /*********************************************************************************************************************
-* TC264 Opensourec Library 即（TC264 开源库）是一个基于官方 SDK 接口的第三方开源库
+* CYT4BB Opensource Library 即（ CYT4BB 开源库）是一个基于官方 SDK 接口的第三方开源库
 * Copyright (c) 2022 SEEKFREE 逐飞科技
 *
-* 本文件是 TC264 开源库的一部分
+* 本文件是 CYT4BB 开源库的一部分
 *
-* TC264 开源库 是免费软件
+* CYT4BB 开源库 是免费软件
 * 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
 * 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
 *
@@ -21,306 +21,201 @@
 * 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
 * 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
 *
-* 文件名称          isr
+* 文件名称          isr_arm_7_0
 * 公司名称          成都逐飞科技有限公司
 * 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
-* 开发环境          ADS v1.8.0
-* 适用平台          TC264D
+* 开发环境          IAR 9.40.1
+* 适用平台          CYT4BB
 * 店铺链接          https://seekfree.taobao.com/
 *
 * 修改记录
 * 日期              作者                备注
-* 2022-09-15       pudding            first version
+* 2024-1-9          pudding             first version
 ********************************************************************************************************************/
 
-#include "isr_config.h"
 #include "zf_common_headfile.h"
 
-
-
-
 // **************************** PIT中断函数 ****************************
-IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
+void pit0_ch0_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    pit_clear_flag(CCU60_CH0);
-//    tsl1401_collect_pit_handler();                  // 线阵CCD采集
+    pit_isr_flag_clear(PIT_CH0);
 
-//      imu963ra_get_gyro();                                                        // 获取 IMU660RA 的角速度测量数值
-
-    if( gyro_Offset_flag==1&&GL_IMU_Flag==1)
+    if(gyro_Offset_flag == 1 && GL_IMU_Flag == 1)
     {
         imu660ra_get_gyro();                                                        // 获取 IMU660RA 的角速度测量数值
         IMU_YAW_integral();           //积分出角度值
-
     }
 
-
 #if IMU_Restrain_FLAG
-  Control_FLAG=0;//隔绝GPS对舵机的影响
-  Steer_set(SERVO_MOTOR_MID+PidLocCtrl(&PID_IMU,0-Daty_Z));//舵机
-//  printf("\r\n Daty_Z--%f",Daty_Z);
+    Control_FLAG = 0; //隔绝GPS对舵机的影响
+    Steer_set(SERVO_MOTOR_MID + PidLocCtrl(&PID_IMU, 0 - Daty_Z)); //舵机
 #endif
-
 }
 
-
-IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
+void pit0_ch1_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    pit_clear_flag(CCU60_CH1);
+    pit_isr_flag_clear(PIT_CH1);
 
     LORA_work();                                    //LORA
     x6f_scan();                                     //Control扫描接收机各个通道
-
-
-
 }
 
-IFX_INTERRUPT(cc61_pit_ch0_isr, 0, CCU6_1_CH0_ISR_PRIORITY)
+void pit0_ch2_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    pit_clear_flag(CCU61_CH0);
+    pit_isr_flag_clear(PIT_CH2);
 
-    if(gps_tau1201_flag)
-           {
-               gps_tau1201_flag = 0;
-               gps_data_parse();           //开始解析数据
-           }
-
+    if(gnss_flag)
+    {
+        gnss_flag = 0;
+//        gps_data_parse();           //开始解析数据
+    }
 }
 
-IFX_INTERRUPT(cc61_pit_ch1_isr, 0, CCU6_1_CH1_ISR_PRIORITY)
+// 我怎么记得没有ch3。。
+/*
+void pit0_ch3_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    pit_clear_flag(CCU61_CH1);
+    pit_isr_flag_clear(PIT_CH3);
 
     key_scan();
 
     //转入有控模式后Control_FLAG==0，隔绝
-    if(Control_FLAG==1)
+    if(Control_FLAG == 1)
     {
-        if(next_point<1)
+        if(next_point < 1)
         {
-         Steer_set(SERVO_MOTOR_MID+PidLocCtrl(&PID_IMU,0-Error));//舵机
+            Steer_set(SERVO_MOTOR_MID + PidLocCtrl(&PID_IMU, 0 - Error)); //舵机
         }
-        else if((next_point>=1&&next_point<=7)||(next_point>7&&next_point<=10)||next_point>10)
+        else if((next_point >= 1 && next_point <= 7) || (next_point > 7 && next_point <= 10) || next_point > 10)
         {
-        Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID+Error));//SD9
-    //  Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID-Error));//SD5
+            Steer_set(PidLocCtrl(&PID_GPS, SERVO_MOTOR_MID + Error)); //SD9
         }
-//            if(next_point<=1||next_point==4)
-//            {
-//             Steer_set(SERVO_MOTOR_MID+PidLocCtrl(&PID_IMU,0-Error));//舵机
-//            }
-//            else if((next_point>1&&next_point<4)||next_point>4)
-//            {
-//            Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID+Error));//SD9
-//        //  Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID-Error));//SD5
-//            }
-
     }
-    HALL_gather();//霍尔编码器定时读取
+    HALL_gather(); //霍尔编码器定时读取
     BLDC_Cloop_ctrl(SPEED_Value);
-//     HIP4082_Motor_ctrl(SPEED_Value);
-
 }
+*/
 // **************************** PIT中断函数 ****************************
 
-
 // **************************** 外部中断函数 ****************************
-IFX_INTERRUPT(exti_ch0_ch4_isr, 0, EXTI_CH0_CH4_INT_PRIO)
+void gpio_0_exti_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    if(exti_flag_get(ERU_CH0_REQ0_P15_4))           // 通道0中断
+    if(exti_flag_get(P01_0))
     {
-        exti_flag_clear(ERU_CH0_REQ0_P15_4);
+        exti_flag_clear(P01_0);
         wireless_module_uart_handler();                 // 无线模块统一回调函数
-
-
-
     }
-
-    if(exti_flag_get(ERU_CH4_REQ13_P15_5))          // 通道4中断
+    if(exti_flag_get(P01_1))
     {
-        exti_flag_clear(ERU_CH4_REQ13_P15_5);
-
-
-
-
+        exti_flag_clear(P01_1);
     }
 }
 
-IFX_INTERRUPT(exti_ch1_ch5_isr, 0, EXTI_CH1_CH5_INT_PRIO)
+void gpio_1_exti_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    if(exti_flag_get(ERU_CH1_REQ10_P14_3))          // 通道1中断
+    if(exti_flag_get(P02_0))
     {
-        exti_flag_clear(ERU_CH1_REQ10_P14_3);
-
-
-
+        exti_flag_clear(P02_0);
     }
-
-    if(exti_flag_get(ERU_CH5_REQ1_P15_8))           // 通道5中断
+    if(exti_flag_get(P02_4))
     {
-        exti_flag_clear(ERU_CH5_REQ1_P15_8);
-
-
-
-
+        exti_flag_clear(P02_4);
     }
 }
 
-// 由于摄像头pclk引脚默认占用了 2通道，用于触发DMA，因此这里不再定义中断函数
-// IFX_INTERRUPT(exti_ch2_ch6_isr, 0, EXTI_CH2_CH6_INT_PRIO)
-// {
-//  interrupt_global_enable(0);                     // 开启中断嵌套
-//  if(exti_flag_get(ERU_CH2_REQ7_P00_4))           // 通道2中断
-//  {
-//      exti_flag_clear(ERU_CH2_REQ7_P00_4);
-//  }
-//  if(exti_flag_get(ERU_CH6_REQ9_P20_0))           // 通道6中断
-//  {
-//      exti_flag_clear(ERU_CH6_REQ9_P20_0);
-//  }
-// }
-
-IFX_INTERRUPT(exti_ch3_ch7_isr, 0, EXTI_CH3_CH7_INT_PRIO)
+void gpio_2_exti_isr()
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    if(exti_flag_get(ERU_CH3_REQ6_P02_0))           // 通道3中断
+    if(exti_flag_get(P03_0))
     {
-        exti_flag_clear(ERU_CH3_REQ6_P02_0);
-        camera_vsync_handler();                     // 摄像头触发采集统一回调函数
+        exti_flag_clear(P03_0);
+        camera_vsync_handler(); // 摄像头触发采集统一回调函数
     }
-    if(exti_flag_get(ERU_CH7_REQ16_P15_1))          // 通道7中断
+    if(exti_flag_get(P03_1))
     {
-        exti_flag_clear(ERU_CH7_REQ16_P15_1);
+        exti_flag_clear(P03_1);
+    }
+}
+
+void gpio_3_exti_isr()
+{
+    if(exti_flag_get(P04_0))
+    {
+        exti_flag_clear(P04_0);
+    }
+    if(exti_flag_get(P04_1))
+    {
+        exti_flag_clear(P04_1);
     }
 }
 // **************************** 外部中断函数 ****************************
-
-
-// **************************** DMA中断函数 ****************************
-IFX_INTERRUPT(dma_ch5_isr, 0, DMA_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    camera_dma_handler();                           // 摄像头采集完成统一回调函数
-}
-// **************************** DMA中断函数 ****************************
-
 
 // **************************** 串口中断函数 ****************************
-IFX_INTERRUPT(uart0_tx_isr, 0, UART0_TX_INT_PRIO)
+void uart0_isr(void)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrTransmit(&uart0_handle);
+    if(Cy_SCB_GetRxInterruptMask(get_scb_module(UART_0)) & CY_SCB_UART_RX_NOT_EMPTY) // 串口0接收中断
+    {
+        Cy_SCB_ClearRxInterrupt(get_scb_module(UART_0), CY_SCB_UART_RX_NOT_EMPTY); // 清除接收中断标志位
 
+#if DEBUG_UART_USE_INTERRUPT // 如果开启 debug 串口中断
+        debug_interrupr_handler(); // 调用 debug 串口接收处理函数 数据会被 debug 环形缓冲区读取
+#endif // 如果修改了 DEBUG_UART_INDEX 那这段代码需要放到对应的串口中断去
 
-}
-IFX_INTERRUPT(uart0_rx_isr, 0, UART0_RX_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrReceive(&uart0_handle);
-
-#if DEBUG_UART_USE_INTERRUPT                        // 如果开启 debug 串口中断
-        debug_interrupr_handler();                  // 调用 debug 串口接收处理函数 数据会被 debug 环形缓冲区读取
-#endif                                              // 如果修改了 DEBUG_UART_INDEX 那这段代码需要放到对应的串口中断去
-
-        gps_uart_callback();
-
-}
-IFX_INTERRUPT(uart0_er_isr, 0, UART0_ER_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrError(&uart0_handle);
-
-
-
+//        gps_uart_callback();
+    }
+    else if(Cy_SCB_GetTxInterruptMask(get_scb_module(UART_0)) & CY_SCB_UART_TX_DONE) // 串口0发送中断
+    {
+        Cy_SCB_ClearTxInterrupt(get_scb_module(UART_0), CY_SCB_UART_TX_DONE); // 清除接收中断标志位
+    }
 }
 
-// 串口1默认连接到摄像头配置串口
-IFX_INTERRUPT(uart1_tx_isr, 0, UART1_TX_INT_PRIO)
+void uart1_isr(void)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrTransmit(&uart1_handle);
-
-
-
-
-}
-IFX_INTERRUPT(uart1_rx_isr, 0, UART1_RX_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrReceive(&uart1_handle);
-    camera_uart_handler();                          // 摄像头参数配置统一回调函数
-}
-IFX_INTERRUPT(uart1_er_isr, 0, UART1_ER_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrError(&uart1_handle);
-
-
-
-
+    if(Cy_SCB_GetRxInterruptMask(get_scb_module(UART_1)) & CY_SCB_UART_RX_NOT_EMPTY) // 串口1接收中断
+    {
+        Cy_SCB_ClearRxInterrupt(get_scb_module(UART_1), CY_SCB_UART_RX_NOT_EMPTY); // 清除接收中断标志位
+        camera_uart_handler(); // 摄像头参数配置统一回调函数
+    }
+    else if(Cy_SCB_GetTxInterruptMask(get_scb_module(UART_1)) & CY_SCB_UART_TX_DONE) // 串口1发送中断
+    {
+        Cy_SCB_ClearTxInterrupt(get_scb_module(UART_1), CY_SCB_UART_TX_DONE); // 清除接收中断标志位
+    }
 }
 
-
-// 串口2默认连接到无线转串口模块
-IFX_INTERRUPT(uart2_tx_isr, 0, UART2_TX_INT_PRIO)
+void uart2_isr(void)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrTransmit(&uart2_handle);
-
-
-
-
-
-}
-IFX_INTERRUPT(uart2_rx_isr, 0, UART2_RX_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrReceive(&uart2_handle);
-//    wireless_module_uart_handler();                 // 无线模块统一回调函数
-
-}
-IFX_INTERRUPT(uart2_er_isr, 0, UART2_ER_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrError(&uart2_handle);
-
+    if(Cy_SCB_GetRxInterruptMask(get_scb_module(UART_2)) & CY_SCB_UART_RX_NOT_EMPTY) // 串口2接收中断
+    {
+        Cy_SCB_ClearRxInterrupt(get_scb_module(UART_2), CY_SCB_UART_RX_NOT_EMPTY); // 清除接收中断标志位
+        wireless_module_uart_handler(); // 无线模块统一回调函数
+    }
+    else if(Cy_SCB_GetTxInterruptMask(get_scb_module(UART_2)) & CY_SCB_UART_TX_DONE) // 串口2发送中断
+    {
+        Cy_SCB_ClearTxInterrupt(get_scb_module(UART_2), CY_SCB_UART_TX_DONE); // 清除接收中断标志位
+    }
 }
 
-
-
-IFX_INTERRUPT(uart3_tx_isr, 0, UART3_TX_INT_PRIO)
+void uart3_isr(void)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrTransmit(&uart3_handle);
-
-
-
-
+    if(Cy_SCB_GetRxInterruptMask(get_scb_module(UART_3)) & CY_SCB_UART_RX_NOT_EMPTY) // 串口3接收中断
+    {
+        Cy_SCB_ClearRxInterrupt(get_scb_module(UART_3), CY_SCB_UART_RX_NOT_EMPTY); // 清除接收中断标志位
+    }
+    else if(Cy_SCB_GetTxInterruptMask(get_scb_module(UART_3)) & CY_SCB_UART_TX_DONE) // 串口3发送中断
+    {
+        Cy_SCB_ClearTxInterrupt(get_scb_module(UART_3), CY_SCB_UART_TX_DONE); // 清除接收中断标志位
+    }
 }
-IFX_INTERRUPT(uart3_rx_isr, 0, UART3_RX_INT_PRIO)
+
+void uart4_isr(void)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrReceive(&uart3_handle);
-
-
-
-
-
-}
-IFX_INTERRUPT(uart3_er_isr, 0, UART3_ER_INT_PRIO)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    IfxAsclin_Asc_isrError(&uart3_handle);
-
-
-
-
-
+    if(Cy_SCB_GetRxInterruptMask(get_scb_module(UART_4)) & CY_SCB_UART_RX_NOT_EMPTY) // 串口4接收中断
+    {
+        Cy_SCB_ClearRxInterrupt(get_scb_module(UART_4), CY_SCB_UART_RX_NOT_EMPTY); // 清除接收中断标志位
+        uart_receiver_handler(); // 串口接收机回调函数
+    }
+    else if(Cy_SCB_GetTxInterruptMask(get_scb_module(UART_4)) & CY_SCB_UART_TX_DONE) // 串口4发送中断
+    {
+        Cy_SCB_ClearTxInterrupt(get_scb_module(UART_4), CY_SCB_UART_TX_DONE); // 清除接收中断标志位
+    }
 }
 // **************************** 串口中断函数 ****************************
