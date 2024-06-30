@@ -72,7 +72,7 @@ key_table table_dispaly[30] = // 结构体数组
 
 void Menu() // 菜单函数
 {
-    /*
+    
     key_scan();
 
     if (key1_flag) {
@@ -95,94 +95,13 @@ void Menu() // 菜单函数
         (*current_operation_index)(); // 执行当前操作函数
         last_index = func_index;
     }
-    */
+    
     
 //menutest    
-        uint16_t data[128];
-    int16_t data_index = 0;
-    for( ; 64 > data_index; data_index ++)
-        data[data_index] = data_index;
-    for(data_index = 64; 128 > data_index; data_index ++)
-        data[data_index] = 128 - data_index;
-
-    ips200_set_dir(IPS200_PORTAIT);
-    ips200_set_color(RGB565_RED, RGB565_BLACK);
-    ips200_init(IPS200_TYPE);
-
-    // 此处编写用户代码 例如外设初始化代码等
-    while(true)
-    {
-        // 此处编写需要循环执行的代码
-
-        ips200_clear();
-        ips200_show_rgb565_image(0, 120, (const uint16 *)gImage_seekfree_logo, 240, 80, 240, 80, 0);    // 显示一个RGB565色彩图片 原图240*80 显示240*80 低位在前
-        system_delay_ms(1500);
-
-        ips200_full(RGB565_GRAY);
-        ips200_show_string( 0 , 16*7,   "SEEKFREE");                            // 显示字符串
-        ips200_show_chinese(80, 16*7,   16, (const uint8 *)chinese_test, 4, RGB565_BLUE);               // 显示汉字
-
-        // 显示的 flaot 数据 最多显示 8bit 位整数 最多显示 6bit 位小数
-        ips200_show_float(  0 , 16*8,   -13.141592,     1, 6);                  // 显示 float 数据 1bit 整数 6bit 小数 应当显示 -3.141592 总共会有 9 个字符的显示占位
-        ips200_show_float(  80, 16*8,   13.141592,      8, 4);                  // 显示 float 数据 8bit 整数 4bit 小数 应当显示 13.1415 总共会有 14 个字符的显示占位 后面会有 5 个字符的空白占位
-
-        ips200_show_int(    0 , 16*9,   -127,           2);                     // 显示 int8 数据
-        ips200_show_uint(   80, 16*9,   255,            4);                     // 显示 uint8 数据
-
-        ips200_show_int(    0 , 16*10,  -32768,         4);                     // 显示 int16 数据
-        ips200_show_uint(   80, 16*10,  65535,          6);                     // 显示 uint16 数据
-
-        ips200_show_int(    0 , 16*11,  -2147483648,    8);                     // 显示 int32 数据 8bit 整数 应当显示 -47483648
-        ips200_show_uint(   80, 16*11,  4294967295,     8);                     // 显示 uint32 数据 10bit 整数 应当显示 4294967295
-
-        system_delay_ms(1000);
-
-        ips200_full(RGB565_GRAY);
-        ips200_show_wave(88, 144, data, 128, 64,  64, 32);                      // 显示一个三角波形 波形宽度 128 波形最大值 64 显示宽度 64 显示最大值 32
-        system_delay_ms(1000);
-        ips200_full(RGB565_GRAY);
-        ips200_show_wave(56, 128, data, 128, 64, 128, 64);                      // 显示一个三角波形 波形宽度 128 波形最大值 64 显示宽度 128 显示最大值 64
-        system_delay_ms(1000);
-
-        // 使用画线函数 从顶上两个角画射线
-        ips200_clear();
-        for(data_index = 0; 240 > data_index; data_index += 10)
-        {
-            ips200_draw_line(0, 0, data_index, 320 - 1, RGB565_66CCFF);
-            system_delay_ms(20);
-        }
-        ips200_draw_line(0, 0, 240 - 1, 320 - 1, RGB565_66CCFF);
-        for(data_index = 310; 0 <= data_index; data_index -= 10)
-        {
-            ips200_draw_line(0, 0, 240 - 1, data_index, RGB565_66CCFF);
-            system_delay_ms(20);
-        }
-
-        ips200_draw_line(240 - 1, 0, 239, 320 - 1, RGB565_66CCFF);
-        for(data_index = 230; 0 <= data_index; data_index -= 10)
-        {
-            ips200_draw_line(240 - 1, 0, data_index, 320 - 1, RGB565_66CCFF);
-            system_delay_ms(20);
-        }
-        ips200_draw_line(240 - 1, 0, 0, 320 - 1, RGB565_66CCFF);
-        for(data_index = 310; 0 <= data_index; data_index -= 10)
-        {
-            ips200_draw_line(240 - 1, 0, 0, data_index, RGB565_66CCFF);
-            system_delay_ms(20);
-        }
-        system_delay_ms(1000);
-
-        ips200_full(RGB565_RED);
-        system_delay_ms(500);
-        ips200_full(RGB565_GREEN);
-        system_delay_ms(500);
-        ips200_full(RGB565_BLUE);
-        system_delay_ms(500);
-        ips200_full(RGB565_WHITE);
-        system_delay_ms(500);
+        
 
         // 此处编写需要循环执行的代码
-    }
+    
 }
 
     
@@ -222,7 +141,7 @@ void Menu_flash_clear(int PAGE_INDEX) // 清除FLASH
     } else {
     }
 
-    printf("\r\n已擦除指定页FLASH:%d", PAGE_INDEX);
+   // printf("\r\n已擦除指定页FLASH:%d", PAGE_INDEX);
 }
 
 void FLAG_param_t_init() // FLAG参数初始化
@@ -236,10 +155,10 @@ void FLAG_param_t_init() // FLAG参数初始化
         STOP_MENU_FLAG = flash_union_buffer[1].int32_type;
         flash_erase_page(FLASH_SECTION_INDEX, FLAG_PAGE_INDEX); // 每次修改值并复位后，将FLASH中的值赋给变量，然后擦除FLASH中的值(自动擦除)
 
-        printf("\r\n已经更新过的(GO_FLAG):%d", GO_FLAG);
-        printf("\r\n已经更新过的(STOP_MENU_FLAG):%d", STOP_MENU_FLAG);
+       // printf("\r\n已经更新过的(GO_FLAG):%d", GO_FLAG);
+        //printf("\r\n已经更新过的(STOP_MENU_FLAG):%d", STOP_MENU_FLAG);
     } else {
-        printf("\r\nFLAG为程序设定值(原始值)");
+       // printf("\r\nFLAG为程序设定值(原始值)");
     }
 }
 
@@ -251,9 +170,9 @@ void Stop_point_param_t_init() // Stop_point参数初始化
 
         flash_read_page(FLASH_SECTION_INDEX, Stop_Point_PAGE_INDEX, (uint32 *)flash_union_buffer, 1); // 将数据从FLASH指定扇区页码放入到缓冲区
         Stop_Point = flash_union_buffer[0].int32_type; // 用什么数据类型写入缓冲区就用什么类型读取，不然打印出来的码是乱码
-        printf("\r\n已经更新过的(Stop_Point):%d", Stop_Point);
+       // printf("\r\n已经更新过的(Stop_Point):%d", Stop_Point);
     } else {
-        printf("\r\nStop_Point为程序设定值(原始值)");
+       // printf("\r\nStop_Point为程序设定值(原始值)");
     }
 }
 
@@ -265,9 +184,9 @@ void Point_distance_param_t_init() // Point_distance参数初始化
 
         flash_read_page(FLASH_SECTION_INDEX, Point_distance_PAGE_INDEX, (uint32 *)flash_union_buffer, 1); // 将数据从FLASH指定扇区页码放入到缓冲区
         Point_distance = flash_union_buffer[0].int32_type; // 用什么数据类型写入缓冲区就用什么类型读取，不然打印出来的码是乱码
-        printf("\r\n已经更新过的(Point_Distance):%d", Point_distance);
+       // printf("\r\n已经更新过的(Point_Distance):%d", Point_distance);
     } else {
-        printf("\r\nPoint_Distance为程序设定值(原始值)");
+       // printf("\r\nPoint_Distance为程序设定值(原始值)");
     }
 }
 
@@ -478,7 +397,7 @@ void fun_b31() // Speed_regulate
             if (gpio_get_level(SWITCH2)) { // 在左拨码开关为1的情况下，右拨码开关为1进入保存参数模式
                 flash_union_buffer[0].int32_type = Menu_key_Operation(SPEED_Pointer) * 100; // 对于速度来说,10和1都太小了，将其放大100倍
                 flash_read_page(FLASH_SECTION_INDEX, FLAG_PAGE_INDEX, (uint32 *)flash_union_buffer, 2); // 将缓冲区的数据写入到指定Flash 扇区的页码
-                printf("\r\n缓冲区数据SPEED:%d", flash_union_buffer[0].int32_type);
+              //  printf("\r\n缓冲区数据SPEED:%d", flash_union_buffer[0].int32_type);
                 ips200_show_string(0, 16 * 4, "Record param_t OK!");
             }
         }
@@ -501,7 +420,7 @@ void fun_b32() // Stop_point/Point_distance
 
                 flash_union_buffer[0].int32_type = Menu_key_Operation(Stop_Point_Pointer);
                 flash_write_page_from_buffer(FLASH_SECTION_INDEX, Stop_Point_PAGE_INDEX,10); // 将缓冲区的数据写入到指定Flash 扇区的页码
-                printf("\r\n缓冲区数据Stop_Point:%d", flash_union_buffer[0].int32_type);
+               // printf("\r\n缓冲区数据Stop_Point:%d", flash_union_buffer[0].int32_type);
                 ips200_show_string(0, 16 * 4, "Record param_t OK!");
             }
         }
@@ -522,7 +441,7 @@ void fun_b32() // Stop_point/Point_distance
 
                 flash_union_buffer[0].int32_type = Menu_key_Operation(Point_distance_Pointer);
                 flash_write_page_from_buffer(FLASH_SECTION_INDEX, Point_distance_PAGE_INDEX,10); // 将缓冲区的数据写入到指定Flash 扇区的页码
-                printf("\r\n缓冲区数据Point_distance:%d", flash_union_buffer[0].int32_type);
+             //   printf("\r\n缓冲区数据Point_distance:%d", flash_union_buffer[0].int32_type);
                 ips200_show_string(0, 16 * 4, "Record param_t OK!");
             }
         }
@@ -553,11 +472,11 @@ void fun_c31() // START_CAR调节
         while (gpio_get_level(SWITCH2)) {
             GO_FLAG = 1; // 打开发车标志位
             ips200_show_string(0, 16 * 0, "GO_FLAG"); ips200_show_int(120, 0, GO_FLAG, 3);
-            printf("\r\nGO_FLAG:%d", GO_FLAG);
+           // printf("\r\nGO_FLAG:%d", GO_FLAG);
 
             STOP_MENU_FLAG = 0; // 关闭菜单标志位
             ips200_show_string(0, 16 * 1, "STOP_MENU"); ips200_show_int(120, 16 * 1, STOP_MENU_FLAG, 3);
-            printf("\r\nSTOP_MENU_FALG:%d", STOP_MENU_FLAG);
+            //printf("\r\nSTOP_MENU_FALG:%d", STOP_MENU_FLAG);
 
             ips200_show_string(0, 16 * 3, "GO GO GO !!!");
             ips200_show_float(0, 16 * 5, gnss.latitude, 3, 6);
@@ -569,8 +488,8 @@ void fun_c31() // START_CAR调节
             flash_union_buffer[0].int32_type = GO_FLAG; // 标志位存入缓冲区
             flash_union_buffer[1].int32_type = STOP_MENU_FLAG; // 标志位存入缓冲区
             flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLAG_PAGE_INDEX,10); // 将缓冲区的数据写入到指定Flash 扇区的页码
-            printf("\r\nGO_FLAG:%d", flash_union_buffer[0].int32_type);
-            printf("\r\nSTOP_MENU_FALG:%d", flash_union_buffer[1].int32_type);
+          //  printf("\r\nGO_FLAG:%d", flash_union_buffer[0].int32_type);
+            //printf("\r\nSTOP_MENU_FALG:%d", flash_union_buffer[1].int32_type);
         }
     }
 }
@@ -604,6 +523,5 @@ void fun_c33() // 舵机测试调节
 
 //智能量子计算机MOSS图片用作壁纸
 //IFX_ALIGN(4)  
-const unsigned char gImage_MOSS[60008] = { 
-0X00,0X10,0XF0,0X00,0X7D,0X00,0X01,0X1B,
+const unsigned char gImage_MOSS[60008] = { 0x00
 };

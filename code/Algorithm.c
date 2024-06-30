@@ -57,12 +57,12 @@ float PidLocCtrl(pid_param_t * pid, float error)
 //    PID_GPS.kp=1;
 //    PID_GPS.kd=1.05;
 
-
+    //转向环
     PID_GPS.kp=1.1;
     PID_GPS.kd=5;
 
-    PID_IMU.kp=1;//1.15
-    PID_IMU.kd=7;
+    PID_IMU.kp=1.1;//1.15
+    PID_IMU.kd=3;
 
     /* 累积误差 */
     pid->integrator += error;
@@ -130,7 +130,7 @@ void GPS_IMU_COM_filtering()
 
     Fusion_angle=K*Daty_Z+(1-K)*gnss.direction;//将积分的YAW和逐飞GPS的direction进行互补融合
 
-    printf("\r\nFusion_angle---%f",Fusion_angle);
+    //printf("\r\nFusion_angle---%f",Fusion_angle);
 
 }
 

@@ -1,70 +1,189 @@
+/*********************************************************************************************************************
+* CYT4BB Opensourec Library ¼´£¨ CYT4BB ¿ªÔ´¿â£©ÊÇÒ»¸ö»ùÓÚ¹Ù·½ SDK ½Ó¿ÚµÄµÚÈý·½¿ªÔ´¿â
+* Copyright (c) 2022 SEEKFREE Öð·É¿Æ¼¼
+*
+* ±¾ÎÄ¼þÊÇ CYT4BB ¿ªÔ´¿âµÄÒ»²¿·Ö
+*
+* CYT4BB ¿ªÔ´¿â ÊÇÃâ·ÑÈí¼þ
+* Äú¿ÉÒÔ¸ù¾Ý×ÔÓÉÈí¼þ»ù½ð»á·¢²¼µÄ GPL£¨GNU General Public License£¬¼´ GNUÍ¨ÓÃ¹«¹²Ðí¿ÉÖ¤£©µÄÌõ¿î
+* ¼´ GPL µÄµÚ3°æ£¨¼´ GPL3.0£©»ò£¨ÄúÑ¡ÔñµÄ£©ÈÎºÎºóÀ´µÄ°æ±¾£¬ÖØÐÂ·¢²¼ºÍ/»òÐÞ¸ÄËü
+*
+* ±¾¿ªÔ´¿âµÄ·¢²¼ÊÇÏ£ÍûËüÄÜ·¢»Ó×÷ÓÃ£¬µ«²¢Î´¶ÔÆä×÷ÈÎºÎµÄ±£Ö¤
+* ÉõÖÁÃ»ÓÐÒþº¬µÄÊÊÏúÐÔ»òÊÊºÏÌØ¶¨ÓÃÍ¾µÄ±£Ö¤
+* ¸ü¶àÏ¸½ÚÇë²Î¼û GPL
+*
+* ÄúÓ¦¸ÃÔÚÊÕµ½±¾¿ªÔ´¿âµÄÍ¬Ê±ÊÕµ½Ò»·Ý GPL µÄ¸±±¾
+* Èç¹ûÃ»ÓÐ£¬Çë²ÎÔÄ<https://www.gnu.org/licenses/>
+*
+* ¶îÍâ×¢Ã÷£º
+* ±¾¿ªÔ´¿âÊ¹ÓÃ GPL3.0 ¿ªÔ´Ðí¿ÉÖ¤Ð­Òé ÒÔÉÏÐí¿ÉÉêÃ÷ÎªÒëÎÄ°æ±¾
+* Ðí¿ÉÉêÃ÷Ó¢ÎÄ°æÔÚ libraries/doc ÎÄ¼þ¼ÐÏÂµÄ GPL3_permission_statement.txt ÎÄ¼þÖÐ
+* Ðí¿ÉÖ¤¸±±¾ÔÚ libraries ÎÄ¼þ¼ÐÏÂ ¼´¸ÃÎÄ¼þ¼ÐÏÂµÄ LICENSE ÎÄ¼þ
+* »¶Ó­¸÷Î»Ê¹ÓÃ²¢´«²¥±¾³ÌÐò µ«ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÖð·É¿Æ¼¼µÄ°æÈ¨ÉùÃ÷£¨¼´±¾ÉùÃ÷£©
+*
+* ÎÄ¼þÃû³Æ          main_cm7_0
+* ¹«Ë¾Ãû³Æ          ³É¶¼Öð·É¿Æ¼¼ÓÐÏÞ¹«Ë¾
+* °æ±¾ÐÅÏ¢          ²é¿´ libraries/doc ÎÄ¼þ¼ÐÄÚ version ÎÄ¼þ °æ±¾ËµÃ÷
+* ¿ª·¢»·¾³          IAR 9.40.1
+* ÊÊÓÃÆ½Ì¨          CYT4BB
+* µêÆÌÁ´½Ó          https://seekfree.taobao.com/
+*
+* ÐÞ¸Ä¼ÇÂ¼
+* ÈÕÆÚ              ×÷Õß                ±¸×¢
+* 2024-1-4       pudding            first version
+********************************************************************************************************************/
 
 #include "zf_common_headfile.h"
 
-// **************************** ä»£ç åŒºåŸŸ ****************************
+// ´ò¿ªÐÂµÄ¹¤³Ì»òÕß¹¤³ÌÒÆ¶¯ÁËÎ»ÖÃÎñ±ØÖ´ÐÐÒÔÏÂ²Ù×÷
+// µÚÒ»²½ ¹Ø±ÕÉÏÃæËùÓÐ´ò¿ªµÄÎÄ¼þ
+// µÚ¶þ²½ project->clean  µÈ´ýÏÂ·½½ø¶ÈÌõ×ßÍê
 
-int main(void)
+// ±¾Àý³ÌÊÇ¿ªÔ´¿â¿Õ¹¤³Ì ¿ÉÓÃ×÷ÒÆÖ²»òÕß²âÊÔ¸÷ÀàÄÚÍâÉè
+// ±¾Àý³ÌÊÇ¿ªÔ´¿â¿Õ¹¤³Ì ¿ÉÓÃ×÷ÒÆÖ²»òÕß²âÊÔ¸÷ÀàÄÚÍâÉè
+// ±¾Àý³ÌÊÇ¿ªÔ´¿â¿Õ¹¤³Ì ¿ÉÓÃ×÷ÒÆÖ²»òÕß²âÊÔ¸÷ÀàÄÚÍâÉè
+
+// **************************** ´úÂëÇøÓò ****************************
+/*
+int8 duty = 0;
+bool dir = true;
+*/
+       
 {
-//æŠŠclock_init();æ¢æŽ‰ å˜æˆ    clock_init(SYSTEM_CLOCK_250M); 	// æ—¶é’Ÿé…ç½®åŠç³»ç»Ÿåˆå§‹åŒ–<åŠ¡å¿…ä¿ç•™>
-    clock_init(SYSTEM_CLOCK_250M); 	// æ—¶é’Ÿé…ç½®åŠç³»ç»Ÿåˆå§‹åŒ–<åŠ¡å¿…ä¿ç•™>
-    debug_init();                   // åˆå§‹åŒ–é»˜è®¤è°ƒè¯•ä¸²å£
-
-    //åˆå§‹åŒ–ä»£ç 
-     ALL_Init();
-
+    clock_init(SYSTEM_CLOCK_250M); 	// Ê±ÖÓÅäÖÃ¼°ÏµÍ³³õÊ¼»¯<Îñ±Ø±£Áô>
+    debug_info_init();                  // µ÷ÊÔ´®¿ÚÐÅÏ¢³õÊ¼»¯
+    
+    // ´Ë´¦±àÐ´ÓÃ»§´úÂë ÀýÈçÍâÉè³õÊ¼»¯´úÂëµÈ
+    
+    //³õÊ¼»¯´úÂë
+    BLDC_init();
+    //ALL_Init();
+    mic_init();
 #if ISR_Start_FLAG
 
-//CCU60_CH1 æ˜¯ç”¨äºŽé…ç½®å’Œåˆå§‹åŒ–å®šæ—¶å™¨ä¸­æ–­çš„æ ‡è¯†ç¬¦ã€‚å…·ä½“æ¥è¯´ï¼Œå®ƒä»£è¡¨äº†ä¸€ç§å®šæ—¶å™¨æ¨¡å—çš„é€šé“ï¼Œç”¨äºŽå®šæ—¶å’Œäº§ç”Ÿä¸­æ–­ã€‚CCUï¼ˆCapture/Compare Unitï¼‰æ˜¯ä¸€ç§åœ¨åµŒå…¥å¼ç³»ç»Ÿä¸­å¸¸è§çš„æ¨¡å—ï¼Œé€šå¸¸ç”¨äºŽæ•èŽ·è¾“å…¥äº‹ä»¶ã€ç”Ÿæˆæ¯”è¾ƒäº‹ä»¶æˆ–ç”¨äºŽè„‰å®½è°ƒåˆ¶ï¼ˆPWMï¼‰     
+//CCU60_CH1 ÊÇÓÃÓÚÅäÖÃºÍ³õÊ¼»¯¶¨Ê±Æ÷ÖÐ¶ÏµÄ±êÊ¶·û¡£¾ßÌåÀ´Ëµ£¬Ëü´ú±íÁËÒ»ÖÖ¶¨Ê±Æ÷Ä£¿éµÄÍ¨µÀ£¬ÓÃÓÚ¶¨Ê±ºÍ²úÉúÖÐ¶Ï¡£CCU£¨Capture/Compare Unit£©ÊÇÒ»ÖÖÔÚÇ¶ÈëÊ½ÏµÍ³ÖÐ³£¼ûµÄÄ£¿é£¬Í¨³£ÓÃÓÚ²¶»ñÊäÈëÊÂ¼þ¡¢Éú³É±È½ÏÊÂ¼þ»òÓÃÓÚÂö¿íµ÷ÖÆ£¨PWM£©     
      
-//CCU60_CH1 CCU61_CH0 CCU61_CH1çš„æ¢æˆ
-     pit_us_init(PIT_CH0, 10);                               // LORAä¸­æ–­
-     pit_ms_init(PIT_CH1, 100);                            // GPSæ•°æ®è§£æžä¸­æ–­/éœå°”ç¼–ç å™¨ä¸­æ–­
-     pit_ms_init(PIT_CH2, 7);                              // èˆµæœº
+//CCU60_CH1 CCU61_CH0 CCU61_CH1µÄ»»³É
+     //»¹ÓÐÒ»¸öÍÓÂÝÒÇµÄÖÐ¶ÏÔÚIMU³õÊ¼»¯µÄÊ±¿Ì¿ªÆô
+     pit_us_init(PIT_CH1, 10);                               // LORAÖÐ¶Ï+ADC²É¼¯
+     pit_ms_init(PIT_CH2, 100);                            // GPSÊý¾Ý½âÎöÖÐ¶Ï/»ô¶û±àÂëÆ÷ÖÐ¶Ï
+     pit_ms_init(PIT_CH10, 7);                              // ¶æ»ú
+     
 
 #endif
 
-//     Ctrl_GO_FLAG=0; //æ¸…é™¤æ ‡å¿—ä½
-     Buzzer_check(0,100);                                  // è‡ªæ£€å®Œæˆ
-    // åˆå§‹åŒ–ä»£ç 
-
-//è¿™ä¸ªè¢«å¤§å‘äº†ä¸€æ³¢     
-//    cpu_wait_event_ready();         // ç­‰å¾…æ‰€æœ‰æ ¸å¿ƒåˆå§‹åŒ–å®Œæ¯•
-
-
-
-    while (1)
+//     Ctrl_GO_FLAG=0; //Çå³ý±êÖ¾Î»
+     Buzzer_check(0,100);                                  // ×Ô¼ìÍê³É
+    // ³õÊ¼»¯´úÂë
+    //float test_angle;
+     /* 
+    generateChirp(Chrip_signal,FFT_SIZE,250,2000,FS);//Éú³É±ê×¼ChripÐÅºÅ
+    seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);           // ³õÊ¼»¯Öð·ÉÖúÊÖ×é¼þ Ñ¡Ôñdebug´®¿ÚÊä³öÐÅÏ¢
+    
+    seekfree_assistant_oscilloscope_data.channel_num  = 4;                      // ÅäÖÃÍ¨µÀ³¤¶ÈÎª1×é
+    */
+    
+    // ´Ë´¦±àÐ´ÓÃ»§´úÂë ÀýÈçÍâÉè³õÊ¼»¯´úÂëµÈ
+    while(true)
     {
-         Menu();
-         /*
+      
+      printf("enter");
+      /* 
+        if(duty >= 0)                                                           // Õý×ª
+        {
+            gpio_set_level(DIR_CH2, GPIO_HIGH);                                  // DIRÊä³ö¸ßµçÆ½
+            pwm_set_duty(PWM_CH2, duty);                  // ¼ÆËãÕ¼¿Õ±È
+        }
+        else                                                                    // ·´×ª
+        {
+            gpio_set_level(DIR_CH2, GPIO_LOW);                                   // DIRÊä³öµÍµçÆ½
+            pwm_set_duty(PWM_CH2, (-duty));               // ¼ÆËãÕ¼¿Õ±È
+        }
+        if(dir)                                                                 // ¸ù¾Ý·½ÏòÅÐ¶Ï¼ÆÊý·½Ïò ±¾Àý³Ì½ö×÷²Î¿¼
+        {
+            duty ++;                                                            // ÕýÏò¼ÆÊý
+            if(duty >= MAX_DUTY)                                                // ´ïµ½×î´óÖµ
+                dir = false;                                                    // ±ä¸ü¼ÆÊý·½Ïò
+        }
+        else
+        {
+            duty --;                                                            // ·´Ïò¼ÆÊý
+            if(duty <= -MAX_DUTY)                                               // ´ïµ½×îÐ¡Öµ
+                dir = true;                                                     // ±ä¸ü¼ÆÊý·½Ïò
+        }
+        system_delay_ms(500);
+      */
+    
+      BLDC_Cloop_ctrl(5000);
+      //BLDC_ctrl(10000);
+        // ´Ë´¦±àÐ´ÐèÒªÑ­»·Ö´ÐÐµÄ´úÂë
+       /* 
+          if(MIC_Start_FLAG){
+              mic_data_copy();//°ÑÒ»×é¹èÂóÊý¾ÝÈ¡³ö
+              //printf("\r\ntest");
+              //test_angle= Get_mic_Angle();
+             // printf("\r\n½Ç¶Ètest_angle:%f",test_angle )
+              for(int i = 0; i < FFT_SIZE; i++) 
+              {
+                  seekfree_assistant_oscilloscope_data.data[0] = fft_signal[0][i*2];//fft_outputSignal[0][i];     // »ñÈ¡ÄæFFTÔËËãºóµÄ·ù¶ÈÐÅÏ¢
+                  seekfree_assistant_oscilloscope_data.data[1] = fft_signal[1][i*2];//fft_signal[1][i * 2];      // »ñÈ¡ÄæFFTÔËËãºóµÄ·ù¶ÈÐÅÏ¢
+                  seekfree_assistant_oscilloscope_data.data[2] = fft_signal[2][i*2];
+                  seekfree_assistant_oscilloscope_data.data[3] = fft_signal[3][i*2];
+                  seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data);     // Êä³ö·ù¶ÈÐÅÏ¢µ½Ê¾²¨Æ÷                                     
+              } 
+          }
+          */
+        // Menu();
         #if Main_FLAG
-                         if(x6f_out[0]<135) {Ctrl_GO_FLAG=1;}//æŽ§åˆ¶å‘è½¦æ ‡å¿—ä½
+      /* 
+                         if(x6f_out[0]<135) {Ctrl_GO_FLAG=1;}//¿ØÖÆ·¢³µ±êÖ¾Î»
 
                          if(GO_FLAG==1)
                            {
 
-                             if(Ctrl_GO_FLAG==1&&Control_FLAG==1) {Follow_Track();}//æ ¸å¿ƒå¾ªè¿¹ç¨‹åº
-                             if(x6f_out[2]>165&&x6f_out[2]<175)//æœ‰æŽ§æ¨¡å¼
+                             if(Ctrl_GO_FLAG==1&&Control_FLAG==1) {Follow_Track();}//ºËÐÄÑ­¼£³ÌÐò
+
+                          
+                             if(x6f_out[2]>165&&x6f_out[2]<175)//ÓÐ¿ØÄ£Ê½+
                              {
                                   Control_FLAG=0;
-                                  Control_Program();//æŽ§åˆ¶ç¨‹åº
+                                  Control_Program();//¿ØÖÆ³ÌÐò
                              }
                            }
-
-                         if(STOP_MENU_FLAG){Menu();}//èœå•
+      */
+                          Follow_Track();
+                          //fft_outputSignal[0][0]=-100000000;
+                        /*for(int i = 0; i < FFT_SIZE; i++) 
+                          {
+                              seekfree_assistant_oscilloscope_data.data[0] =  out_signal[0][i];//fft_outputSignal[0][i];     // »ñÈ¡ÄæFFTÔËËãºóµÄ·ù¶ÈÐÅÏ¢
+                              seekfree_assistant_oscilloscope_data.data[1] = out_signal[1][i];//fft_signal[1][i * 2];      // »ñÈ¡ÄæFFTÔËËãºóµÄ·ù¶ÈÐÅÏ¢
+                             seekfree_assistant_oscilloscope_data.data[2] = fft_outputSignal[0][i];
+                             seekfree_assistant_oscilloscope_data.data[3] = fft_outputSignal[1][i];
+                              seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data);     // Êä³ö·ù¶ÈÐÅÏ¢µ½Ê¾²¨Æ÷                                     
+                          } */
+                          
+                         if(STOP_MENU_FLAG){Menu();}//²Ëµ¥
         #endif
 
                          GL_CRC();
 
-                         if(GL_IMU_Flag==1) {Follow_Track();}//æ ¸å¿ƒå¾ªè¿¹ç¨‹åº
-                         if(x6f_out[2]>165&&x6f_out[2]<175)//æœ‰æŽ§æ¨¡å¼
+                         //if(GL_IMU_Flag==1) {Follow_Track();}//ºËÐÄÑ­¼£³ÌÐò
+                         
+                         /*if(x6f_out[2]>165&&x6f_out[2]<175)//ÓÐ¿ØÄ£Ê½
                          {
                               Control_FLAG=0;
                               GL_IMU_Flag=0;
-                              Control_Program();//æŽ§åˆ¶ç¨‹åº
-                         }
+                              Control_Program();//¿ØÖÆ³ÌÐò
+                         }*/
 
-        */
+        
 
+
+      
+      
+      
+        // ´Ë´¦±àÐ´ÐèÒªÑ­»·Ö´ÐÐµÄ´úÂë
     }
 }
 
+// **************************** ´úÂëÇøÓò ****************************

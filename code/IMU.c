@@ -74,13 +74,13 @@ void IMU_GetValues()//将采集的数值转化为实际物理值, 并对陀螺仪进行去零漂处理
 //2000dps:IMU963--14.3
 
     //! 陀螺仪角速度必须转换为弧度制角速度: deg/s -> rad/s
-    IMU_Data.gyro_x = ((float) imu660ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 16.4f;
-    IMU_Data.gyro_y = ((float) imu660ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 16.4f;
-    IMU_Data.gyro_z = ((float) imu660ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 16.4f;
+//    IMU_Data.gyro_x = ((float) imu660ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 16.4f;
+//    IMU_Data.gyro_y = ((float) imu660ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 16.4f;
+//    IMU_Data.gyro_z = ((float) imu660ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 16.4f;
 
-//        IMU_Data.gyro_x = ((float) imu963ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 14.3f;
-//        IMU_Data.gyro_y = ((float) imu963ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 14.3f;
-//        IMU_Data.gyro_z = ((float) imu963ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 14.3f;
+        IMU_Data.gyro_x = ((float) imu963ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 14.3f;
+        IMU_Data.gyro_y = ((float) imu963ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 14.3f;
+        IMU_Data.gyro_z = ((float) imu963ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 14.3f;
 
 }
 
@@ -114,9 +114,9 @@ void IMU_YAW_integral()//对角速度进行积分
 void IMU_init()//IMU初始化
 {
 
-    imu660ra_init();   //IMU660惯导初始化
-//    imu963ra_init();   //IMU660惯导初始化
-    pit_ms_init(PIT_CH2, 5);                              // (IMU)初始化 CCU60_CH0 为周期中断 5ms 周期,IMU660频率为200HZ
+//    imu660ra_init();   //IMU660惯导初始化
+    imu963ra_init();   //IMU660惯导初始化
+    pit_ms_init(PIT_CH0, 5);                              // (IMU)初始化 CCU60_CH0 为周期中断 5ms 周期,IMU660频率为200HZ
     IMU_gyro_Offset_Init();// 陀螺仪零漂初始化
 
 }
@@ -132,13 +132,13 @@ void IMU_SHOW()
     ips200_show_string(0, 16*2, "T_N:");      ips200_show_float(60,16*2,T_N,3,6);
 
 }
-
+/*
 void IMU_TEXT()
 {
     HIP4082_Motor_ctrl(5000);
 
 }
-
+*/
 void GPS_direction_average()//计算GPS偏航角平均值
 {
     if(1)

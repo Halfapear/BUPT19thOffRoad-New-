@@ -56,18 +56,23 @@ uint16 key4_count=-1;
 uint16 switch1_count=-1;
 uint16 switch2_count=-1;
 
+uint16 ten_us=0;
+
+int8 duty = 0;
+bool dir = true;
+
 void Key_init()//按键与LED初始化
 {
-//5.23 我寻思没有4个led吧，那全改1了
+//5.23 我寻思没有4个led吧，那全改1了-
        gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);         // 初始化 LED1 输出 默认高电平 推挽输出模式
        gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);         // 初始化 LED2 输出 默认高电平 推挽输出模式
        gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);         // 初始化 LED3 输出 默认高电平 推挽输出模式
        gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);         // 初始化 LED4 输出 默认高电平 推挽输出模式
 
-       gpio_init(KEY_1, GPI, GPIO_LOW, GPI_PULL_UP);           // 初始化 KEY1 输入 默认高电平 上拉输入
-       gpio_init(KEY_2, GPI, GPIO_HIGH, GPI_PULL_UP);           // 初始化 KEY2 输入 默认高电平 上拉输入
-       gpio_init(KEY_3, GPI, GPIO_HIGH, GPI_PULL_UP);           // 初始化 KEY3 输入 默认高电平 上拉输入
-       gpio_init(KEY_4, GPI, GPIO_HIGH, GPI_PULL_UP);           // 初始化 KEY4 输入 默认高电平 上拉输入
+       gpio_init(KEY1, GPI, GPIO_LOW, GPI_PULL_UP);           // 初始化 KEY1 输入 默认高电平 上拉输入
+       gpio_init(KEY2, GPI, GPIO_HIGH, GPI_PULL_UP);           // 初始化 KEY2 输入 默认高电平 上拉输入
+       gpio_init(KEY3, GPI, GPIO_HIGH, GPI_PULL_UP);           // 初始化 KEY3 输入 默认高电平 上拉输入
+       gpio_init(KEY4, GPI, GPIO_HIGH, GPI_PULL_UP);           // 初始化 KEY4 输入 默认高电平 上拉输入
 
        gpio_init(SWITCH1, GPI, GPIO_HIGH, GPI_FLOATING_IN);    // 初始化 SWITCH1 输入 默认高电平 浮空输入
        gpio_init(SWITCH2, GPI, GPIO_HIGH, GPI_FLOATING_IN);    // 初始化 SWITCH2 输入 默认高电平 浮空输入
@@ -89,7 +94,7 @@ void key_scan()//按键扫描
         //读取当前按键状态
         key1_state = gpio_get_level(KEY1);
         key2_state = gpio_get_level(KEY2);
-        key3_state = gpio_get_level(KEY_3);
+        key3_state = gpio_get_level(KEY3);
         key4_state = gpio_get_level(KEY4);
 
 
@@ -191,7 +196,7 @@ void LORA_init()//LORA初始化
         LORA_Send_TXT();//需要发送的信息
 
 }
-
+/*
 void LORA_work()//LORA工作函数
 {
     fifo_data_count = fifo_used(&uart_data_fifo);                           // 查看 fifo 是否有数据
@@ -216,6 +221,7 @@ void LORA_work()//LORA工作函数
 
     }
 }
+*/
 
 void uart_rx_interrupt_handler (void)//LORA串口中断
 {
@@ -233,12 +239,11 @@ int16 Current_speed=0;
 int16 Gap=0;
 int32 OUT=0;
 
+/*
 void HIP4082_init()//HIP4082初始化
 {
        pwm_init(PWM_L1, 17000, 0);                                                 // PWM 通道 L1 初始化频率 17KHz 占空比初始为 0
        pwm_init(PWM_L2, 17000, 0);                                                 // PWM 通道 L2 初始化频率 17KHz 占空比初始为 0
-
-
 
 }
 
@@ -257,6 +262,8 @@ void HIP4082_Motor_ctrl(int32 Motor_SPEED)//HIP4082单路驱动
             }
 
 }
+
+*/
 
 void Motor_text()//电机测试
 {
@@ -294,11 +301,12 @@ void Motor_text()//电机测试
           ips200_show_int(100,  16*3,MOTOR, 5);
 //          HIP4082_Motor_ctrl(MOTOR);
           BLDC_ctrl(MOTOR);
-//          BLDC_Cloop_ctrl(MOTOR);
+          BLDC_Cloop_ctrl(MOTOR);
 
 
 
 }
+
 
 void SPEED_param_t_init()//SPEED参数初始化
 {
@@ -308,36 +316,37 @@ void SPEED_param_t_init()//SPEED参数初始化
 
         flash_read_page_to_buffer(FLASH_SECTION_INDEX, SPEED_PAGE_INDEX,10);       //将数据从FLASH指定扇区页码放入到缓冲区
         SPEED=flash_union_buffer[0].int32_type;         //用什么数据类型写入缓冲区就用什么类型读取，不然打印出来的码是乱码
-        printf("\r\n已经更新过的(SPEED):%d",  SPEED);
+        //printf("\r\n已经更新过的(SPEED):%d",  SPEED);
 
     }
-    else{printf("\r\nSPEED为程序设定值(原始值)");}
+    else{//printf("\r\nSPEED为程序设定值(原始值)");
+    }
 
 }
 
 void BLDC_init()//无刷电机初始化
 {
-
-    pwm_init(PWM_CH1, 1000, 0);                 //PWM引脚初始化
-    gpio_init(DIR_CH1, GPO, 1, GPO_PUSH_PULL);  //方向引脚
+    gpio_init(DIR_CH2, GPO, 1, GPO_PUSH_PULL);  //方向引脚
+    pwm_init(PWM_CH2, 17000, 0);                 //PWM引脚初始化
     PidInit(&PID_Init);
+    printf("init ok");
 }
 
-void BLDC_ctrl(int16 Motor_SPEED)//BLDC驱动
+void BLDC_ctrl(int16 Motor_SPEED)//BLDC驱动--6.8,电机输出口暂时改为5.0，5.1，驱动函数就是BLDC_Cloop_ctrl带pid，pid参数直接在函数内部设置
 {
 
     if(Motor_SPEED>=0)//正转
     {
-        pwm_set_duty(PWM_CH1, (Motor_SPEED));
-        gpio_set_level(DIR_CH1,1);
+        pwm_set_duty(PWM_CH2, Motor_SPEED);
+        gpio_set_level(DIR_CH2,1);
     }
     else             //反转
     {
         pwm_set_duty(PWM_CH2, -Motor_SPEED);
-        gpio_set_level(DIR_CH1,0);
+        gpio_set_level(DIR_CH2,0);
     }
 
- //    ips200_show_uint(100,  16*1,Motor_SPEED, 5);
+     //ips200_show_uint(100,  16*1,Motor_SPEED, 5);
 
 }
 
@@ -345,18 +354,19 @@ void BLDC_Cloop_ctrl(int16 SPEED) //BLDC闭环控制
 {
 
       Target_speed=SPEED;      //目标速度
-      Current_speed= encoder;   //当前速度
+      Current_speed= encoder;   //当前速度---这里直接等于了啊。。。
       Gap=Target_speed-Current_speed;       //速度差距
 
-
-      OUT=PidIncCtrl(&PID_MOTOR,(float)Gap);
-    if(OUT> 10000) {OUT=10000;}
-    if(OUT<-10000) {OUT=-10000;}
+      //有刷这样算出来感觉值会特别小，暂时改成成100的系数了
+      //OUT=PidIncCtrl(&PID_MOTOR,(float)Gap)*100;
+      OUT=Gap;
+      //这里可以改限幅-先改成有刷最大值了
+    if(OUT> 6000) {OUT=6000;}
+    if(OUT<-6000) {OUT=-6000;}
 
     BLDC_ctrl((int16)OUT);
 //    system_delay_ms(3);
-//    printf("%d,%d,%d,%d\n",Target_speed,Current_speed,Gap,OUT);
-//      printf("%d\n",Current_speed);
+    printf("%d,%d,%d,%d\n",Target_speed,Current_speed,Gap,OUT);
 
 
 
@@ -367,7 +377,7 @@ void BLDC_Cloop_ctrl(int16 SPEED) //BLDC闭环控制
 //===================================================霍尔编码器===================================================
 int16 encoder=0;  //转速
 int16 stand=0;
-/*
+
 
 void HALL_init()//霍尔编码器初始化
 {
@@ -376,14 +386,14 @@ void HALL_init()//霍尔编码器初始化
 
 void HALL_gather()//霍尔编码器获取值
 {
-
+    //7ms/次
     encoder= (encoder_get_count(ENCODER1_TIM));
     encoder_clear_count(ENCODER1_TIM);                                // 采集对应编码器数据
 //    printf("encoder counter: %d\n", encoder);                // 串口输出采集的数据
 //    system_delay_ms(100);
 }
 
-*/
+
 
 
 //===================================================舵机===================================================
@@ -397,13 +407,7 @@ void Steer_init()//舵机初始化
     PidInit(&PID_Init);
 }
 
-void Steer_set(int angle)//舵机驱动
-{
-    if(angle<SERVO_MOTOR_LMAX){angle=SERVO_MOTOR_LMAX;}
-    if(angle>SERVO_MOTOR_RMAX){angle=SERVO_MOTOR_RMAX;}
-    pwm_set_duty(SERVO_MOTOR_PWM, (uint32)SERVO_MOTOR_DUTY(angle));
-
-}
+c
 
 void Steer_text()//舵机测试
 {
@@ -486,8 +490,8 @@ void x6f_scan(void)//遥控器通道扫描
 void Control_TEXT()//遥控器测试
 {
     //打印各通道高电平时长计数值
-    printf("CH1 = %d\tCH2 = %d\tCH3 = %d\tCH4= %d\tCH5 = %d\tCH6 = %d\r\n",
-            x6f_out[0], x6f_out[1], x6f_out[2], x6f_out[3], x6f_out[4], x6f_out[5]);
+    //printf("CH1 = %d\tCH2 = %d\tCH3 = %d\tCH4= %d\tCH5 = %d\tCH6 = %d\r\n",
+         //   x6f_out[0], x6f_out[1], x6f_out[2], x6f_out[3], x6f_out[4], x6f_out[5]);
     gpio_toggle_level(LED1);
     system_delay_ms(50);
 }
@@ -537,7 +541,7 @@ void WX_CTRL()
    //        BLDC_Cloop_ctrl(0);
        }
 }
-
+/*
 void YX_CTRL()
 {
     gpio_set_level(BUZZER_PIN,0);
@@ -582,7 +586,7 @@ void YX_CTRL()
            HIP4082_Motor_ctrl(0);
        }
 }
-
+*/
 //===================================================TOF===================================================
 //TOF 是 "Time of Flight" 的缩写，意思是“飞行时间”
 
@@ -591,9 +595,9 @@ void YX_CTRL()
 //===================================================总初始化===================================================
 void ALL_Init()
 {
-    gnss_init(1);        //GPS初始化
+    gnss_init(TAU1201);        //GPS初始化
 //    ips200_init(IPS200_TYPE_PARALLEL8);     //IPS200显示初始化
-    ips200_init(IPS200_TYPE_PARALLEL8);        //IPS114
+    ips200_init(IPS200_TYPE_SPI);        //IPS114IPS200_TYPE_PARALLEL8 
     Buzzer_init();     //蜂鸣器初始化
     Key_init();        //按键及LED初始化
 //    HIP4082_init();      //HIP4062驱动初始化
@@ -601,8 +605,10 @@ void ALL_Init()
     Steer_init();      //Steer舵机初始化
     LORA_init();       //LORA初始化
 //  mt9v03x_init();    //摄像头初始化
-    Control_init();    //遥控器引脚初始化
-//    HALL_init();//霍尔编码器初始化
+//    Control_init();    //遥控器引脚初始化
+    HALL_init();//霍尔编码器初始化
+    
+     flash_init(); 
 
 #if FLASH_Init_FLAG
     SPEED_param_t_init();

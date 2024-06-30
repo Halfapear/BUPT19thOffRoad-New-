@@ -41,7 +41,7 @@ void  IMU_GetValues();//将采集的数值转化为实际物理值, 并对陀螺仪进行去零漂处理
 void  IMU_YAW_integral(void);//对角速度进行积分
 void  IMU_init(void);//IMU初始化
 void  IMU_SHOW(void);//IMU数据显示
-void  IMU_TEXT();//IMU抑制测试
+//void  IMU_TEXT();//IMU抑制测试
 void  IMU_Handle_180(void);
 void  IMU_Handle_360(void);
 void  IMU_Handle_0  (void);

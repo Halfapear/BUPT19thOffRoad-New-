@@ -34,7 +34,7 @@
 
 extern gnss_info_struct gnss; // 使用gnss变量
 
-int Control_FLAG = 1;         // 该标志位意义是，当它为1时是无控模式(靠GPS+IMU导航)/当手柄上的按键按下时，该标志位被清0,无法执行无控模式，转入有控模式
+int Control_FLAG = 0;         // 该标志位意义是，当它为1时是无控模式(靠GPS+IMU导航)/当手柄上的按键按下时，该标志位被清0,无法执行无控模式，转入有控模式
 int S_Point = 0;              // 停止点位参数
 int P_Distance = 0;           // 点位距离参数
 int next_point = 0;           // 下一个目标点
@@ -54,12 +54,15 @@ float PD_YAW = 0;
 
 void Follow_Track() // 核心循迹程序
 {
-#if (Float_Record_FLAG || Double_Record_FLAG) // 单精度和双精度存储都用这个
+  //纯gps模式
+#if GPS_Mode
+#if (Float_Record_FLAG || Double_Record_FLAG || Int_Record_FLAG) // 单精度和双精度存储都用这个
     distance = get_two_points_distance(gnss.latitude, gnss.longitude, Work_target_array[0][next_point], Work_target_array[1][next_point]); // 距离
     last_azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, Work_target_array[0][next_point - 1], Work_target_array[1][next_point - 1]); // 方位角 (两点连线与正北的夹角)
     azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, Work_target_array[0][next_point], Work_target_array[1][next_point]); // 方位角 (两点连线与正北的夹角)
 #endif
 
+    //没看懂为什么需要下面这个 
 #if (Array_Record_FLAG)
     distance = get_two_points_distance(gnss.latitude, gnss.longitude, GPS_GET_LAT[next_point], GPS_GET_LOT[next_point]); // 距离
     azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, GPS_GET_LAT[next_point], GPS_GET_LOT[next_point]); // 方位角 (两点连线与正北的夹角)
@@ -73,10 +76,14 @@ void Follow_Track() // 核心循迹程序
     // IMU_Navigation_180_S()------2
     // Single_layer_feedback()------3
     // Double_layer_feedback_0()------4
+    //上面这几个函数是最终的角度结算函数，上面算完就给舵机赋值了
+       
+// 6.28 暂时注释排查警钟长鸣问题
 
     if (next_point < 1 || next_point == 7) {
         Navigation_mode(0);
     }
+    //这里可以看出大部分点是3模式，信标应该也只用3就够了吧?
     if ((next_point >= 1 && next_point < 7) || (next_point > 7 && next_point < 10) || next_point > 10) {
         Navigation_mode(3);
     } else if (next_point == 10) {
@@ -86,8 +93,11 @@ void Follow_Track() // 核心循迹程序
     // STEER_Value=PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID+Error);//SD9
     // STEER_Value=PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID-Error);//SD5
 
-    Switching_point_D(); // 距离判据切点
+    Switching_point_D(); // 距离判据切点----这里要融合信标
 
+/*   
+    //去年的任务是绕几个锥桶过几个元素，这下面的代码时采集好点位后的不同元素速度控制
+    //信标的元素只有一个这部分应该是不需要的
     if (next_point == 1) {
         Retardation(50, 40, -400); // 反推制动
     } else if (next_point == 2) {
@@ -123,6 +133,45 @@ void Follow_Track() // 核心循迹程序
     } else { // 默认
         SPEED_Value = 100;
     }
+   
+*/
+#endif
+    
+    
+    
+//匹配滤波器
+//要预先生成一端标准的Chirp信号？
+
+#if MIC_Mode
+        
+    //ChripPipei();
+    
+    if(MIC_rcyflag)//波形与预期足够相似
+    {
+        Error=Get_mic_Angle();
+        printf("\r\nError:%lf\r\n",Error);
+    }
+    else
+    {
+        Error=0;
+        SPEED_Value=0;
+    }
+    
+    
+    
+    
+    
+    
+#endif
+    
+   
+    
+#if GPS_MIC_Mode
+    
+    
+    
+#endif
+
 }
 
 /*
@@ -174,31 +223,32 @@ void Task_RZT(int Steer, int16 Motor, int Angle, char Type) // 任务:绕锥桶一圈
 }
 */
 
-void Switching_point_D() // 切点(距离)判断
+void Switching_point_D() // 切点(距离)判断-----切点标志要改，信标影响下，应该改为踩过信标再切点
 {
     if (next_point == 0 || next_point < 1 || next_point == 12) {
         if (distance < 2) { // 切点
             next_point++;
-            printf("\r\n 3-当前点位-%d", next_point);
-            printf("\r\n \\\\\\\\\\\\\\\\\\\\");
+           // printf("\r\n 3-当前点位-%d", next_point);
+            //printf("\r\n \\\\\\\\\\\\\\\\\\\\");
         }
     } else if (next_point == 8 || next_point == 9 || next_point == 10) {
         if (distance < 2) { // 切点
             next_point++;
-            printf("\r\n 0.75-当前点位-%d", next_point);
-            printf("\r\n \\\\\\\\\\\\\\\\\\\\");
+           // printf("\r\n 0.75-当前点位-%d", next_point);
+            //printf("\r\n \\\\\\\\\\\\\\\\\\\\");
         }
     } else {
         if (distance < 0.75) { // 切点
             next_point++;
-            printf("\r\n 2-当前点位-%d", next_point);
-            printf("\r\n \\\\\\\\\\\\\\\\\\\\");
+           // printf("\r\n 2-当前点位-%d", next_point);
+            //printf("\r\n \\\\\\\\\\\\\\\\\\\\");
         }
     }
 }
 
 void Double_layer_feedback_0() // 双层反馈(用于去的时候是0度)
 {
+    //第一个点azimuth获取到了出发点和目标点的方位角
     // 向北发车
     if (azimuth > 180) { // 将大于180的方向角变为负角
         azimuth -= 360;
@@ -211,13 +261,13 @@ void Double_layer_feedback_0() // 双层反馈(用于去的时候是0度)
 
     if ((azimuth - Daty_Z) > 180) { // 当两角度之差大于180度时，则将差值减去360
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z) - 360; // GPS的方向角-IMU经过PD处理的航向角
-        printf("IMU(0).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("IMU(0).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else if ((azimuth - Daty_Z) < -180) { // 当两角度之差小于-180度时，则将差值加上360
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z) + 360; // GPS的方向角-IMU经过PD处理的航向角
-        printf("IMU(0).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("IMU(0).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else {
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z); // GPS的方向角-IMU经过PD处理的航向角
-        printf("IMU(0).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("IMU(0).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     }
 }
 
@@ -229,13 +279,13 @@ void Double_layer_feedback_180() // 双层反馈(用于返回的时候是180度)
 
     if ((azimuth - Daty_Z) > 180) { // 当两角度之差大于180度时，则将差值减去360
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z) - 360; // GPS的方向角-IMU经过PD处理的航向角
-        printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+        //printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else if ((azimuth - Daty_Z) < -180) { // 当两角度之差小于-180度时，则将差值加上360
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z) + 360; // GPS的方向角-IMU经过PD处理的航向角
-        printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+        //printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else {
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z); // GPS的方向角-IMU经过PD处理的航向角
-        printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     }
 }
 
@@ -252,13 +302,13 @@ void Single_layer_feedback() // 单层反馈
     }
     if ((azimuth - Daty_Z) > 180) { // 当两角度之差大于180度时，则将差值减去360
         Error = azimuth - Daty_Z - 360;
-        printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else if ((azimuth - Daty_Z) < -180) { // 当两角度之差小于-180度时，则将差值加上360
         Error = azimuth - Daty_Z + 360;
-        printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else {
         Error = azimuth - Daty_Z;
-        printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       // printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     }
 }
 
@@ -282,7 +332,7 @@ void Retardation(int X, int16 Y, int16 Z) // 反推制动
     if (encoder < X) {
         SPEED_Value = Y;
     } else {
-        SPEED_Value = (Z);
+         SPEED_Value = (Z);
     }
 }
 
@@ -308,7 +358,7 @@ void Navigation_mode(int TYPE)
     } else if (TYPE == 2) {
         IMU_Navigation_180_S(); // 顺时针IMU--180度导航(右转)
     } else if (TYPE == 3) {
-        Single_layer_feedback(); // 单层反馈----没有IMU抑制转向效果
+         Single_layer_feedback(); // 单层反馈----没有IMU抑制转向效果
     } else if (TYPE == 4) {
         Double_layer_feedback_0(); // 双层反馈(用于去的时候是0度)
     }
