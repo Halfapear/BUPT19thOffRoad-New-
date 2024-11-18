@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<BuildDb />
+<BuildDb>
+    <Tool>
+        <Name>linker</Name>
+        <Parent>
+            <Path>C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\Debug_m0_plus\Exe\cyt4bb7_cm_0_plus.out</Path>
+            <Output>
+                <Path>C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\Debug_m0_plus\List\cyt4bb7_cm_0_plus.map</Path>
+            </Output>
+        </Parent>
+    </Tool>
+</BuildDb>

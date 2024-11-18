@@ -30,9 +30,9 @@ float T_N=0;
 float C_Direction_2=0;
 int    direction_count;//GPS累加循环数
 int    Flag=0;
-int    GL_IMU_Flag=0;
-double gps_direction_average;//gps计算后的平均值
-double gps_direction_sum;//gps偏航角累加值
+int    GL_IMU_Flag=1;
+double gps_direction_average=0;//gps计算后的平均值
+double gps_direction_sum=0;//gps偏航角累加值
 /**
  * @brief 陀螺仪零漂初始化
  * 通过采集一定数据求均值计算陀螺仪零点偏移值。
@@ -58,6 +58,8 @@ float IMU_gyro_Offset_Init()
     Gyro_Offset.Xdata /= 1000;
     Gyro_Offset.Ydata /= 1000;
     Gyro_Offset.Zdata /= 1000;
+    
+    printf("零漂：%2f,%2f,%2f",Gyro_Offset.Xdata,Gyro_Offset.Ydata,Gyro_Offset.Zdata);
 
     return gyro_Offset_flag=1;
 }
@@ -74,13 +76,15 @@ void IMU_GetValues()//将采集的数值转化为实际物理值, 并对陀螺仪进行去零漂处理
 //2000dps:IMU963--14.3
 
     //! 陀螺仪角速度必须转换为弧度制角速度: deg/s -> rad/s
-//    IMU_Data.gyro_x = ((float) imu660ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 16.4f;
-//    IMU_Data.gyro_y = ((float) imu660ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 16.4f;
-//    IMU_Data.gyro_z = ((float) imu660ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 16.4f;
+   // IMU_Data.gyro_x = ((float) imu660ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 16.4f;
+   // IMU_Data.gyro_y = ((float) imu660ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 16.4f;
+   // IMU_Data.gyro_z = ((float) imu660ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 16.4f;
 
-        IMU_Data.gyro_x = ((float) imu963ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 14.3f;
+       IMU_Data.gyro_x = ((float) imu963ra_gyro_x - Gyro_Offset.Xdata) * PI / 180 / 14.3f;
         IMU_Data.gyro_y = ((float) imu963ra_gyro_y - Gyro_Offset.Ydata) * PI / 180 / 14.3f;
         IMU_Data.gyro_z = ((float) imu963ra_gyro_z - Gyro_Offset.Zdata) * PI / 180 / 14.3f;
+        
+       // printf("IMU数据:%f,%f,%f",IMU_Data.gyro_x,IMU_Data.gyro_y,IMU_Data.gyro_z);
 
 }
 
@@ -104,9 +108,10 @@ void IMU_YAW_integral()//对角速度进行积分
              IMU_Handle_180();//规划为0-180和0-(-180)   Daty_Z
              IMU_Handle_360();//规划为0-360和0-(-360)   T_M
              IMU_Handle_0();  //规划为0-正无穷和0-负无穷  T_N
-         }
+            // printf("IMU处理数据:%f,%f,%f",Daty_Z,T_M,T_N);
 
-
+        }
+       // printf("IMU数据:%f,%f,%f",Daty_Z,T_M,T_N);
 
 }
 
@@ -114,8 +119,17 @@ void IMU_YAW_integral()//对角速度进行积分
 void IMU_init()//IMU初始化
 {
 
-//    imu660ra_init();   //IMU660惯导初始化
-    imu963ra_init();   //IMU660惯导初始化
+   // imu660ra_init();   //IMU660惯导初始化
+        
+    if(imu963ra_init())   //IMU660惯导初始化
+    {
+        printf("\r\n初始化IMU963失败");
+    }
+    else
+    {
+            printf("\r\n初始化IMU963成功");
+      
+    }
     pit_ms_init(PIT_CH0, 5);                              // (IMU)初始化 CCU60_CH0 为周期中断 5ms 周期,IMU660频率为200HZ
     IMU_gyro_Offset_Init();// 陀螺仪零漂初始化
 
@@ -132,18 +146,18 @@ void IMU_SHOW()
     ips200_show_string(0, 16*2, "T_N:");      ips200_show_float(60,16*2,T_N,3,6);
 
 }
-/*
+
 void IMU_TEXT()
 {
     HIP4082_Motor_ctrl(5000);
 
 }
-*/
+
 void GPS_direction_average()//计算GPS偏航角平均值
 {
     if(1)
     {
-        if(direction_count <= 20)
+        while(direction_count <= 20)
         {
             gps_direction_sum += gnss.direction;
             direction_count++;
@@ -151,6 +165,8 @@ void GPS_direction_average()//计算GPS偏航角平均值
         gps_direction_average=(double)(gps_direction_sum/direction_count);
     }
 }
+
+
 void GPS_IMU_Complementary_filter()//将GPS反馈的direction(航向角)和IMU反馈的YAW(航向角)进行互补滤波
 {
     if(gnss.direction>180)    //获取到GPS方位角信息

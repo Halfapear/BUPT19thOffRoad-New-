@@ -17,6 +17,9 @@
 
 extern float Target_point[2][150]; // 用于储存采集的目标点信息，用于后续的位置计算(第一层是纬度，第二层是经度)
 extern float Work_target_array[2][150]; // 用于将从flash中读取的目标点数组的数据复制过来，当这个数组被赋值时，后续的一切和Flash再无关系
+extern float Start_Point[2];//记录开始发车的角度--用于行进途中进行角度计算--暂时不用
+
+
 
 #endif
 
@@ -24,6 +27,7 @@ extern float Work_target_array[2][150]; // 用于将从flash中读取的目标点数组的数据
 
 extern double Target_point[2][150]; // 用于储存采集的目标点信息，用于后续的位置计算(第一层是纬度，第二层是经度)
 extern double Work_target_array[2][150]; // 用于将从flash中读取的目标点数组的数据复制过来，当这个数组被赋值时，后续的一切和Flash再无关系
+extern double Start_Point[2];//记录开始发车的角度
 
 #endif
 
@@ -45,7 +49,7 @@ extern double GPS_GET_LOT[];
 #define RP_MAX 20 // 设置的采集点上限(自己决定)
 #define Point_NUM 10 // 精度或纬度采集个数
 #define FLASH_SECTION_INDEX 0 // 存储数据用的扇区
-#define FLASH_PAGE_INDEX 11 // 存储数据用的页码 倒数第一个页码
+#define FLASH_PAGE_INDEX 89 // 存储数据用的页码 倒数第一个页码
 #define GPS_PAGE_INDEX 11 // GPS存储页码
 
 // 函数声明

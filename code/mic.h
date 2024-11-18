@@ -19,8 +19,12 @@ extern float fft_signal_1[2*FFT_SIZE];
 extern float fft_signal_2[2*FFT_SIZE];  
 extern float fft_signal_3[2*FFT_SIZE];  
 extern float fft_signal_4[2*FFT_SIZE];  
+
+extern float sin_signal[FFT_SIZE+10];
+
 void mic_init();                //麦克风adc接口初始化
 void mic_data_get (void);       //麦克风原始数据获取     -放pit0
 void mic_data_copy(void);       //将原始数据赋值出来，用于计算   -放循环
+void test_data_copy(void);
 
 #endif //MIC_H_

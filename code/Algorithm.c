@@ -9,6 +9,7 @@ pid_param_t PID_IMU;
 pid_param_t PID_Init;
 pid_param_t PID_MOTOR;
 
+
 /*************************************************************************
  *  函数名称：float constrain_float(float amt, float low, float high)
  *  功能说明：限幅函数
@@ -63,6 +64,11 @@ float PidLocCtrl(pid_param_t * pid, float error)
 
     PID_IMU.kp=1.1;//1.15
     PID_IMU.kd=3;
+    
+    /*PID_MOTOR.kp=1.2;
+    PID_MOTOR.ki=1;
+    PID_MOTOR.kd=5;
+    PID_MOTOR.imax=2000*/;
 
     /* 累积误差 */
     pid->integrator += error;
@@ -98,20 +104,20 @@ float PidLocCtrl(pid_param_t * pid, float error)
  *************************************************************************/
 float PidIncCtrl(pid_param_t * pid, float error)
 {
-    PID_MOTOR.kp=110;
-    PID_MOTOR.ki=6;
-    PID_MOTOR.kd=5;
+    PID_MOTOR.kp=3;
+    PID_MOTOR.ki=1.5;
+    PID_MOTOR.kd=3;
 
 
 
     pid->out_p = pid->kp * (error - pid->last_error);
     pid->out_i = pid->ki * error;
     pid->out_d = pid->kd * ((error - pid->last_error) - pid->last_derivative);
-
+    //printf("OUTP:%f,OUTI:%f,OUTD:%f",pid->out_p,pid->out_i,pid->out_d);
     pid->last_derivative = error - pid->last_error;
     pid->last_error = error;
-
-    pid->out += pid->out_p + pid->out_i + pid->out_d;
+    
+    pid->out = pid->out_p + pid->out_i + pid->out_d;
     return pid->out;
 }
 

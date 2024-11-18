@@ -34,10 +34,14 @@
 
 extern gnss_info_struct gnss; // 使用gnss变量
 
-int Control_FLAG = 0;         // 该标志位意义是，当它为1时是无控模式(靠GPS+IMU导航)/当手柄上的按键按下时，该标志位被清0,无法执行无控模式，转入有控模式
+int Control_FLAG = 1;         // 该标志位意义是，当它为1时是无控模式(靠GPS+IMU导航)/当手柄上的按键按下时，该标志位被清0,无法执行无控模式，转入有控模式
 int S_Point = 0;              // 停止点位参数
 int P_Distance = 0;           // 点位距离参数
+
+//next_point将由lora模块获取的数据进行赋值，lora数据0-8,0为起始点，1-8为信标,届时最多只存9个点
 int next_point = 0;           // 下一个目标点
+ 
+
 int Point_interval = 0;       // 点位区间数
 int ZT_FLAG = 0;              // 绕锥桶一周标志位
 int Distance_FLAG = 0;        // 距离切换标志位
@@ -50,19 +54,26 @@ double azimuth = 0;     // 方位角(得出的函数返回值为double)
 double last_azimuth = 0;// 上一次的方位角
 double Error = 0;       // 方位角和航向角的误差(得出的函数返回值为double)
 
+double start_distance=0;
+
+int Start_GPSangle_Flag=0;//跑短直线以获取GPS航向角，为了后续与IMU同步
+int ST_Point_RecordFlag=0;//初始点位记录标志位
+
+
+
+
 float PD_YAW = 0;
 
 void Follow_Track() // 核心循迹程序
 {
   //纯gps模式
 #if GPS_Mode
-#if (Float_Record_FLAG || Double_Record_FLAG || Int_Record_FLAG) // 单精度和双精度存储都用这个
+#if (Float_Record_FLAG || Double_Record_FLAG) // 单精度和双精度存储都用这个
     distance = get_two_points_distance(gnss.latitude, gnss.longitude, Work_target_array[0][next_point], Work_target_array[1][next_point]); // 距离
     last_azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, Work_target_array[0][next_point - 1], Work_target_array[1][next_point - 1]); // 方位角 (两点连线与正北的夹角)
     azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, Work_target_array[0][next_point], Work_target_array[1][next_point]); // 方位角 (两点连线与正北的夹角)
 #endif
 
-    //没看懂为什么需要下面这个 
 #if (Array_Record_FLAG)
     distance = get_two_points_distance(gnss.latitude, gnss.longitude, GPS_GET_LAT[next_point], GPS_GET_LOT[next_point]); // 距离
     azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, GPS_GET_LAT[next_point], GPS_GET_LOT[next_point]); // 方位角 (两点连线与正北的夹角)
@@ -77,9 +88,56 @@ void Follow_Track() // 核心循迹程序
     // Single_layer_feedback()------3
     // Double_layer_feedback_0()------4
     //上面这几个函数是最终的角度结算函数，上面算完就给舵机赋值了
-       
-// 6.28 暂时注释排查警钟长鸣问题
-
+    
+//先写五个
+    
+        printf("DS:%f,YAW:%f,AZI:%f，point:%d,gnss:%f",distance,Daty_Z,azimuth,next_point,gnss.direction);
+     // 距离判据切点----这里要融合信标
+    if(Start_GPSangle_Flag==0)
+    {
+      if(ST_Point_RecordFlag==0){
+        Start_Point[0]=gnss.latitude;//这里后面可以加上与flash内部存的数据进行互补运算
+        Start_Point[1]=gnss.longitude;
+        ST_Point_RecordFlag=1;//只存一次，注意到开始点在转到FOLLOW_TRACK
+      }
+      start_distance=get_two_points_distance(gnss.latitude, gnss.longitude, Start_Point[0], Start_Point[1]); // 与起始点距离
+      //直接用Work_target_array数组里的第一个值作为起始点      
+      printf("start_distance:%f",start_distance);
+      if(fabs(start_distance)>3.0)
+      {
+          GPS_direction_average();//超过3m,获取GPS航向角
+          gps_direction_average= get_two_points_azimuth(Start_Point[0], Start_Point[1], gnss.latitude, gnss.longitude);
+          if(gps_direction_average>180 && gps_direction_average<=360)
+          {
+              gps_direction_average-=360;
+          }
+          else if(gps_direction_average<(-180) && gps_direction_average>=(-360))
+          {
+              gps_direction_average+=360;
+          }
+          Daty_Z=gps_direction_average; 
+          
+          printf("\r\nIMU初始值与GPS同步!!!,同步角度：%f",gps_direction_average);
+          Start_GPSangle_Flag=1;
+          next_point ++;
+      }
+      SPEED_Value=1300;//起步阶段
+      
+    }
+    else
+    {
+        //正常寻迹-gps
+        SPEED_Value=2000;
+        Navigation_mode(3);
+        //要检查一下这里的输出
+        printf("\n 寻迹中");
+        Switching_point_D();
+      
+    
+    }
+        
+    
+/*
     if (next_point < 1 || next_point == 7) {
         Navigation_mode(0);
     }
@@ -95,9 +153,9 @@ void Follow_Track() // 核心循迹程序
 
     Switching_point_D(); // 距离判据切点----这里要融合信标
 
-/*   
+    
     //去年的任务是绕几个锥桶过几个元素，这下面的代码时采集好点位后的不同元素速度控制
-    //信标的元素只有一个这部分应该是不需要的
+    //，信标的元素只有一个这部分应该是不需要的
     if (next_point == 1) {
         Retardation(50, 40, -400); // 反推制动
     } else if (next_point == 2) {
@@ -133,8 +191,9 @@ void Follow_Track() // 核心循迹程序
     } else { // 默认
         SPEED_Value = 100;
     }
-   
+
 */
+    
 #endif
     
     
@@ -145,17 +204,13 @@ void Follow_Track() // 核心循迹程序
 #if MIC_Mode
         
     //ChripPipei();
-    
-    if(MIC_rcyflag)//波形与预期足够相似
-    {
-        Error=Get_mic_Angle();
+        SPEED_Value=1100;
+        MIC_rcyflag=1;
+        Start_GPSangle_Flag=1;
+        Error=Get_mic_Angle_Filtered();
         printf("\r\nError:%lf\r\n",Error);
-    }
-    else
-    {
-        Error=0;
-        SPEED_Value=0;
-    }
+    
+   
     
     
     
@@ -167,84 +222,111 @@ void Follow_Track() // 核心循迹程序
    
     
 #if GPS_MIC_Mode
+        
+    //next_point=lora_receive_num;//将lora收到的编号直接赋值给next_point-0为出发点，1-8为信标
+    next_point=1;
+    if(start_mict>10)
+        restart_mic=5;//返航时间
+    if(restart_mic>0){
+        next_point=0;        
+    }
     
+    ips200_show_int(0,16*8,next_point,2);
+            ips200_show_float(0, 16 * 9, Work_target_array[0][next_point],3,6); 
+            ips200_show_float(0, 16 * 10, Work_target_array[1][next_point] ,3,6);
     
+#if (Float_Record_FLAG || Double_Record_FLAG) // 单精度和双精度存储都用这个
+    //start_distance=get_two_points_distance(gnss.latitude, gnss.longitude, Work_target_array[0][0], Work_target_array[1][0]); // 与起始点距离
+    distance = get_two_points_distance(gnss.latitude, gnss.longitude, Work_target_array[0][next_point], Work_target_array[1][next_point]); // 距离
+    last_azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, Work_target_array[0][next_point - 1], Work_target_array[1][next_point - 1]); // 方位角 (两点连线与正北的夹角)
+    azimuth = get_two_points_azimuth(gnss.latitude, gnss.longitude, Work_target_array[0][next_point], Work_target_array[1][next_point]); // 方位角 (两点连线与正北的夹角)
+#endif
+    printf("\r\nDS:%f,YAW:%f,AZI:%f，point:%d",distance,Daty_Z,azimuth,next_point);
+     // 距离判据切点----这里要融合信标
+    if(Start_GPSangle_Flag==0)
+    {
+      if(ST_Point_RecordFlag==0){
+        Start_Point[0]=gnss.latitude;//这里后面可以加上与flash内部存的数据进行互补运算
+        Start_Point[1]=gnss.longitude;
+        ST_Point_RecordFlag=1;//只存一次，注意到开始点在转到FOLLOW_TRACK
+      }
+      Error=Daty_Z;
+      start_distance=get_two_points_distance(gnss.latitude, gnss.longitude, Start_Point[0], Start_Point[1]); // 与起始点距离
+      //直接用Work_target_array数组里的第一个值作为起始点      
+      printf("start_distance:%f",start_distance);
+      if(fabs(start_distance)>3.0)
+      {
+          GPS_direction_average();//超过3m,获取GPS航向角
+          gps_direction_average= get_two_points_azimuth(Start_Point[0], Start_Point[1], gnss.latitude, gnss.longitude);
+          if(gps_direction_average>180 && gps_direction_average<=360)
+          {
+              gps_direction_average-=360;
+          }
+          else if(gps_direction_average<(-180) && gps_direction_average>=(-360))
+          {
+              gps_direction_average+=360;
+          }
+          Daty_Z=gps_direction_average; 
+          
+          printf("\r\nIMU初始值与GPS同步!!!,同步角度：%f",gps_direction_average);
+          Start_GPSangle_Flag=1;
+          //next_point ++;
+      }
+      SPEED_Value=3000;//起步阶段
+      
+    }
+    else
+    {
+        //正常寻迹-gps-mic
+       // SPEED_Value=30;
+        
+       // Navigation_mode(3);
+        //要检查一下这里的输出
+        printf("\r\n 寻迹中");
+        //Switching_point_D();
+        //切点判据由lora负责，lora获得的值直接赋值给next_point
+        if(next_point!=0){
+            if(distance>5)
+            {
+                SPEED_Value=SPEED; //B31菜单可以对GPS寻迹速度进行调节       
+                Navigation_mode(3);
+                MIC_rcyflag=0;
+                
+            }
+            else
+            {
+                SPEED_Value=1700; 
+                //start_mict=my_s;
+                Error=Get_mic_Angle_Filtered();
+                MIC_rcyflag=1;
+            }
+        }  
+        else{
+            SPEED_Value=3000; 
+            MIC_rcyflag=0;
+            Navigation_mode(3);
+            if(distance<2)
+            {
+                SPEED_Value=0;   
+            }          
+        }
+    }
+
     
 #endif
 
 }
 
-/*
-void Task_RZT(int Steer, int16 Motor, int Angle, char Type) // 任务:绕锥桶一圈
-{
-    if (Angle == 0 && Type == 'N') {
-        if (ZT_FLAG == 0) {
-            do {
-                Control_FLAG = 0;     // 给0隔绝GPS影响
-                Steer_set(Steer);   // 绕桶半径大小是由打死角度决定的
-                SPEED_Value = Motor; // 闭环
-                if (T_M < (-358)) {
-                    Control_FLAG = 1; // 重新赋值，打开GPS影响
-                    ZT_FLAG = 1;
-                }
-                gpio_set_level(BUZZER_PIN, 1);
-            } while (ZT_FLAG == 0);
-            gpio_set_level(BUZZER_PIN, 0);
-        }
-    } else if (Angle == 0 && Type == 'S') {
-        if (ZT_FLAG == 0) {
-            do {
-                Control_FLAG = 0;     // 给0隔绝GPS影响
-                Steer_set(Steer);   // 绕桶半径大小是由打死角度决定的
-                SPEED_Value = Motor; // 闭环
-                if (T_N > (358)) {
-                    Control_FLAG = 1; // 重新赋值，打开GPS影响
-                    ZT_FLAG = 1;
-                }
-                gpio_set_level(BUZZER_PIN, 1);
-            } while (ZT_FLAG == 0);
-            gpio_set_level(BUZZER_PIN, 0);
-        }
-    } else if (Angle == 180 && Type == 'N') {
-        if (ZT_FLAG == 0) {
-            do {
-                Control_FLAG = 0;     // 给0隔绝GPS影响
-                Steer_set(Steer);   // 绕桶半径大小是由打死角度决定的
-                SPEED_Value = Motor; // 闭环
-                if (T_N < (-540)) {
-                    Control_FLAG = 1; // 重新赋值，打开GPS影响
-                    ZT_FLAG = 1;
-                }
-                gpio_set_level(BUZZER_PIN, 1);
-            } while (ZT_FLAG == 0);
-            gpio_set_level(BUZZER_PIN, 0);
-        }
-    }
-}
-*/
 
 void Switching_point_D() // 切点(距离)判断-----切点标志要改，信标影响下，应该改为踩过信标再切点
-{
-    if (next_point == 0 || next_point < 1 || next_point == 12) {
-        if (distance < 2) { // 切点
-            next_point++;
-           // printf("\r\n 3-当前点位-%d", next_point);
-            //printf("\r\n \\\\\\\\\\\\\\\\\\\\");
-        }
-    } else if (next_point == 8 || next_point == 9 || next_point == 10) {
-        if (distance < 2) { // 切点
-            next_point++;
-           // printf("\r\n 0.75-当前点位-%d", next_point);
-            //printf("\r\n \\\\\\\\\\\\\\\\\\\\");
-        }
-    } else {
-        if (distance < 0.75) { // 切点
-            next_point++;
-           // printf("\r\n 2-当前点位-%d", next_point);
-            //printf("\r\n \\\\\\\\\\\\\\\\\\\\");
-        }
-    }
-}
+{       
+       if (distance < 3){//切点
+         next_point++;
+         printf("\r\n 3-当前点位-%d,distance:%d", next_point,distance);
+         
+       }
+}  
+
 
 void Double_layer_feedback_0() // 双层反馈(用于去的时候是0度)
 {
@@ -253,11 +335,13 @@ void Double_layer_feedback_0() // 双层反馈(用于去的时候是0度)
     if (azimuth > 180) { // 将大于180的方向角变为负角
         azimuth -= 360;
     }
+    
     // 向南发车
-    azimuth += 180;
-    if (azimuth > 180) { // 将大于180的方向角变为负角
+    
+    
+    /*azimuth += 180;    if (azimuth > 180) { // 将大于180的方向角变为负角
         azimuth -= 360;
-    }
+    }*/
 
     if ((azimuth - Daty_Z) > 180) { // 当两角度之差大于180度时，则将差值减去360
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z) - 360; // GPS的方向角-IMU经过PD处理的航向角
@@ -287,6 +371,7 @@ void Double_layer_feedback_180() // 双层反馈(用于返回的时候是180度)
         Error = azimuth - PidLocCtrl(&PID_IMU, Daty_Z); // GPS的方向角-IMU经过PD处理的航向角
        // printf("IMU(180).azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     }
+    printf("ERROR:%f",Error);
 }
 
 void Single_layer_feedback() // 单层反馈
@@ -296,19 +381,19 @@ void Single_layer_feedback() // 单层反馈
         azimuth -= 360;
     }
     // 向南发车
-    azimuth += 180;
-    if (azimuth > 180) { // 将大于180的方向角变为负角
-        azimuth -= 360;
-    }
+   // azimuth += 180;
+   // if (azimuth > 180) { // 将大于180的方向角变为负角
+     //   azimuth -= 360;
+    //}
     if ((azimuth - Daty_Z) > 180) { // 当两角度之差大于180度时，则将差值减去360
         Error = azimuth - Daty_Z - 360;
-       // printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       printf("\r\nGPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else if ((azimuth - Daty_Z) < -180) { // 当两角度之差小于-180度时，则将差值加上360
         Error = azimuth - Daty_Z + 360;
-       // printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       printf("\r\nGPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     } else {
         Error = azimuth - Daty_Z;
-       // printf("GPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
+       printf("\r\nGPS.azimuth:%f,Daty_Z:%f,Error:%f\n", azimuth, Daty_Z, Error); // 如果点位在正北，那么方向角未经过处理的值是0
     }
 }
 
@@ -332,7 +417,7 @@ void Retardation(int X, int16 Y, int16 Z) // 反推制动
     if (encoder < X) {
         SPEED_Value = Y;
     } else {
-         SPEED_Value = (Z);
+        SPEED_Value = (Z);
     }
 }
 

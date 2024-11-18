@@ -4,23 +4,28 @@
 
 float count_signal_0[FFT_SIZE*2];//互相关运算数组
 float count_signal_1[FFT_SIZE*2];//互相关运算数组
-float out_signal[2][FFT_SIZE];
+float out_signal_0[FFT_SIZE];//可视化输出数组
+float out_signal_1[FFT_SIZE];
 float fft_outputSignal[4][FFT_SIZE];
 float Chrip_signal[FFT_SIZE*2];//标准Chrip信号
 float one_signal[4][2*FFT_SIZE]; //归一化之后的信号数组--
 float rcy;//相关度
-int MIC_rcyflag=1;
+int MIC_rcyflag=0;
 //extern float RcyThredNum;
+
+float angle_filter_buffer[FILTER_SIZE] = {0};  // 角度值缓存数组
+int filter_index = 0;  // 滤波数组索引
+
 float RcyThredNum=3.14;
 float d1=0;
 float d2=0;
 
 void Get_mic_Distance()
 {
-    int16 i=0;
+    int16_t i=0;
     float pmax=0; //最大值
-    int16 qmax=0; //最大下标值
-    int16 num=30;//最大值搜索点数
+    int16_t qmax=0; //最大下标值
+    int16_t num=30;//最大值搜索点数
     
     //定义fft对象
     arm_cfft_instance_f32 arm_cfft_instance_f32_len_2048;
@@ -56,7 +61,7 @@ void Get_mic_Distance()
     
    
     //左右互换-只换实部
-    for(i = 0; i<FFT_SIZE; i++)
+    for(i = 0; i<FFT_SIZE/2; i++)
     {
         float temp=count_signal_0[i*2];
         count_signal_0[i*2]=count_signal_0[i*2+2048];
@@ -67,8 +72,8 @@ void Get_mic_Distance()
         count_signal_1[i*2+2048]=temp1;
         
     }
-    //arm_cmplx_mag_f32(count_signal_0, out_signal[0] , FFT_SIZE);
-    //arm_cmplx_mag_f32(count_signal_1, out_signal[1] , FFT_SIZE);
+    arm_cmplx_mag_f32(count_signal_0, out_signal_0 , FFT_SIZE);
+    arm_cmplx_mag_f32(count_signal_1, out_signal_1 , FFT_SIZE);
     
     
     
@@ -113,40 +118,86 @@ void Get_mic_Distance()
 
 }
 
+double calculate_angle_with_y_axis(double x, double y) {
+    double angle_with_x_axis = fast_atan2(y, x);
+    double angle_with_y_axis = PI / 2 - angle_with_x_axis;
+    return angle_with_y_axis*(180/PI);
+}
+
 float Get_mic_Angle(void)      //互相关获得角度
 {
     //float d1=0,d2=0;//d1前后距离差，d2右左距离差
-    float angle;
+    float angle=90.0;
     
     Get_mic_Distance();
-   
+    
     //这里放调试代码
     printf("\r\n距离差1:%f\r\n距离差2:%f",d1,d2 );
+    if(fabsf(d1)>27)
+      d1=0;
+    if(fabsf(d2)>27)
+      d2=0;
+    
     
     //先算角度的绝对值，再进行象限和正负的判断
-    angle=atan2f(fabs(d2),fabs(d1));
-    if(d1>0&&d2>0)
+    
+    if(fabsf(d2)<3.3&&d1>21.0)//横向值接近0，走直线
     {
-        angle=angle;
+       angle=90.0;
     }
-    else if(d1>0&&d2<0)
+    else if(fabsf(d2)<3.3&&d1<-15.0)
     {
-        angle=-angle;
+        angle=0.0;
     }
-    else if(d1<0&&d2<0)
+    else if(fabsf(d1)<3.3&&d2>12.0)//
     {
-        angle=angle-180.0;
+        angle=0.0;
     }
-    else
+    else if(fabsf(d1)<3.3&&d2<-12.0)
     {
-        angle=180.0-angle;
+        angle=180;
     }
+    else if(fabsf(d1)>3.5&&fabsf(d2)>3.5&&fabsf(d1)<27&&fabsf(d2)<27){
+        angle=calculate_angle_with_y_axis(d1,d2);
+        
+    }
+    
+    
+    
     
     //角度使用-180~180系统
     
     return angle;
     
     
+}
+
+
+// 移动平均滤波函数
+float Moving_Average_Filter(float new_angle) {
+    float sum = 0.0;
+    int count;
+
+    // 将新的角度值添加到数组中
+    angle_filter_buffer[filter_index++] = new_angle;
+
+    // 如果数组已满，重置索引以循环存储新值
+    if (filter_index >= FILTER_SIZE) {
+        filter_index = 0;
+    }
+
+    // 计算数组中所有值的平均值
+    for (count = 0; count < FILTER_SIZE; count++) {
+        sum += angle_filter_buffer[count];
+    }
+
+    return sum / FILTER_SIZE;  // 返回平均值
+}
+
+// 修改后的Get_mic_Angle函数，使用滤波器
+float Get_mic_Angle_Filtered(void) {
+    float raw_angle = Get_mic_Angle();  // 获取原始角度值
+    return Moving_Average_Filter(raw_angle);  // 返回滤波后的角度值
 }
 
 //得到一个-1到1的chrip信号

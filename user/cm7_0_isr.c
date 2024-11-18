@@ -41,12 +41,11 @@
 void pit0_ch0_isr()                     // 定时器通道 0 周期中断服务函数      
 {
     pit_isr_flag_clear(PIT_CH0);//5ms
-    
-    BLDC_Cloop_ctrl(5000);
+    //BLDC_Cloop_ctrl(SPEED_Value);
     
     if(gyro_Offset_flag == 1 && GL_IMU_Flag == 1)
     {
-//        imu960ra_get_gyro();                                                        // 获取 IMU660RA 的角速度测量数值
+        imu963ra_get_gyro();                                                        // 获取 IMU660RA 的角速度测量数值
         IMU_YAW_integral();           //积分出角度值
     }
     
@@ -55,6 +54,7 @@ void pit0_ch0_isr()                     // 定时器通道 0 周期中断服务函数
     Control_FLAG = 0; //隔绝GPS对舵机的影响
     Steer_set(SERVO_MOTOR_MID + PidLocCtrl(&PID_IMU, 0 - Daty_Z)); //舵机
 #endif
+
     
 }
 
@@ -63,24 +63,40 @@ void pit0_ch1_isr()                     // 定时器通道 1 周期中断服务函数
     pit_isr_flag_clear(PIT_CH1);//10us
     
     //LORA_work();                                    //LORA
-    ten_us++;
+   ten_us++;
     if(ten_us==10)//100us采集一次硅麦数据
     {
         mic_data_get();
+        Get_xf6_adc();
         ten_us=0;
     }
-    x6f_scan();                                     //Control扫描接收机各个通道
+    //x6f_scan();                                     //Control扫描接收机各个通道
     
 }
 
 void pit0_ch2_isr()                     // 定时器通道 2 周期中断服务函数      
 {
     pit_isr_flag_clear(PIT_CH2);
-    
+    my_tms++;
     if(gnss_flag)
     {
         gnss_flag = 0;
-        gnss_data_parse();           //开始解析数据
+        gnss_data_parse();          //开始解析数据
+    }
+    if(my_tms>=10)
+    {
+        my_tms=0;
+        my_s++;
+        if(MIC_rcyflag)
+        {
+            start_mict++;
+        }
+        else
+        {
+            start_mict=0;
+        }
+        if(restart_mic>0)
+            restart_mic--;
     }
     
 }
@@ -88,33 +104,7 @@ void pit0_ch2_isr()                     // 定时器通道 2 周期中断服务函数
 void pit0_ch10_isr()                    // 定时器通道 10 周期中断服务函数      
 {
     pit_isr_flag_clear(PIT_CH10);
-    /*
-     if(duty >= 0)                                                           // 正转
-        {
-            gpio_set_level(DIR_CH2, GPIO_HIGH);                                  // DIR输出高电平
-            pwm_set_duty(PWM_CH2, duty);                  // 计算占空比
-        }
-        else                                                                    // 反转
-        {
-            gpio_set_level(DIR_CH2, GPIO_LOW);                                   // DIR输出低电平
-            pwm_set_duty(PWM_CH2, (-duty));               // 计算占空比
-        }
-        if(dir)                                                                 // 根据方向判断计数方向 本例程仅作参考
-        {
-            duty ++;                                                            // 正向计数
-            if(duty >= MAX_DUTY)                                                // 达到最大值
-                dir = false;                                                    // 变更计数方向
-        }
-        else
-        {
-            duty --;                                                            // 反向计数
-            if(duty <= -MAX_DUTY)                                               // 达到最小值
-                dir = true;                                                     // 变更计数方向
-        }
-        system_delay_ms(500);
-    */
-      
-    //BLDC_Cloop_ctrl(5000);
+    
     //舵机控制
     key_scan();
     
@@ -139,14 +129,31 @@ void pit0_ch10_isr()                    // 定时器通道 10 周期中断服务函数
 //            Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID+Error));//SD9
 //        //  Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID-Error));//SD5
 //            }
-      
-       Steer_set(SERVO_MOTOR_MID+PidLocCtrl(&PID_IMU,Error));
+      if(Start_GPSangle_Flag==0)
+        {
+         Steer_set(SERVO_MOTOR_MID+PidLocCtrl(&PID_IMU,0-Error));//舵机
+        }
+      else if(MIC_rcyflag){
+          Steer_set(PidLocCtrl(&PID_IMU,Error));
+      }
+      else
+      {
+          Steer_set(PidLocCtrl(&PID_GPS,SERVO_MOTOR_MID+Error));//看完error的值再决定怎么改
+      }
       
 
     }
-    //HALL_gather();//霍尔编码器定时读取
-    //BLDC_Cloop_ctrl(SPEED_Value);
     
+    HALL_gather();//霍尔编码器定时读取
+    if(!xf6_stopflag){
+        BLDC_Cloop_ctrl(SPEED_Value);
+    }
+    else
+    {
+        BLDC_Cloop_ctrl(0);
+        printf("\n\r停车");
+    }
+     //BLDC_Cloop_ctrl(SPEED);    
     
     
     

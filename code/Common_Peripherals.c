@@ -4,6 +4,87 @@
 
 #include "zf_common_headfile.h"
 
+int my_s=0;
+int my_tms=0;
+int start_mict=0;
+int restart_mic=0;
+
+//----------------------遥控---------------------------------
+uint8 xf6_stopflag=0;
+
+uint32 xf6_adcnum=0;
+int xf6_adc[1000];
+int xf6_work[1000];
+
+
+void Get_xf6_adc()//adc采集xf6
+{
+    xf6_adc[xf6_adcnum]=adc_convert(XF6_ADC);
+    
+    xf6_adcnum++;
+    if(xf6_adcnum>=1000)
+        xf6_adcnum=0;
+
+}
+
+void xf6_data_copy()//把xf6采集到的数据赋值出来
+{
+    for(int i=0;i<XF6_SIZE;i++)
+    {
+        xf6_work[i]=xf6_adc[i];
+    }
+
+}
+
+int calcute_xf6_high()//计算周期内的高电平数量
+{
+    int num=0;
+    for(int i=0;i<XF6_SIZE;i++)
+    {
+        if(xf6_work[i]>200)
+          num++;
+    }
+    return num;
+}
+
+
+//-----------------------lora----------------------------
+uint8 lora_get_data[4];                 // 接收数据缓冲数组                               
+uint8 lora_get_num = 0;                 
+uint8 lora_receive_num;                 // 当前收到的序号
+uint8 lora_receive_num_last;            // 上一次收到的序号
+
+void lora_communication_receive(void)
+{
+    uint8 temp_data;
+    if(uart_query_byte(WIRELESS_UART_INDEX, &temp_data))
+    {
+          if(temp_data == 0x66)
+          {
+              lora_get_num = 0;
+          }
+          lora_get_data[lora_get_num] = temp_data;
+          if(lora_get_data[lora_get_num] == 0x88 && lora_get_num == 3)
+          {
+              lora_receive_num_last = lora_receive_num;
+              lora_receive_num = lora_get_data[1];
+              lora_get_num = 0;
+          }
+          lora_get_num ++;
+    }
+}
+
+void LORA_init()
+{
+    set_wireless_type(WIRELESS_UART, lora_communication_receive);                               // 设置回调函数
+    
+    uart_init (LORA_UART_INDEX, LORA_UART_BUAD_RATE, LORA_UART_RX_PIN, LORA_UART_TX_PIN);       // 初始化LORA串口
+    
+    uart_rx_interrupt(LORA_UART_INDEX, 1);                                                      // 打开串口接收中断    
+    
+}
+
+
 //===================================================蜂鸣器===================================================
 void Buzzer_init()//蜂鸣器初始化
 {
@@ -57,9 +138,6 @@ uint16 switch1_count=-1;
 uint16 switch2_count=-1;
 
 uint16 ten_us=0;
-
-int8 duty = 0;
-bool dir = true;
 
 void Key_init()//按键与LED初始化
 {
@@ -158,7 +236,7 @@ fifo_write_buffer写入FIFO缓冲区
 //
 
 
-uint8 uart_get_data[64];                                                        // 串口接收数据缓冲区
+/*uint8 uart_get_data[64];                                                        // 串口接收数据缓冲区
 uint8 fifo_get_data[64];                                                        // fifo 输出读出缓冲区
 uint8  get_data = 0;                                                            // 接收数据变量
 uint32 fifo_data_count = 0;                                                     // fifo 数据个数
@@ -196,7 +274,7 @@ void LORA_init()//LORA初始化
         LORA_Send_TXT();//需要发送的信息
 
 }
-/*
+
 void LORA_work()//LORA工作函数
 {
     fifo_data_count = fifo_used(&uart_data_fifo);                           // 查看 fifo 是否有数据
@@ -221,7 +299,6 @@ void LORA_work()//LORA工作函数
 
     }
 }
-*/
 
 void uart_rx_interrupt_handler (void)//LORA串口中断
 {
@@ -229,7 +306,7 @@ void uart_rx_interrupt_handler (void)//LORA串口中断
     uart_query_byte(UART_INDEX, &get_data);                                     // 接收数据 查询式 有数据会返回 TRUE 没有数据会返回 FALSE
     fifo_write_buffer(&uart_data_fifo, &get_data, 1);                           // 将数据写入 fifo 中
 }
-
+*/
 //===================================================电机===================================================
 //HIP4082 是由 Intersil（现为 Renesas Electronics 旗下公司）生产的一种高压、高速 MOSFET 驱动器。它的主要功能是驱动N沟道MOSFET，用于全桥（H-bridge）或半桥（half-bridge）电路中。这种芯片常用于DC-DC转换器、马达控制、电源逆变器等需要高效、高速切换的应用
 
@@ -239,17 +316,19 @@ int16 Current_speed=0;
 int16 Gap=0;
 int32 OUT=0;
 
-/*
 void HIP4082_init()//HIP4082初始化
 {
+  /*
        pwm_init(PWM_L1, 17000, 0);                                                 // PWM 通道 L1 初始化频率 17KHz 占空比初始为 0
        pwm_init(PWM_L2, 17000, 0);                                                 // PWM 通道 L2 初始化频率 17KHz 占空比初始为 0
+
+*/
 
 }
 
 void HIP4082_Motor_ctrl(int32 Motor_SPEED)//HIP4082单路驱动
 {
-
+/*
         if(Motor_SPEED>=0)
             {
                 pwm_set_duty(PWM_L1, Motor_SPEED );//2.6
@@ -260,10 +339,8 @@ void HIP4082_Motor_ctrl(int32 Motor_SPEED)//HIP4082单路驱动
                 pwm_set_duty(PWM_L1, 0);
                 pwm_set_duty(PWM_L2,(-Motor_SPEED));                    // 同一时间 一个电机只能输出一个 PWM 另一通道保持低电平
             }
-
-}
-
 */
+}
 
 void Motor_text()//电机测试
 {
@@ -301,12 +378,11 @@ void Motor_text()//电机测试
           ips200_show_int(100,  16*3,MOTOR, 5);
 //          HIP4082_Motor_ctrl(MOTOR);
           BLDC_ctrl(MOTOR);
-          BLDC_Cloop_ctrl(MOTOR);
+//          BLDC_Cloop_ctrl(MOTOR);
 
 
 
 }
-
 
 void SPEED_param_t_init()//SPEED参数初始化
 {
@@ -319,34 +395,39 @@ void SPEED_param_t_init()//SPEED参数初始化
         //printf("\r\n已经更新过的(SPEED):%d",  SPEED);
 
     }
-    else{//printf("\r\nSPEED为程序设定值(原始值)");
+    else{
+      //printf("\r\nSPEED为程序设定值(原始值)");
     }
 
 }
 
 void BLDC_init()//无刷电机初始化
 {
-    gpio_init(DIR_CH2, GPO, 1, GPO_PUSH_PULL);  //方向引脚
+
     pwm_init(PWM_CH2, 17000, 0);                 //PWM引脚初始化
-    PidInit(&PID_Init);
-    printf("init ok");
+    gpio_init(DIR_CH2, GPO, 1, GPO_PUSH_PULL);  //方向引脚
+   // PidInit(&PID_Init);
 }
 
 void BLDC_ctrl(int16 Motor_SPEED)//BLDC驱动--6.8,电机输出口暂时改为5.0，5.1，驱动函数就是BLDC_Cloop_ctrl带pid，pid参数直接在函数内部设置
 {
+  
+  //printf("\r\n输出pwm:%d",Motor_SPEED);
 
     if(Motor_SPEED>=0)//正转
-    {
-        pwm_set_duty(PWM_CH2, Motor_SPEED);
-        gpio_set_level(DIR_CH2,1);
+    {       
+        pwm_set_duty(PWM_CH2, (Motor_SPEED));
+        gpio_set_level(DIR_CH2,1);       
     }
     else             //反转
     {
+        
         pwm_set_duty(PWM_CH2, -Motor_SPEED);
         gpio_set_level(DIR_CH2,0);
+        
     }
 
-     //ips200_show_uint(100,  16*1,Motor_SPEED, 5);
+ //    ips200_show_uint(100,  16*1,Motor_SPEED, 5);
 
 }
 
@@ -354,19 +435,24 @@ void BLDC_Cloop_ctrl(int16 SPEED) //BLDC闭环控制
 {
 
       Target_speed=SPEED;      //目标速度
-      Current_speed= encoder;   //当前速度---这里直接等于了啊。。。
+      Current_speed= encoder*2;   //当前速度---这里直接等于了啊。。。
       Gap=Target_speed-Current_speed;       //速度差距
 
       //有刷这样算出来感觉值会特别小，暂时改成成100的系数了
-      //OUT=PidIncCtrl(&PID_MOTOR,(float)Gap)*100;
-      OUT=Gap;
+      OUT=PidIncCtrl(&PID_MOTOR,(float)Gap);
       //这里可以改限幅-先改成有刷最大值了
-    if(OUT> 6000) {OUT=6000;}
-    if(OUT<-6000) {OUT=-6000;}
-
+    // seekfree_assistant_oscilloscope_data.data[0] = OUT;
+     //seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data);  
+    if(OUT> 7000) {OUT=7000;}
+    if(OUT<-7000) {OUT=-7000;}
+    
+       
+     // OUT=7000;
     BLDC_ctrl((int16)OUT);
 //    system_delay_ms(3);
-    printf("%d,%d,%d,%d\n",Target_speed,Current_speed,Gap,OUT);
+   // printf("\r\nBCC:\r\n");
+   // printf("%d,%d,%d,%d\n",Target_speed,Current_speed,Gap,OUT);
+      //printf("%d\n",Current_speed);
 
 
 
@@ -381,7 +467,7 @@ int16 stand=0;
 
 void HALL_init()//霍尔编码器初始化
 {
-    encoder_dir_init(ENCODER1_TIM,ENCODER1_PLUS,ENCODER1_DIR);
+    encoder_quad_init(ENCODER1_TIM,ENCODER1_PLUS,ENCODER1_DIR);
 }
 
 void HALL_gather()//霍尔编码器获取值
@@ -389,7 +475,7 @@ void HALL_gather()//霍尔编码器获取值
     //7ms/次
     encoder= (encoder_get_count(ENCODER1_TIM));
     encoder_clear_count(ENCODER1_TIM);                                // 采集对应编码器数据
-//    printf("encoder counter: %d\n", encoder);                // 串口输出采集的数据
+    //printf("encoder counter: %d\n", encoder);                // 串口输出采集的数据
 //    system_delay_ms(100);
 }
 
@@ -407,7 +493,17 @@ void Steer_init()//舵机初始化
     PidInit(&PID_Init);
 }
 
-c
+void Steer_set(int angle)//舵机驱动
+{
+    //if(Start_GPSangle_Flag==0)//同步角阶段，直行
+      //  angle=90;
+      
+      
+    if(angle<SERVO_MOTOR_LMAX){angle=SERVO_MOTOR_LMAX;}
+    if(angle>SERVO_MOTOR_RMAX){angle=SERVO_MOTOR_RMAX;}
+    pwm_set_duty(SERVO_MOTOR_PWM, (uint32)SERVO_MOTOR_DUTY(angle));
+
+}
 
 void Steer_text()//舵机测试
 {
@@ -457,7 +553,7 @@ int16 x6f_count[6];
 //各通道高电平计数输出
 int16 x6f_out[6];
 
-int   Ctrl_GO_FLAG=0;//遥控发车标志位
+int   Ctrl_GO_FLAG=1;//遥控发车标志位
 
 void Control_init()//遥控器引脚初始化
 {
@@ -541,7 +637,7 @@ void WX_CTRL()
    //        BLDC_Cloop_ctrl(0);
        }
 }
-/*
+
 void YX_CTRL()
 {
     gpio_set_level(BUZZER_PIN,0);
@@ -586,7 +682,7 @@ void YX_CTRL()
            HIP4082_Motor_ctrl(0);
        }
 }
-*/
+
 //===================================================TOF===================================================
 //TOF 是 "Time of Flight" 的缩写，意思是“飞行时间”
 
@@ -596,31 +692,34 @@ void YX_CTRL()
 void ALL_Init()
 {
     gnss_init(TAU1201);        //GPS初始化
-//    ips200_init(IPS200_TYPE_PARALLEL8);     //IPS200显示初始化
     ips200_init(IPS200_TYPE_SPI);        //IPS114IPS200_TYPE_PARALLEL8 
     Buzzer_init();     //蜂鸣器初始化
     Key_init();        //按键及LED初始化
-//    HIP4082_init();      //HIP4062驱动初始化
     BLDC_init();     //无刷电机初始化
     Steer_init();      //Steer舵机初始化
-    LORA_init();       //LORA初始化
-//  mt9v03x_init();    //摄像头初始化
-//    Control_init();    //遥控器引脚初始化
+    //LORA_init();       //LORA初始化
+    //Control_init();    //遥控器引脚初始化
     HALL_init();//霍尔编码器初始化
     
-     flash_init(); 
-
+    flash_init(); 
+    
+    gpio_init(XF6_STOP,GPI,0,GPI_FLOATING_IN);
+    LORA_init();
 #if FLASH_Init_FLAG
-    SPEED_param_t_init();
-    FLAG_param_t_init();
-    Stop_point_param_t_init();
-    Point_distance_param_t_init();
+    //SPEED_param_t_init();
+    //FLAG_param_t_init();
+   // Stop_point_param_t_init();
+   // Point_distance_param_t_init();
     GPS_param_t_init();
 #endif
 
 
 #if IMU_STATR_FLAG
     IMU_init();         //IMU初始化
+    
+      printf("imu init suc");
+    
+   
 #endif
 
 }

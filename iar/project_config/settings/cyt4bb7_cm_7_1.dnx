@@ -1,5 +1,16 @@
 <?xml version="1.0"?>
 <settings>
+    <Jet>
+        <JetConnSerialNo>SEEKFREE CMSIS-DAP V2:SF-3183304213204</JetConnSerialNo>
+        <JetConnFoundProbes>SEEKFREE CMSIS-DAP V1:SF-3183304213204:SEEKFREE CMSIS-DAP V2:SF-3183304213204:</JetConnFoundProbes>
+        <DisableInterrupts>0</DisableInterrupts>
+        <LeaveRunning>0</LeaveRunning>
+        <MultiCoreRunAll>0</MultiCoreRunAll>
+    </Jet>
+    <PlDriver>
+        <FirstRun>0</FirstRun>
+        <MemConfigValue>D:\IAR9.40.1\arm\config\debugger\Infineon\CYT4BB_M7.ddf</MemConfigValue>
+    </PlDriver>
     <Stack>
         <FillEnabled>0</FillEnabled>
         <OverflowWarningsEnabled>1</OverflowWarningsEnabled>
@@ -11,17 +22,30 @@
         <LimitSize>0</LimitSize>
         <ByteLimit>50</ByteLimit>
     </Stack>
-    <PlDriver>
-        <MemConfigValue>C:\Program Files\IAR Systems\Embedded Workbench 9.2\arm\config\debugger\Infineon\CYT4BB_M7.ddf</MemConfigValue>
-    </PlDriver>
-    <Jet>
-        <DisableInterrupts>0</DisableInterrupts>
-        <LeaveRunning>0</LeaveRunning>
-        <MultiCoreRunAll>0</MultiCoreRunAll>
-    </Jet>
+    <Exceptions>
+        <StopOnUncaught>_ 0</StopOnUncaught>
+        <StopOnThrow>_ 0</StopOnThrow>
+    </Exceptions>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
+    <SWOManager>
+        <SamplingDivider>8192</SamplingDivider>
+        <OverrideClock>0</OverrideClock>
+        <CpuClock>1398101057</CpuClock>
+        <SwoClock>1381319470</SwoClock>
+        <DataLogMode>0</DataLogMode>
+        <ItmPortsEnabled>63</ItmPortsEnabled>
+        <ItmTermIOPorts>1</ItmTermIOPorts>
+        <ItmLogPorts>0</ItmLogPorts>
+        <ItmLogFile>$PROJ_DIR$\ITM.log</ItmLogFile>
+        <PowerForcePC>1</PowerForcePC>
+        <PowerConnectPC>1</PowerConnectPC>
+    </SWOManager>
     <ArmDriver>
-        <EnableCache>1</EnableCache>
         <EnforceMemoryConfiguration>1</EnforceMemoryConfiguration>
+        <EnableCache>1</EnableCache>
     </ArmDriver>
     <DisassembleMode>
         <mode>0</mode>

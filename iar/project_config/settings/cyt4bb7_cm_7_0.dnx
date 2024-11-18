@@ -1,5 +1,18 @@
 <?xml version="1.0"?>
 <settings>
+    <Jet>
+        <PrevWtdReset>Reset and halt after bootloader</PrevWtdReset>
+        <OnlineReset>Software</OnlineReset>
+        <JetConnSerialNo>SEEKFREE CMSIS-DAP V2:SF-3183304213204</JetConnSerialNo>
+        <JetConnFoundProbes>SEEKFREE CMSIS-DAP V1:SF-3183304213204:SEEKFREE CMSIS-DAP V2:SF-3183304213204:</JetConnFoundProbes>
+        <DisableInterrupts>0</DisableInterrupts>
+        <LeaveRunning>0</LeaveRunning>
+        <MultiCoreRunAll>0</MultiCoreRunAll>
+    </Jet>
+    <PlDriver>
+        <FirstRun>0</FirstRun>
+        <MemConfigValue>D:\IAR9.40.1\arm\config\debugger\Infineon\CYT4BB_M7.ddf</MemConfigValue>
+    </PlDriver>
     <Stack>
         <FillEnabled>0</FillEnabled>
         <OverflowWarningsEnabled>1</OverflowWarningsEnabled>
@@ -11,36 +24,10 @@
         <LimitSize>0</LimitSize>
         <ByteLimit>50</ByteLimit>
     </Stack>
-    <PlDriver>
-        <FirstRun>0</FirstRun>
-        <MemConfigValue>D:\IAR Systems\Embedded Workbench 9.2\arm\config\debugger\Infineon\CYT4BB_M7.ddf</MemConfigValue>
-    </PlDriver>
-    <Jet>
-        <JetConnSerialNo>SEEKFREE CMSIS-DAP V2:SF-3183304213204</JetConnSerialNo>
-        <JetConnFoundProbes />
-        <PrevWtdReset>System</PrevWtdReset>
-        <OnlineReset>Software</OnlineReset>
-        <DisableInterrupts>0</DisableInterrupts>
-        <LeaveRunning>0</LeaveRunning>
-        <MultiCoreRunAll>0</MultiCoreRunAll>
-    </Jet>
-    <ArmDriver>
-        <EnableCache>1</EnableCache>
-        <EnforceMemoryConfiguration>1</EnforceMemoryConfiguration>
-    </ArmDriver>
-    <DebugChecksum>
-        <Checksum>2871534337</Checksum>
-    </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
         <StopOnThrow>_ 0</StopOnThrow>
     </Exceptions>
-    <Disassembly>
-        <MixedMode>1</MixedMode>
-    </Disassembly>
-    <CallStack>
-        <ShowArgs>0</ShowArgs>
-    </CallStack>
     <SWOManager>
         <SamplingDivider>8192</SamplingDivider>
         <OverrideClock>0</OverrideClock>
@@ -54,6 +41,19 @@
         <PowerForcePC>1</PowerForcePC>
         <PowerConnectPC>1</PowerConnectPC>
     </SWOManager>
+    <ArmDriver>
+        <EnableCache>1</EnableCache>
+        <EnforceMemoryConfiguration>1</EnforceMemoryConfiguration>
+    </ArmDriver>
+    <DebugChecksum>
+        <Checksum>1001564302</Checksum>
+    </DebugChecksum>
+    <Disassembly>
+        <MixedMode>1</MixedMode>
+    </Disassembly>
+    <CallStack>
+        <ShowArgs>0</ShowArgs>
+    </CallStack>
     <Trace1>
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
@@ -92,7 +92,8 @@
         <mode>0</mode>
     </DisassembleMode>
     <Breakpoints2>
-        <Count>0</Count>
+        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\code\Menu.c}.478.13" 0 0 1 "" 0 "" 0</Bp0>
+        <Count>1</Count>
     </Breakpoints2>
     <Aliases>
         <Count>0</Count>

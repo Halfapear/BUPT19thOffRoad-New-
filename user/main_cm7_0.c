@@ -44,138 +44,105 @@
 // 本例程是开源库空工程 可用作移植或者测试各类内外设
 
 // **************************** 代码区域 ****************************
-/*
-int8 duty = 0;
-bool dir = true;
-*/
-       
+
+int main(void)
 {
     clock_init(SYSTEM_CLOCK_250M); 	// 时钟配置及系统初始化<务必保留>
     debug_info_init();                  // 调试串口信息初始化
     
     // 此处编写用户代码 例如外设初始化代码等
-    
+
     //初始化代码
-    BLDC_init();
-    //ALL_Init();
+    
+    ALL_Init();
     mic_init();
-#if ISR_Start_FLAG
+    adc_init(XF6_ADC,ADC_12BIT);
+    
 
 //CCU60_CH1 是用于配置和初始化定时器中断的标识符。具体来说，它代表了一种定时器模块的通道，用于定时和产生中断。CCU（Capture/Compare Unit）是一种在嵌入式系统中常见的模块，通常用于捕获输入事件、生成比较事件或用于脉宽调制（PWM）     
      
 //CCU60_CH1 CCU61_CH0 CCU61_CH1的换成
      //还有一个陀螺仪的中断在IMU初始化的时刻开启
-     pit_us_init(PIT_CH1, 10);                               // LORA中断+ADC采集
-     pit_ms_init(PIT_CH2, 100);                            // GPS数据解析中断/霍尔编码器中断
-     pit_ms_init(PIT_CH10, 7);                              // 舵机
-     
-
-#endif
-
+    
+    pit_us_init(PIT_CH1, 10);                               // LORA中断+ADC采集
+    pit_ms_init(PIT_CH2, 100);                            // GPS数据解析中断
+    pit_ms_init(PIT_CH10, 7);                              // 舵机/霍尔编码器/电机
+    
 //     Ctrl_GO_FLAG=0; //清除标志位
-     Buzzer_check(0,100);                                  // 自检完成
+    Buzzer_check(0,100);                                  // 自检完成
     // 初始化代码
     //float test_angle;
-     /* 
-    generateChirp(Chrip_signal,FFT_SIZE,250,2000,FS);//生成标准Chrip信号
+    //generateChirp(Chrip_signal,FFT_SIZE,250,2000,FS);//生成标准Chrip信号
     seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);           // 初始化逐飞助手组件 选择debug串口输出信息
     
     seekfree_assistant_oscilloscope_data.channel_num  = 4;                      // 配置通道长度为1组
-    */
     
     // 此处编写用户代码 例如外设初始化代码等
     while(true)
     {
-      
-      printf("enter");
-      /* 
-        if(duty >= 0)                                                           // 正转
-        {
-            gpio_set_level(DIR_CH2, GPIO_HIGH);                                  // DIR输出高电平
-            pwm_set_duty(PWM_CH2, duty);                  // 计算占空比
-        }
-        else                                                                    // 反转
-        {
-            gpio_set_level(DIR_CH2, GPIO_LOW);                                   // DIR输出低电平
-            pwm_set_duty(PWM_CH2, (-duty));               // 计算占空比
-        }
-        if(dir)                                                                 // 根据方向判断计数方向 本例程仅作参考
-        {
-            duty ++;                                                            // 正向计数
-            if(duty >= MAX_DUTY)                                                // 达到最大值
-                dir = false;                                                    // 变更计数方向
-        }
-        else
-        {
-            duty --;                                                            // 反向计数
-            if(duty <= -MAX_DUTY)                                               // 达到最小值
-                dir = true;                                                     // 变更计数方向
-        }
-        system_delay_ms(500);
-      */
-    
-      BLDC_Cloop_ctrl(5000);
-      //BLDC_ctrl(10000);
         // 此处编写需要循环执行的代码
-       /* 
-          if(MIC_Start_FLAG){
+        //Menu();       
+      //BLDC_ctrl(3000);
+        
+        if(MIC_Start_FLAG){
               mic_data_copy();//把一组硅麦数据取出
+         }
+        
+            //test_data_copy();
               //printf("\r\ntest");
               //test_angle= Get_mic_Angle();
              // printf("\r\n角度test_angle:%f",test_angle )
-              for(int i = 0; i < FFT_SIZE; i++) 
+            /* for(int i = 0; i < FFT_SIZE; i++) 
               {
-                  seekfree_assistant_oscilloscope_data.data[0] = fft_signal[0][i*2];//fft_outputSignal[0][i];     // 获取逆FFT运算后的幅度信息
-                  seekfree_assistant_oscilloscope_data.data[1] = fft_signal[1][i*2];//fft_signal[1][i * 2];      // 获取逆FFT运算后的幅度信息
-                  seekfree_assistant_oscilloscope_data.data[2] = fft_signal[2][i*2];
-                  seekfree_assistant_oscilloscope_data.data[3] = fft_signal[3][i*2];
-                  seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data);     // 输出幅度信息到示波器                                     
-              } 
-          }
-          */
-        // Menu();
+                  seekfree_assistant_oscilloscope_data.data[0] = fft_signal_1[i*2];//fft_outputSignal[0][i];     // 获取逆FFT运算后的幅度信息
+                  seekfree_assistant_oscilloscope_data.data[1] = fft_signal_2[i*2];//fft_signal[1][i * 2];      // 获取逆FFT运算后的幅度信息
+                  seekfree_assistant_oscilloscope_data.data[2] = fft_signal_3[i*2];
+                  seekfree_assistant_oscilloscope_data.data[3] = fft_signal_4[i*2];
+                 seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data);     // 输出幅度信息到示波器                                     
+              }*/
+      //  } 
+
+         // }        
+        //printf("/r/nDaty_Z%dT_M,%d,%d,Error%d,azimuth%d",(int)Daty_Z,(int)T_M,(int)T_N,Error,azimuth);
+      
+        #if  XF6_Control_Flag//遥控停车
+            xf6_data_copy();
+            if(calcute_xf6_high()>105)
+                xf6_stopflag=1;
+           /* else
+                xf6_stopflag=0;*/
+            
+            //ips200_show_uint(16,16*5,num,5);
+        #endif
+            
         #if Main_FLAG
-      /* 
-                         if(x6f_out[0]<135) {Ctrl_GO_FLAG=1;}//控制发车标志位
+    
+                         //if(x6f_out[0]<135) {Ctrl_GO_FLAG=1;}//控制发车标志位
 
                          if(GO_FLAG==1)
-                           {
+                          {
+                                printf("\r\n开始发车！！！");
+                                
+                              Follow_Track();//核心循迹程序                     
+                          }
 
-                             if(Ctrl_GO_FLAG==1&&Control_FLAG==1) {Follow_Track();}//核心循迹程序
-
-                          
-                             if(x6f_out[2]>165&&x6f_out[2]<175)//有控模式+
-                             {
-                                  Control_FLAG=0;
-                                  Control_Program();//控制程序
-                             }
-                           }
-      */
-                          Follow_Track();
-                          //fft_outputSignal[0][0]=-100000000;
+                          //Follow_Track();
                         /*for(int i = 0; i < FFT_SIZE; i++) 
                           {
-                              seekfree_assistant_oscilloscope_data.data[0] =  out_signal[0][i];//fft_outputSignal[0][i];     // 获取逆FFT运算后的幅度信息
-                              seekfree_assistant_oscilloscope_data.data[1] = out_signal[1][i];//fft_signal[1][i * 2];      // 获取逆FFT运算后的幅度信息
+                              seekfree_assistant_oscilloscope_data.data[0] =  out_signal_0[i];//fft_outputSignal[0][i];     // 获取逆FFT运算后的幅度信息
+                              seekfree_assistant_oscilloscope_data.data[1] = out_signal_1[i];//fft_signal[1][i * 2];      // 获取逆FFT运算后的幅度信息
                              seekfree_assistant_oscilloscope_data.data[2] = fft_outputSignal[0][i];
                              seekfree_assistant_oscilloscope_data.data[3] = fft_outputSignal[1][i];
                               seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data);     // 输出幅度信息到示波器                                     
-                          } */
+                          }*/ 
                           
-                         if(STOP_MENU_FLAG){Menu();}//菜单
-        #endif
-
-                         GL_CRC();
-
-                         //if(GL_IMU_Flag==1) {Follow_Track();}//核心循迹程序
+                         if(STOP_MENU_FLAG){Menu();}//菜单-------//踩点和标志改变
                          
-                         /*if(x6f_out[2]>165&&x6f_out[2]<175)//有控模式
-                         {
-                              Control_FLAG=0;
-                              GL_IMU_Flag=0;
-                              Control_Program();//控制程序
-                         }*/
-
+        #endif                      
+                         //GL_CRC();
+                        
+                         
+                       
         
 
 

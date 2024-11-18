@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.general.xcl" --backend -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.driver.xcl" 
+& "D:\IAR9.40.1\common\bin\cspybat" -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.general.xcl" --backend -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\IAR\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.driver.xcl" 
+& "D:\IAR9.40.1\common\bin\cspybat" -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_7_1.Debug.driver.xcl" 
 }

@@ -31,12 +31,12 @@ void GPS_GL_GET()
             ips200_show_string(0, 16*0,"R:");
             ips200_show_float(50, 16*0,  GPS_GET_LAT[i], 3, 6);
             ips200_show_uint  (180, 16*0, i, 3);
-            printf("\r\n缓冲区纬度数据:%f", GPS_GET_LAT[i]);
+            //printf("\r\n缓冲区纬度数据:%f", GPS_GET_LAT[i]);
 
 
             ips200_show_float(50, 16*1,  GPS_GET_LOT[i], 3, 6);
             ips200_show_uint (180, 16*1, i, 3);
-            printf("\r\n缓冲区经度数据:%f",GPS_GET_LOT[i]);
+            //printf("\r\n缓冲区经度数据:%f",GPS_GET_LOT[i]);
 
             i++;
             GL_NUM++;
@@ -78,7 +78,7 @@ void GL_CRC()
                   {
                     key3_flag=0;
                     key1_flag=0;
-                    ips114_clear();
+                    ips200_clear();
                   }
 
               }
@@ -94,7 +94,7 @@ void GL_CRC()
                         key3_flag=0;
                         for(int NUM=0;NUM<20;NUM++)
                          {
-                             printf("\r\n组数-%d,工作数组纬度数据-%f,工作数组经度数据-%f",NUM+1,GPS_GET_LAT[NUM],GPS_GET_LOT[NUM]);
+                            // printf("\r\n组数-%d,工作数组纬度数据-%f,工作数组经度数据-%f",NUM+1,GPS_GET_LAT[NUM],GPS_GET_LOT[NUM]);
                              system_delay_ms(50);
                          }
                       }
@@ -103,7 +103,7 @@ void GL_CRC()
                   {
                     key4_flag=0;
                     key2_flag=0;
-                    ips114_clear();
+                    ips200_clear();
                     system_delay_ms(5000);
                     GL_IMU_Flag=1;
                   }

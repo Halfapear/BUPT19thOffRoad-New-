@@ -11,11 +11,15 @@ int16 mic_raw_data_3[MIC_RAW_DATA_LEN];
 int16 mic_raw_data_4[MIC_RAW_DATA_LEN];
 
 
+float sin_signal[FFT_SIZE+10];
+
 //float fft_signal[4][2*FFT_SIZE];                // 定义取出数据的保存位置
 float fft_signal_1[2*FFT_SIZE];  
 float fft_signal_2[2*FFT_SIZE];  
 float fft_signal_3[2*FFT_SIZE];  
 float fft_signal_4[2*FFT_SIZE];  
+
+
 int16 adc_offset=2048;                          //adc稳态误差
 //float是因为三角计算之后可能会产生小数
 
@@ -142,4 +146,38 @@ void mic_data_copy(void)
         }
     }
 }
+
+
+
+
+
+void test_data_copy(void)
+{
+    for(int i=0;i<FFT_SIZE+10;i++)
+    {
+        sin_signal[i]=arm_sin_f32(PI*i/10);
+    
+    }
+    
+        for(int16 i = 0;i < FFT_SIZE; i ++)
+        {
+            fft_signal_1[i * 2] = sin_signal[i];                          // 保存用于FFT计算的数据 实部赋值
+            fft_signal_2[i * 2] = sin_signal[i+5];
+            fft_signal_3[i * 2] = sin_signal[i+5];                          // 保存用于FFT计算的数据 实部赋值
+            fft_signal_4[i * 2] = sin_signal[i];
+            fft_signal_1[i * 2 + 1] = 0.0f;                                       // 保存用于FFT计算的数据 虚部赋值
+            fft_signal_2[i * 2 + 1] = 0.0f;  
+            fft_signal_3[i * 2 + 1] = 0.0f;                                       // 保存用于FFT计算的数据 虚部赋值
+            fft_signal_4[i * 2 + 1] = 0.0f;  
+            
+        }
+
+}
+
+
+
+
+
+
+
 

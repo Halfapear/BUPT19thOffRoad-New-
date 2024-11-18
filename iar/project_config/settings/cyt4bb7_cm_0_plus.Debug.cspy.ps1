@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.general.xcl" --backend -f "D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.driver.xcl" 
+& "D:\IAR9.40.1\common\bin\cspybat" -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.general.xcl" --backend -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.2\common\bin\cspybat" -f "D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\D盘桌面\单片机相关\0越野相关\【例程】各个模块的使用例程\E01_01_button_switch_demo\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.driver.xcl" 
+& "D:\IAR9.40.1\common\bin\cspybat" -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\zf\Desktop\19sMART\CYT4BB7_Library-master\CYT4BB7_Library-master\Seekfree_CYT4BB_Opensource_Library\project\iar\project_config\settings\cyt4bb7_cm_0_plus.Debug.driver.xcl" 
 }

@@ -18,6 +18,12 @@ extern int16 SPEED_Value;
 extern double azimuth;
 extern int next_point;
 
+extern double start_distance;//计算起始点和当前点的距离
+
+
+extern int Start_GPSangle_Flag;//跑短直线以获取GPS航向角，为了后续与IMU同步
+
+
 //函数声明
 void Follow_Track(void);//核心循迹程序
 void Task_RZT(int Steer,int16 Motor,int Angle,char Type);//任务:绕锥桶一圈

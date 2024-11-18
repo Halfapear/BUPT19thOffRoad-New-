@@ -17,30 +17,34 @@ uint32 Work_target_array[2][150]; // ÓÃÓÚ½«´ÓflashÖĞ¶ÁÈ¡µÄÄ¿±êµãÊı×éµÄÊı¾İ¸´ÖÆ¹ı
 uint32 lat; // Î³¶È
 uint32 lot; // ¾­¶È
 
+
 void GPS_Record_flash() { // ½«²É¼¯µÄµãÎ»¼ÇÂ¼µ½»º³åÇø²¢´¢´æÖÁGPS_FLASH
     static int NUM = 0; // ²É¼¯µãµÄ´ÎÊı
 
     lat = gnss.latitude * 1000000; // Î³¶È*100Íò(GPS»Ø´«Êı¾İÖ»ÓĞºó6Î»ÓĞĞ§)
     lot = gnss.longitude * 1000000; // ¾­¶È*100Íò(GPS»Ø´«Êı¾İÖ»ÓĞºó6Î»ÓĞĞ§)
-
+    
+    
+    
     flash_union_buffer[Number].uint32_type = lat; // ½«Î³¶ÈÊı¾İÇ¿ÖÆ×ª»»ºó´¢´æÔÚFLASH ²Ù×÷µÄÊı¾İ»º³åÇø (Êı×é±êºÅÎªÅ¼ÊıÊ±ÊÇÎ³¶ÈÊı¾İ)
     ips200_show_string(0, 16 * 0, "R:");
     ips200_show_uint(50, 16 * 0, flash_union_buffer[Number].uint32_type, 10);
     ips200_show_uint(180, 16 * 0, Number, 3);
-    printf("\r\n»º³åÇøÎ³¶ÈÊı¾İ:%d", (int)flash_union_buffer[Number].uint32_type);
+    printf("\r\n»º³åÇøÎ³¶ÈÊı¾İ:%d %d", Number,(int)flash_union_buffer[Number].uint32_type);
 
     Number++; // Êı×éÏÂ±ê+1,ÇĞ»»´¢´æ¾­¶È
 
     flash_union_buffer[Number].uint32_type = lot; // ½«¾­¶ÈÊı¾İÇ¿ÖÆ×ª»»ºó´¢´æÔÚFLASH ²Ù×÷µÄÊı¾İ»º³åÇø (Êı×é±êºÅÎªÆæÊıÊ±ÊÇ¾­¶ÈÊı¾İ)
     ips200_show_uint(50, 16 * 1, flash_union_buffer[Number].uint32_type, 10);
     ips200_show_uint(180, 16 * 1, Number, 3);
-    printf("\r\n»º³åÇø¾­¶ÈÊı¾İ:%d", (int)flash_union_buffer[Number].uint32_type);
+    printf("\r\n»º³åÇø¾­¶ÈÊı¾İ:%d %d", Number,(int)flash_union_buffer[Number].uint32_type);
 
     Number++; // Êı×éÏÂ±ê+1,ÇĞ»»´¢´æÎ³¶È
 
     if (flash_check(FLASH_SECTION_INDEX, GPS_PAGE_INDEX)) { // ÅĞ¶ÏFlashÊÇ·ñÓĞÊı¾İ : ÓĞÊı¾İ·µ»Ø1£¬ÎŞÊı¾İ·µ»Ø0
         flash_erase_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // ²Á³ıFlashÊı¾İ
     }
+    printf("\r\n»º³åÇø11¾­¶ÈÊı¾İ:%d %d", Number,(int)flash_union_buffer[1].uint32_type);
 
     flash_write_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, Number); // ½«»º³åÇøµÄÊı¾İĞ´Èëµ½Ö¸¶¨Flash ÉÈÇøµÄÒ³Âë
 
@@ -63,9 +67,14 @@ void GPS_Flash_use() { // ½«GPS_FLASHµÄÊı¾İÖØĞÂ¶Á»Ø»º³åÇø²¢¸³Öµ¸øÊı×é
 
         for (int data = 0; data < DATA_LENGTH; data++) {
             Target_point[0][TG] = flash_union_buffer[data].uint32_type; // Î³¶È
+            printf("\r\nÏÂ±ê:%d",data);
+            printf(",%d",flash_union_buffer[data].uint32_type);
             data++;
             Target_point[1][TG] = flash_union_buffer[data].uint32_type; // ¾­¶È
             TG++; // ÏÂ±ê+1
+            printf("\r\nÏÂ±ê:%d",data);
+            printf(",%d",flash_union_buffer[data].uint32_type);
+            
         }
         printf("\r\n³É¹¦´ÓGPS_FLASHÈ¡»ØÊı¾İ\n");
     }
@@ -79,7 +88,7 @@ void GPS_Work_array() { // ÓÃÓÚ¸ôÀëFLASH,Êµ¼Ê²Î¼Ó¼ÆËãµÄÊı×é
         Work_target_array[0][NUM] = Target_point[0][NUM];
         Work_target_array[1][NUM] = Target_point[1][NUM];
 
-       printf("\r\n×éÊı-%d,¹¤×÷Êı×éÎ³¶ÈÊı¾İ-%d,¹¤×÷Êı×é¾­¶ÈÊı¾İ-%d", NUM + 1, (int)Work_target_array[0][NUM], (int)Work_target_array[1][NUM]);
+        printf("\r\n×éÊı-%d,¹¤×÷Êı×éÎ³¶ÈÊı¾İ-%f,¹¤×÷Êı×é¾­¶ÈÊı¾İ-%f", NUM + 1, Target_point[0][NUM], Target_point[1][NUM]);
         system_delay_ms(50);
     }
 }
@@ -91,7 +100,7 @@ void GPS_param_t_init() { // GPS²ÎÊı³õÊ¼»¯
     } else {
         printf("\r\nGPSÎª³ÌĞòÉè¶¨Öµ(Ô­Ê¼Öµ)");
     }
-}
+} 
 
 // ×Ü»áÓĞÒ»¸öshow
 void GPS_SHOW() { // GPSĞÅÏ¢ÏÔÊ¾
@@ -109,40 +118,46 @@ float Target_point[2][150]; // ÓÃÓÚ´¢´æ²É¼¯µÄÄ¿±êµãĞÅÏ¢£¬ÓÃÓÚºóĞøµÄÎ»ÖÃ¼ÆËã(µÚÒ»
 float Work_target_array[2][150]; // ÓÃÓÚ½«´ÓflashÖĞ¶ÁÈ¡µÄÄ¿±êµãÊı×éµÄÊı¾İ¸´ÖÆ¹ıÀ´£¬µ±Õâ¸öÊı×é±»¸³ÖµÊ±£¬ºóĞøµÄÒ»ÇĞºÍFlashÔÙÎŞ¹ØÏµ
 double lat; // Î³¶È
 double lot; // ¾­¶È
+float Start_Point[2];//¼ÇÂ¼¿ªÊ¼·¢³µµÄ½Ç¶È
 
 void GPS_Record_flash() { // ½«²É¼¯µÄµãÎ»¼ÇÂ¼µ½»º³åÇø²¢´¢´æÖÁGPS_FLASH
     static int NUM = 0; // ²É¼¯µãµÄ´ÎÊı
 
     lat = gnss.latitude; // »ñÈ¡Î³¶È
     lot = gnss.longitude; // »ñÈ¡¾­¶È
+    
+    Work_target_array[0][NUM]=lat;
+    Work_target_array[1][NUM]=lot;
 
     flash_union_buffer[Number].float_type = lat; // ½«Î³¶ÈÊı¾İÇ¿ÖÆ×ª»»ºó´¢´æÔÚFLASH ²Ù×÷µÄÊı¾İ»º³åÇø (Êı×é±êºÅÎªÅ¼ÊıÊ±ÊÇÎ³¶ÈÊı¾İ)
+    //flash_union_buffer[Number].float_type = Number+1; // ½«Î³¶ÈÊı¾İÇ¿ÖÆ×ª»»ºó´¢´æÔÚFLASH ²Ù×÷µÄÊı¾İ»º³åÇø (Êı×é±êºÅÎªÅ¼ÊıÊ±ÊÇÎ³¶ÈÊı¾İ)
     ips200_show_string(0, 16 * 0, "R:");
     ips200_show_float(50, 16 * 0, flash_union_buffer[Number].float_type, 3, 6);
     ips200_show_uint(180, 16 * 0, Number, 3);
-   // printf("\r\n»º³åÇøÎ³¶ÈÊı¾İ:%f", flash_union_buffer[Number].float_type);
+    printf("\r\n»º³åÇøÎ³¶ÈÊı¾İ:%f", flash_union_buffer[Number].float_type);
 
     Number++; // Êı×éÏÂ±ê+1,ÇĞ»»´¢´æ¾­¶È
 
     flash_union_buffer[Number].float_type = lot; // ½«¾­¶ÈÊı¾İÇ¿ÖÆ×ª»»ºó´¢´æÔÚFLASH ²Ù×÷µÄÊı¾İ»º³åÇø (Êı×é±êºÅÎªÆæÊıÊ±ÊÇ¾­¶ÈÊı¾İ)
+    //flash_union_buffer[Number].float_type = Number+1; 
     ips200_show_float(50, 16 * 1, flash_union_buffer[Number].float_type, 3, 6);
     ips200_show_uint(180, 16 * 1, Number, 3);
-   // printf("\r\n»º³åÇø¾­¶ÈÊı¾İ:%f", flash_union_buffer[Number].float_type);
-
+    printf("\r\n»º³åÇø¾­¶ÈÊı¾İ:%f", flash_union_buffer[Number].float_type);
+    
     Number++; // Êı×éÏÂ±ê+1,ÇĞ»»´¢´æÎ³¶È
 
     if (flash_check(FLASH_SECTION_INDEX, GPS_PAGE_INDEX)) { // ÅĞ¶ÏFlashÊÇ·ñÓĞÊı¾İ : ÓĞÊı¾İ·µ»Ø1£¬ÎŞÊı¾İ·µ»Ø0
         flash_erase_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX); // ²Á³ıFlashÊı¾İ
     }
-
-    flash_write_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, Number); // ½«»º³åÇøµÄÊı¾İĞ´Èëµ½Ö¸¶¨Flash ÉÈÇøµÄÒ³Âë
+    flash_write_page_from_buffer(FLASH_SECTION_INDEX,GPS_PAGE_INDEX,Number);
+    //flash_write_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, Number); // ½«»º³åÇøµÄÊı¾İĞ´Èëµ½Ö¸¶¨Flash ÉÈÇøµÄÒ³Âë
 
     NUM++;
 
     if (NUM > RP_MAX) { // Èç¹û²É¼¯µã´ÎÊı´óÓÚ¹æ¶¨´ÎÊıµÄ×î´óÖµ£¬ÔòÈÃËûµÈÓÚ1
         NUM = 1;
     }
-
+    
     ips200_show_uint(200, 0, NUM, 3); // ÏÔÊ¾ÒÑ²É¼¯µÄµãÊı
 }
 
@@ -150,17 +165,23 @@ void GPS_Flash_use() { // ½«GPS_FLASHµÄÊı¾İÖØĞÂ¶Á»Ø»º³åÇø²¢¸³Öµ¸øÊı×é
     flash_buffer_clear(); // Çå¿Õ»º³åÇø
 
     if (flash_check(FLASH_SECTION_INDEX, GPS_PAGE_INDEX)) { // ÅĞ¶ÏFlashÊÇ·ñÓĞÊı¾İ : ÓĞÊı¾İ·µ»Ø1£¬ÎŞÊı¾İ·µ»Ø0
-        flash_read_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, DATA_LENGTH); // ½«Êı¾İ´ÓFLASHÖ¸¶¨ÉÈÇøÒ³Âë·ÅÈëµ½»º³åÇø
-
+        //flash_read_page(FLASH_SECTION_INDEX, GPS_PAGE_INDEX, (uint32 *)flash_union_buffer, DATA_LENGTH); // ½«Êı¾İ´ÓFLASHÖ¸¶¨ÉÈÇøÒ³Âë·ÅÈëµ½»º³åÇø
+        flash_read_page_to_buffer(FLASH_SECTION_INDEX, GPS_PAGE_INDEX,DATA_LENGTH);
         int TG = 0; // ÓÃÒÔÇĞ»»¶şÎ¬Êı×éÏÂ±ê
-
+        printf("\n\n\n¶Á³öÊı¾İ--float");
         for (int data = 0; data < DATA_LENGTH; data++) {
             Target_point[0][TG] = flash_union_buffer[data].float_type; // Î³¶ÈÊı¾İ
+            printf("\r\n»º³åÇøÎ³¶ÈÊı¾İ:%f", Target_point[0][TG]);
             data++;
+            
+    
             Target_point[1][TG] = flash_union_buffer[data].float_type; // ¾­¶ÈÊı¾İ
+            printf("\r\n»º³åÇø¾­¶ÈÊı¾İ:%f", Target_point[1][TG]);
             TG++;
+            
+    
         }
-      //  printf("\r\n³É¹¦´ÓGPS_FLASHÈ¡»ØÊı¾İ\n");
+        printf("\r\n³É¹¦´ÓGPS_FLASHÈ¡»ØÊı¾İ£¬%d\n",DATA_LENGTH);
     }
 }
 #endif
@@ -171,6 +192,7 @@ double Target_point[2][150]; // ÓÃÓÚ´¢´æ²É¼¯µÄÄ¿±êµãĞÅÏ¢£¬ÓÃÓÚºóĞøµÄÎ»ÖÃ¼ÆËã(µÚÒ
 double Work_target_array[2][150]; // ÓÃÓÚ½«´ÓflashÖĞ¶ÁÈ¡µÄÄ¿±êµãÊı×éµÄÊı¾İ¸´ÖÆ¹ıÀ´£¬µ±Õâ¸öÊı×é±»¸³ÖµÊ±£¬ºóĞøµÄÒ»ÇĞºÍFlashÔÙÎŞ¹ØÏµ
 double lat; // Î³¶È
 double lot; // ¾­¶È
+double Start_Point[2];//¼ÇÂ¼¿ªÊ¼·¢³µµÄ½Ç¶È
 
 uint32 I_lat; // doubleÀàĞÍÎ³¶ÈÊı¾İÕûÊı²¿·Ö
 float F_lat; // doubleÀàĞÍÎ³¶ÈÊı¾İĞ¡Êı²¿·Ö(Ç¿ÖÆ×ª»»Îªfloat)
@@ -183,6 +205,9 @@ void GPS_Record_flash() { // ½«²É¼¯µÄµãÎ»¼ÇÂ¼µ½»º³åÇø²¢´¢´æÖÁGPS_FLASH
 
     lat = gnss.latitude; // »ñÈ¡Î³¶È
     lot = gnss.longitude; // »ñÈ¡¾­¶È
+    
+    Work_target_array[0][NUM]=lat;
+    Work_target_array[1][NUM]=lot;
 
     I_lat = (uint32)(lat); // »ñÈ¡Î³¶ÈÕûÊı²¿·Ö
     F_lat = lat - I_lat; // »ñÈ¡Î³¶ÈĞ¡Êı²¿·Ö

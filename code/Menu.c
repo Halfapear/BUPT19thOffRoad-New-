@@ -9,7 +9,7 @@ int STOP_MENU_FLAG = 1;// 菜单标志位
 int func_index = 0;    // 初始显示欢迎界面
 int last_index = 127;  // last初始为无效值
 
-int SPEED = 0;            // SPEED参数
+int SPEED = 5000;            // SPEED参数
 int *SPEED_Pointer;       // SPEED参数指针
 int Stop_Point = 0;       // Stop_Point参数
 int *Stop_Point_Pointer;  // Stop_Point参数指针
@@ -121,7 +121,7 @@ int Menu_key_Operation(int *param_t) // 按键调节界面操作函数//指针变量作为形参，
         default: break;
     }
 
-    ips200_show_int(120, 16 * 3, *param_t, 3);
+    ips200_show_int(120, 16 * 3, *param_t, 6);
 
     return *param_t;
 }
@@ -140,6 +140,7 @@ void Menu_flash_clear(int PAGE_INDEX) // 清除FLASH
         ips200_show_string(0, 16 * 1, "Point_Dis_PAGE_INDEX(7)-->");
     } else {
     }
+    
 
    // printf("\r\n已擦除指定页FLASH:%d", PAGE_INDEX);
 }
@@ -193,9 +194,12 @@ void Point_distance_param_t_init() // Point_distance参数初始化
 /*********第0层***********/
 void fun_0()
 {
-    ips200_show_rgb565_image(0, 0, (const uint16 *)gImage_MOSS, 240, 125, 240, 125, 0); // isp114
+    //ips200_show_rgb565_image(0, 0, (const uint16 *)gImage_MOSS, 240, 125, 240, 125, 0); // isp114
+    //ips200_show_int(0,0,(int)Daty_Z,3);
+    //ips200_show_float(0,0,Gyro_Offset.Zdata,3,5);
+    IMU_SHOW();
+    
 }
-
 /*********第1层***********/
 void fun_a1()
 {
@@ -351,6 +355,7 @@ void fun_a31() // GPS点位采集并存入对应FLASH
             if (key4_flag) {
                 key4_flag = 0;
                 GPS_Record_flash();
+                //ips200_show_float(50, 16 * 4, flash_union_buffer[Number].float_type, 3, 6);
             }
             ips200_show_string(0, 16 * 3, "T:"); // 浮点实时点位
             ips200_show_float(50, 16 * 4, gnss.latitude, 3, 6);
@@ -482,6 +487,9 @@ void fun_c31() // START_CAR调节
             ips200_show_float(0, 16 * 5, gnss.latitude, 3, 6);
             ips200_show_float(0, 16 * 6, gnss.longitude, 3, 6);
             ips200_show_string(0, 16 * 7, "satellite:"); ips200_show_uint(100, 16 * 7, gnss.satellite_used, 5);
+            ips200_show_int(0,16*8,next_point,2);
+            ips200_show_float(0, 16 * 9, Work_target_array[0][next_point],3,6); 
+            ips200_show_float(0, 16 * 10, Work_target_array[1][next_point] ,3,6);
 
             flash_buffer_clear(); // 清空缓冲区
 
